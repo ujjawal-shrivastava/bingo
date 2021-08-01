@@ -1,22 +1,31 @@
-import 'dart:io';
-
 import 'package:artemis/artemis.dart';
 import 'package:bingo/networking/clientProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:gql_websocket_link/gql_websocket_link.dart';
+import 'package:localstorage/localstorage.dart';
+import 'package:uuid/uuid.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-
-import 'api/api.dart';
 import 'networking/messagesBuilder.dart';
+import 'screens/home.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  final storage =
+      new LocalStorage('storage', null, {'player_id': Uuid().toString()});
+  await storage.ready;
+  runApp(
+    MyApp(
+      storage: storage,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
+  final LocalStorage storage;
+  MyApp({required this.storage});
   @override
   Widget build(BuildContext context) {
     return GameClient(
+      localStorage: storage,
       artemisClient: ArtemisClient.fromLink(
         WebSocketLink(
           null,
@@ -30,53 +39,25 @@ class MyApp extends StatelessWidget {
       ),
       child: MaterialApp(
         title: 'Bingo Tingo',
+        routes: {
+          '/': (context) => Home(),
+        },
+        onGenerateRoute: (settings) {
+          var reg = RegExp('\/room\/(\w+)');
+          var roomId = reg.firstMatch(settings.name ?? '');
+          if (roomId != null) {
+            return MaterialPageRoute(
+              builder: (context) => GameMessageBuilder(
+                roomId: roomId.group(0) ?? '',
+                playerId: GameClient.of(context)!.playerId,
+              ),
+            );
+          }
+        },
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
         home: Home(),
-      ),
-    );
-  }
-}
-
-class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  TextEditingController _editingController = TextEditingController();
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          TextField(
-            controller: _editingController,
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              var client = GameClient.of(context)!.artemisClient;
-              var createLobby = CreateLobbyMutation(
-                variables: CreateLobbyArguments(
-                  playerId: _editingController.text,
-                  playerName: _editingController.text,
-                ),
-              );
-              var result = await client.execute(createLobby);
-              print("Created Room Id ${result.data?.createLobby}");
-              var roomId = result.data?.createLobby;
-              if (roomId != null) {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => GameMessageBuilder(
-                          roomId: roomId,
-                          playerId: _editingController.text,
-                        )));
-              }
-            },
-            child: Text("Create Lobby"),
-          )
-        ],
       ),
     );
   }

@@ -7,14 +7,19 @@ class Room extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            "Room ${this.room.id}",
-          )
-        ],
+    return Scaffold(
+      body: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              "Room ${this.room.id}",
+              style: Theme.of(context).textTheme.headline4,
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
       ),
     );
   }

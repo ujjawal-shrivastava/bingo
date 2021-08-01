@@ -21,28 +21,48 @@ class GameMessageBuilder extends StatefulWidget {
 class _GameMessageBuilderState extends State<GameMessageBuilder> {
   var stream =
       StreamController<GraphQLResponse<GameMessages$Subscription>>.broadcast();
+
+  StreamSubscription<GraphQLResponse<GameMessages$Subscription>>? subscription;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      setState(() {
-        var artemisClient = GameClient.of(context)!.artemisClient;
-        var streamData = artemisClient.stream(
-          GameMessagesSubscription(
-            variables: GameMessagesArguments(
-              roomId: widget.roomId,
-              playerId: widget.playerId,
-            ),
-          ),
-        );
-        streamData.listen((event) {
-          print("Event ${event.data}");
-          stream.add(event);
-        });
-        // stream?.listen((event) {
-        //   print("Event: $event");
-        // });
-      });
+      var gc = GameClient.of(context)!;
+      if (gc.playerName.text.isEmpty) {
+        showDialog(
+            context: context,
+            builder: (context) => Dialog(
+                  child: Container(
+                    child: Column(
+                      children: [
+                        TextField(
+                          controller: gc.playerName,
+                        ),
+                        ElevatedButton(
+                            onPressed: () {}, child: Text("Join Room"))
+                      ],
+                    ),
+                  ),
+                ));
+      } else {
+        connect();
+      }
+    });
+  }
+
+  connect() {
+    var artemisClient = GameClient.of(context)!.artemisClient;
+    var streamData = artemisClient.stream(
+      GameMessagesSubscription(
+        variables: GameMessagesArguments(
+          roomId: widget.roomId,
+          playerId: widget.playerId,
+        ),
+      ),
+    );
+    subscription = streamData.listen((event) {
+      print("Event ${event.data}");
+      stream.add(event);
     });
   }
 
@@ -70,5 +90,11 @@ class _GameMessageBuilderState extends State<GameMessageBuilder> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    subscription?.cancel();
+    super.dispose();
   }
 }
