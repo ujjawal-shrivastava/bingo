@@ -15,29 +15,13 @@ class _HomeState extends State<Home> {
       body: Column(
         children: [
           TextField(
-            controller: GameClient.of(context)?.playerName,
+            controller: GameClient.of(context)!.playerName,
           ),
           ElevatedButton(
             onPressed: () async {
-              var client = GameClient.of(context)!.artemisClient;
-              var createLobby = CreateLobbyMutation(
-                variables: CreateLobbyArguments(
-                  playerId: GameClient.of(context)!.playerId,
-                  playerName: GameClient.of(context)!.playerName.text,
-                ),
-              );
-              var result = await client.execute(createLobby);
-              print("Created Room Id ${result.data?.createLobby}");
-              var roomId = result.data?.createLobby;
+              var roomId = await GameClient.of(context)?.createRoom();
               if (roomId != null) {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => GameMessageBuilder(
-                      roomId: roomId,
-                      playerId: GameClient.of(context)!.playerId,
-                    ),
-                  ),
-                );
+                Navigator.of(context).pushNamed('/room/$roomId');
               }
             },
             child: Text("Create Lobby"),

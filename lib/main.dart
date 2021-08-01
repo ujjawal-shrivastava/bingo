@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
             print("RoomId $roomId");
             return MaterialPageRoute(
               builder: (context) => GameMessageBuilder(
-                roomId: roomId.group(0) ?? '',
+                roomId: roomId.group(1) ?? '',
                 playerId: GameClient.of(context)!.playerId,
               ),
             );
