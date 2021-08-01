@@ -43,9 +43,11 @@ class MyApp extends StatelessWidget {
           '/': (context) => Home(),
         },
         onGenerateRoute: (settings) {
-          var reg = RegExp('\/room\/(\w+)');
+          var reg = RegExp(r'\/room\/(\w+)');
+          print("Room Path ${settings.name}");
           var roomId = reg.firstMatch(settings.name ?? '');
           if (roomId != null) {
+            print("RoomId $roomId");
             return MaterialPageRoute(
               builder: (context) => GameMessageBuilder(
                 roomId: roomId.group(0) ?? '',
