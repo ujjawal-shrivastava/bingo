@@ -50,16 +50,8 @@ class _GameMessageBuilderState extends State<GameMessageBuilder> {
     });
   }
 
-  connect() {
-    var artemisClient = GameClient.of(context)!.artemisClient;
-    var streamData = artemisClient.stream(
-      GameMessagesSubscription(
-        variables: GameMessagesArguments(
-          roomId: widget.roomId,
-          playerId: widget.playerId,
-        ),
-      ),
-    );
+  connect() async {
+    var streamData = await GameClient.of(context)!.connect(widget.roomId);
     subscription = streamData.listen((event) {
       print("Event ${event.data}");
       stream.add(event);

@@ -1,6 +1,4 @@
-import 'package:bingo/api/api.dart';
 import 'package:bingo/networking/clientProvider.dart';
-import 'package:bingo/networking/messagesBuilder.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -32,25 +30,9 @@ class _HomeState extends State<Home> {
                     padding:
                         EdgeInsets.symmetric(vertical: 20, horizontal: 40)),
                 onPressed: () async {
-                  var client = GameClient.of(context)!.artemisClient;
-                  var createLobby = CreateLobbyMutation(
-                    variables: CreateLobbyArguments(
-                      playerId: GameClient.of(context)!.playerId,
-                      playerName: GameClient.of(context)!.playerName.text,
-                    ),
-                  );
-                  var result = await client.execute(createLobby);
-                  print("Created Room Id ${result.data?.createLobby}");
-                  var roomId = result.data?.createLobby;
+                  var roomId = await GameClient.of(context)?.createRoom();
                   if (roomId != null) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => GameMessageBuilder(
-                          roomId: roomId,
-                          playerId: GameClient.of(context)!.playerId,
-                        ),
-                      ),
-                    );
+                    Navigator.of(context).pushNamed('/room/$roomId');
                   }
                 },
                 child: Text("Create Lobby"),
