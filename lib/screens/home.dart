@@ -7,6 +7,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  TextEditingController roomIdController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,27 +23,57 @@ class _HomeState extends State<Home> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: TextField(
                   controller: GameClient.of(context)?.playerName,
                   decoration: InputDecoration(
-                    hintText: 'Player Name',
+                    labelText: 'Player Name',
                     border: OutlineInputBorder(),
-                  )),
-              SizedBox(height: 20),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    textStyle:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    padding:
-                        EdgeInsets.symmetric(vertical: 20, horizontal: 40)),
-                onPressed: () async {
-                  var roomId = await GameClient.of(context)?.createRoom();
-                  if (roomId != null) {
-                    Navigator.of(context).pushNamed('/room/$roomId');
-                  }
-                },
-                child: Text("Create Lobby"),
-              )
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 20,
+                ),
+                child: TextField(
+                  controller: roomIdController,
+                  decoration: InputDecoration(
+                    labelText: 'Room Id',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
+              ValueListenableBuilder(
+                  valueListenable: roomIdController,
+                  builder: (context, value, child) {
+                    return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          textStyle: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 40)),
+                      onPressed: () async {
+                        late var roomId;
+                        if (roomIdController.text.isEmpty) {
+                          roomId = await GameClient.of(context)?.createRoom();
+                        } else {
+                          roomId = await GameClient.of(context)
+                              ?.joinRoom(roomIdController.text);
+                        }
+                        if (roomId != null) {
+                          Navigator.of(context).pushNamed('/room/$roomId');
+                        }
+                      },
+                      child: Text(roomIdController.text.isEmpty
+                          ? "Create Lobby"
+                          : "Join Lobby"),
+                    );
+                  })
             ],
           ),
         ),

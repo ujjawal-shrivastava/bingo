@@ -9,8 +9,7 @@ import 'networking/messagesBuilder.dart';
 import 'screens/home.dart';
 
 void main() async {
-  final storage =
-      new LocalStorage('storage', null, {'player_id': Uuid().toString()});
+  final storage = new LocalStorage('storage', null, {'player_id': Uuid().v4()});
   await storage.ready;
   runApp(
     MyApp(

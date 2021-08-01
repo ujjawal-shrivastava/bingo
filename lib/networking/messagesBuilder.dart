@@ -35,8 +35,10 @@ class _GameMessageBuilderState extends State<GameMessageBuilder> {
                   child: Container(
                     child: Column(
                       children: [
-                        TextField(
-                          controller: gc.playerName,
+                        Container(
+                          child: TextField(
+                            controller: gc.playerName,
+                          ),
                         ),
                         ElevatedButton(
                             onPressed: () {}, child: Text("Join Room"))
@@ -45,7 +47,15 @@ class _GameMessageBuilderState extends State<GameMessageBuilder> {
                   ),
                 ));
       } else {
-        connect();
+        try {
+          connect();
+        } catch (e) {
+          if (Navigator.of(context).canPop()) {
+            Navigator.of(context).pop();
+          } else {
+            Navigator.of(context).pushNamed("/");
+          }
+        }
       }
     });
   }

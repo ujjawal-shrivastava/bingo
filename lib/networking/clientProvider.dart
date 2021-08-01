@@ -32,6 +32,10 @@ class GameClient extends InheritedWidget {
     return true;
   }
 
+  bool isPhone(BuildContext context) {
+    return MediaQuery.of(context).size.width < 600;
+  }
+
   Future<String> createRoom() async {
     if (playerName.text.isEmpty) {
       throw "Name empty";
@@ -64,6 +68,7 @@ class GameClient extends InheritedWidget {
     );
     var result = await artemisClient.execute(createLobby);
     if (result.data?.joinLobby == null) {
+      print("Result $result Data ${result.data} Errors ${result.errors}");
       throw "Cannot join Lobby";
     } else {
       return roomId;
@@ -92,6 +97,7 @@ class GameClient extends InheritedWidget {
     bool isFirst = true;
     streamData.listen((event) async {
       if (isFirst) {
+        isFirst = false;
         if (event.data != null) {
           completer.complete(controller.stream);
           await Future.delayed(Duration(milliseconds: 100));
