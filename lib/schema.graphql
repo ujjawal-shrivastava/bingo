@@ -1,0 +1,116 @@
+schema {
+  query: QueryRoot
+  mutation: MutationRoot
+  subscription: Subscription
+}
+
+# Directs the executor to query only when the field exists.
+directive @ifdef on FIELD
+
+type Board {
+  numbers: [[Int!]!]!
+}
+
+type BoardCreation {
+  ready: [String!]!
+}
+
+interface CommonPlayer {
+  isConnected: Boolean!
+}
+
+type GameData {
+  players: [GamePlayer!]!
+  boardSize: Int!
+  gameState: GameState!
+}
+
+union GameEvents = GameStarted | RoomUpdate
+
+type GameMessage {
+  event: GameEvents!
+  room: Room!
+}
+
+type GamePlayer implements CommonPlayer {
+  player: Player!
+  board: Board
+}
+
+type GameRunning {
+  turn: String!
+  selectedNumbers: [SelectedCell!]!
+}
+
+type GameStarted {
+  gameState: GameState!
+}
+
+union GameState = BoardCreation | GameRunning
+
+type LobbyData {
+  players: [LobbyPlayer!]!
+}
+
+type LobbyPlayer implements CommonPlayer {
+  player: Player!
+}
+
+type MutationRoot {
+  createLobby(playerId: String!, playerName: String!): String!
+  joinLobby(playerId: String!, playerName: String!, roomId: String!): String!
+}
+
+type Player {
+  id: String!
+  name: String!
+}
+
+type PlayerConnected {
+  player: Player!
+  room: Room!
+}
+
+type PlayerHandler {
+  startGame(boardSize: Int!): Boolean!
+  readyBoard(board: [[Int!]!]!): Boolean!
+  playerMove(number: Int!): Boolean!
+}
+
+type PlayerJoined {
+  player: Player!
+  room: Room!
+}
+
+type PlayerLeft {
+  player: Player!
+  room: Room!
+}
+
+type QueryRoot {
+  hello: String!
+  gameEvent(playerId: String!, roomId: String!): PlayerHandler!
+}
+
+type Room {
+  id: String!
+  state: RoomState!
+  players: [CommonPlayer!]!
+}
+
+union RoomState = LobbyData | GameData
+
+type RoomUpdate {
+  room: Room!
+}
+
+type SelectedCell {
+  cellValue: Int!
+  selectedBy: String!
+}
+
+union ServerResponse = PlayerJoined | PlayerConnected | PlayerLeft | GameMessage
+
+type Subscription {
+  serverMessages(roomId: String!, playerId: String!): ServerResponse!
+}

@@ -1,0 +1,3 @@
+mutation joinLobby($playerId: String, $playerName: String, $roomId: String) {
+  joinLobby(playerId: $playerId, playerName: $playerName, roomId: $roomId)
+}

@@ -1,0 +1,98 @@
+fragment playerFields on Player {
+  id
+  name
+}
+fragment roomFields on Room {
+  id
+  players {
+    isConnected
+  }
+  state {
+    __typename
+    ... on LobbyData {
+      players {
+        player {
+          ...playerFields
+        }
+      }
+    }
+    ... on GameData {
+      players {
+        player {
+          ...playerFields
+        }
+        board {
+          numbers
+        }
+      }
+      boardSize
+      gameState {
+        __typename
+        ... on BoardCreation {
+          ready
+        }
+        ... on GameRunning {
+          turn
+          selectedNumbers {
+            selectedBy
+            cellValue
+          }
+        }
+      }
+    }
+  }
+}
+
+subscription gameMessages($roomId: String, $playerId: String) {
+  serverMessages(roomId: $roomId, playerId: $playerId) {
+    __typename
+    ... on PlayerJoined {
+      player {
+        ...playerFields
+      }
+      room {
+        ...roomFields
+      }
+    }
+    ... on PlayerConnected {
+      player {
+        ...playerFields
+      }
+      room {
+        ...roomFields
+      }
+    }
+    ... on PlayerLeft {
+      player {
+        ...playerFields
+      }
+      room {
+        ...roomFields
+      }
+    }
+    ... on GameMessage {
+      room {
+        ...roomFields
+      }
+      event {
+        __typename
+        ... on GameStarted {
+          gameState {
+            __typename
+            ... on BoardCreation {
+              ready
+            }
+            ... on GameRunning {
+              turn
+            }
+          }
+        }
+        ... on RoomUpdate {
+          room {
+            ...roomFields
+          }
+        }
+      }
+    }
+  }
+}
