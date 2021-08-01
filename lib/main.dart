@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:artemis/artemis.dart';
 import 'package:bingo/networking/clientProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:gql_websocket_link/gql_websocket_link.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'api/api.dart';
 import 'networking/messagesBuilder.dart';
@@ -15,7 +17,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GameClient(
-      artemisClient: ArtemisClient('https://bingotingo.herokuapp.com/'),
+      artemisClient: ArtemisClient.fromLink(
+        WebSocketLink(
+          null,
+          channelGenerator: () => WebSocketChannel.connect(
+            Uri.parse(
+              'ws://bingotingo.herokuapp.com/',
+            ),
+            protocols: ['graphql-ws'],
+          ),
+        ),
+      ),
       child: MaterialApp(
         title: 'Bingo Tingo',
         theme: ThemeData(

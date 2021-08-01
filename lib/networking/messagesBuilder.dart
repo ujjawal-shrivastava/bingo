@@ -1,8 +1,12 @@
+import 'dart:async';
+
+import 'package:artemis/client.dart';
 import 'package:artemis/schema/graphql_response.dart';
 import 'package:bingo/api/api.dart';
 import 'package:bingo/networking/clientProvider.dart';
 import 'package:bingo/screens/lobby.dart';
 import 'package:flutter/material.dart';
+import 'package:gql_websocket_link/gql_websocket_link.dart';
 
 class GameMessageBuilder extends StatefulWidget {
   final String roomId;
@@ -15,19 +19,29 @@ class GameMessageBuilder extends StatefulWidget {
 }
 
 class _GameMessageBuilderState extends State<GameMessageBuilder> {
-  Stream<GraphQLResponse<GameMessages$Subscription>>? stream;
+  var stream =
+      StreamController<GraphQLResponse<GameMessages$Subscription>>.broadcast();
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       setState(() {
-        stream = GameClient.of(context)
-            ?.artemisClient
-            .stream(GameMessagesSubscription(
-                variables: GameMessagesArguments(
+        var artemisClient = GameClient.of(context)!.artemisClient;
+        var streamData = artemisClient.stream(
+          GameMessagesSubscription(
+            variables: GameMessagesArguments(
               roomId: widget.roomId,
               playerId: widget.playerId,
-            )));
+            ),
+          ),
+        );
+        streamData.listen((event) {
+          print("Event ${event.data}");
+          stream.add(event);
+        });
+        // stream?.listen((event) {
+        //   print("Event: $event");
+        // });
       });
     });
   }
@@ -36,7 +50,7 @@ class _GameMessageBuilderState extends State<GameMessageBuilder> {
   Widget build(BuildContext context) {
     return Container(
       child: StreamBuilder<GraphQLResponse<GameMessages$Subscription>>(
-        stream: stream,
+        stream: stream.stream,
         builder: (context, ass) {
           if (ass.error != null) {
             print("Error: ${ass.error}");
