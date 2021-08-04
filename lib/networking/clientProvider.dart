@@ -4,13 +4,14 @@ import 'package:artemis/artemis.dart';
 import 'package:bingo/api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:uuid/uuid.dart';
 
 class GameClient extends InheritedWidget {
   final ArtemisClient artemisClient;
 
   final LocalStorage localStorage;
 
-  String get playerId => localStorage.getItem('player_id');
+  final String playerId;
 
   TextEditingController playerName = TextEditingController();
 
@@ -18,9 +19,9 @@ class GameClient extends InheritedWidget {
       {Key? key,
       required this.child,
       required this.artemisClient,
-      required this.localStorage})
+      required this.localStorage,
+      required this.playerId})
       : super(key: key, child: child);
-
   final Widget child;
 
   static GameClient? of(BuildContext context) {
@@ -40,6 +41,8 @@ class GameClient extends InheritedWidget {
     if (playerName.text.isEmpty) {
       throw "Name empty";
     }
+    print("Create room player $playerId");
+
     var createLobby = CreateLobbyMutation(
       variables: CreateLobbyArguments(
         playerId: playerId,
@@ -66,6 +69,7 @@ class GameClient extends InheritedWidget {
         roomId: roomId,
       ),
     );
+    print("Joining Room $roomId player $playerId");
     var result = await artemisClient.execute(createLobby);
     if (result.data?.joinLobby == null) {
       print("Result $result Data ${result.data} Errors ${result.errors}");
@@ -81,7 +85,7 @@ class GameClient extends InheritedWidget {
       throw "Name empty";
     }
 
-    print("Connect to room $roomId");
+    print("Connect to room $roomId playerId $playerId");
     var streamData = artemisClient.stream(
       GameMessagesSubscription(
         variables: GameMessagesArguments(

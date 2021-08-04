@@ -18,19 +18,137 @@ mixin RoomFieldsMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class CreateLobby$MutationRoot extends JsonSerializable with EquatableMixin {
+  CreateLobby$MutationRoot();
+
+  factory CreateLobby$MutationRoot.fromJson(Map<String, dynamic> json) =>
+      _$CreateLobby$MutationRootFromJson(json);
+
+  late String createLobby;
+
+  @override
+  List<Object?> get props => [createLobby];
+  @override
+  Map<String, dynamic> toJson() => _$CreateLobby$MutationRootToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class JoinLobby$MutationRoot extends JsonSerializable with EquatableMixin {
+  JoinLobby$MutationRoot();
+
+  factory JoinLobby$MutationRoot.fromJson(Map<String, dynamic> json) =>
+      _$JoinLobby$MutationRootFromJson(json);
+
+  late String joinLobby;
+
+  @override
+  List<Object?> get props => [joinLobby];
+  @override
+  Map<String, dynamic> toJson() => _$JoinLobby$MutationRootToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$CommonPlayer$GamePlayer$Player extends JsonSerializable
+    with EquatableMixin, PlayerFieldsMixin {
+  RoomFieldsMixin$CommonPlayer$GamePlayer$Player();
+
+  factory RoomFieldsMixin$CommonPlayer$GamePlayer$Player.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$CommonPlayer$GamePlayer
+    extends RoomFieldsMixin$CommonPlayer with EquatableMixin {
+  RoomFieldsMixin$CommonPlayer$GamePlayer();
+
+  factory RoomFieldsMixin$CommonPlayer$GamePlayer.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$CommonPlayer$GamePlayerFromJson(json);
+
+  late RoomFieldsMixin$CommonPlayer$GamePlayer$Player player;
+
+  @override
+  List<Object?> get props => [player];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$CommonPlayer$GamePlayerToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$CommonPlayer$LobbyPlayer$Player extends JsonSerializable
+    with EquatableMixin, PlayerFieldsMixin {
+  RoomFieldsMixin$CommonPlayer$LobbyPlayer$Player();
+
+  factory RoomFieldsMixin$CommonPlayer$LobbyPlayer$Player.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$CommonPlayer$LobbyPlayer$PlayerFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$CommonPlayer$LobbyPlayer$PlayerToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$CommonPlayer$LobbyPlayer
+    extends RoomFieldsMixin$CommonPlayer with EquatableMixin {
+  RoomFieldsMixin$CommonPlayer$LobbyPlayer();
+
+  factory RoomFieldsMixin$CommonPlayer$LobbyPlayer.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$CommonPlayer$LobbyPlayerFromJson(json);
+
+  late RoomFieldsMixin$CommonPlayer$LobbyPlayer$Player player;
+
+  @override
+  List<Object?> get props => [player];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$CommonPlayer$LobbyPlayerToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class RoomFieldsMixin$CommonPlayer extends JsonSerializable
     with EquatableMixin {
   RoomFieldsMixin$CommonPlayer();
 
-  factory RoomFieldsMixin$CommonPlayer.fromJson(Map<String, dynamic> json) =>
-      _$RoomFieldsMixin$CommonPlayerFromJson(json);
+  factory RoomFieldsMixin$CommonPlayer.fromJson(Map<String, dynamic> json) {
+    switch (json['__typename'].toString()) {
+      case r'GamePlayer':
+        return RoomFieldsMixin$CommonPlayer$GamePlayer.fromJson(json);
+      case r'LobbyPlayer':
+        return RoomFieldsMixin$CommonPlayer$LobbyPlayer.fromJson(json);
+      default:
+    }
+    return _$RoomFieldsMixin$CommonPlayerFromJson(json);
+  }
 
   late bool isConnected;
 
+  @JsonKey(name: '__typename')
+  String? $$typename;
+
   @override
-  List<Object?> get props => [isConnected];
+  List<Object?> get props => [isConnected, $$typename];
   @override
-  Map<String, dynamic> toJson() => _$RoomFieldsMixin$CommonPlayerToJson(this);
+  Map<String, dynamic> toJson() {
+    switch ($$typename) {
+      case r'GamePlayer':
+        return (this as RoomFieldsMixin$CommonPlayer$GamePlayer).toJson();
+      case r'LobbyPlayer':
+        return (this as RoomFieldsMixin$CommonPlayer$LobbyPlayer).toJson();
+      default:
+    }
+    return _$RoomFieldsMixin$CommonPlayerToJson(this);
+  }
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -756,33 +874,177 @@ class GameMessages$Subscription extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class CreateLobby$MutationRoot extends JsonSerializable with EquatableMixin {
-  CreateLobby$MutationRoot();
+class Ping$QueryRoot extends JsonSerializable with EquatableMixin {
+  Ping$QueryRoot();
 
-  factory CreateLobby$MutationRoot.fromJson(Map<String, dynamic> json) =>
-      _$CreateLobby$MutationRootFromJson(json);
+  factory Ping$QueryRoot.fromJson(Map<String, dynamic> json) =>
+      _$Ping$QueryRootFromJson(json);
 
-  late String createLobby;
+  late String ping;
 
   @override
-  List<Object?> get props => [createLobby];
+  List<Object?> get props => [ping];
   @override
-  Map<String, dynamic> toJson() => _$CreateLobby$MutationRootToJson(this);
+  Map<String, dynamic> toJson() => _$Ping$QueryRootToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class JoinLobby$MutationRoot extends JsonSerializable with EquatableMixin {
-  JoinLobby$MutationRoot();
-
-  factory JoinLobby$MutationRoot.fromJson(Map<String, dynamic> json) =>
-      _$JoinLobby$MutationRootFromJson(json);
-
-  late String joinLobby;
+class CreateLobbyArguments extends JsonSerializable with EquatableMixin {
+  CreateLobbyArguments({this.playerId, this.playerName});
 
   @override
-  List<Object?> get props => [joinLobby];
+  factory CreateLobbyArguments.fromJson(Map<String, dynamic> json) =>
+      _$CreateLobbyArgumentsFromJson(json);
+
+  final String? playerId;
+
+  final String? playerName;
+
   @override
-  Map<String, dynamic> toJson() => _$JoinLobby$MutationRootToJson(this);
+  List<Object?> get props => [playerId, playerName];
+  @override
+  Map<String, dynamic> toJson() => _$CreateLobbyArgumentsToJson(this);
+}
+
+final CREATE_LOBBY_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'createLobby'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'playerId')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'String'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'playerName')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'String'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'createLobby'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'playerId'),
+                  value: VariableNode(name: NameNode(value: 'playerId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'playerName'),
+                  value: VariableNode(name: NameNode(value: 'playerName')))
+            ],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class CreateLobbyMutation
+    extends GraphQLQuery<CreateLobby$MutationRoot, CreateLobbyArguments> {
+  CreateLobbyMutation({required this.variables});
+
+  @override
+  final DocumentNode document = CREATE_LOBBY_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'createLobby';
+
+  @override
+  final CreateLobbyArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  CreateLobby$MutationRoot parse(Map<String, dynamic> json) =>
+      CreateLobby$MutationRoot.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class JoinLobbyArguments extends JsonSerializable with EquatableMixin {
+  JoinLobbyArguments({this.playerId, this.playerName, this.roomId});
+
+  @override
+  factory JoinLobbyArguments.fromJson(Map<String, dynamic> json) =>
+      _$JoinLobbyArgumentsFromJson(json);
+
+  final String? playerId;
+
+  final String? playerName;
+
+  final String? roomId;
+
+  @override
+  List<Object?> get props => [playerId, playerName, roomId];
+  @override
+  Map<String, dynamic> toJson() => _$JoinLobbyArgumentsToJson(this);
+}
+
+final JOIN_LOBBY_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'joinLobby'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'playerId')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'String'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'playerName')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'String'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'roomId')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'String'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'joinLobby'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'playerId'),
+                  value: VariableNode(name: NameNode(value: 'playerId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'playerName'),
+                  value: VariableNode(name: NameNode(value: 'playerName'))),
+              ArgumentNode(
+                  name: NameNode(value: 'roomId'),
+                  value: VariableNode(name: NameNode(value: 'roomId')))
+            ],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class JoinLobbyMutation
+    extends GraphQLQuery<JoinLobby$MutationRoot, JoinLobbyArguments> {
+  JoinLobbyMutation({required this.variables});
+
+  @override
+  final DocumentNode document = JOIN_LOBBY_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'joinLobby';
+
+  @override
+  final JoinLobbyArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  JoinLobby$MutationRoot parse(Map<String, dynamic> json) =>
+      JoinLobby$MutationRoot.fromJson(json);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -846,7 +1108,49 @@ final GAME_MESSAGES_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
                   alias: null,
                   arguments: [],
                   directives: [],
-                  selectionSet: null)
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: '__typename'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              InlineFragmentNode(
+                  typeCondition: TypeConditionNode(
+                      on: NamedTypeNode(
+                          name: NameNode(value: 'GamePlayer'),
+                          isNonNull: false)),
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'player'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FragmentSpreadNode(
+                              name: NameNode(value: 'playerFields'),
+                              directives: [])
+                        ]))
+                  ])),
+              InlineFragmentNode(
+                  typeCondition: TypeConditionNode(
+                      on: NamedTypeNode(
+                          name: NameNode(value: 'LobbyPlayer'),
+                          isNonNull: false)),
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'player'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FragmentSpreadNode(
+                              name: NameNode(value: 'playerFields'),
+                              directives: [])
+                        ]))
+                  ]))
             ])),
         FieldNode(
             name: NameNode(value: 'state'),
@@ -1238,161 +1542,34 @@ class GameMessagesSubscription
       GameMessages$Subscription.fromJson(json);
 }
 
-@JsonSerializable(explicitToJson: true)
-class CreateLobbyArguments extends JsonSerializable with EquatableMixin {
-  CreateLobbyArguments({this.playerId, this.playerName});
-
-  @override
-  factory CreateLobbyArguments.fromJson(Map<String, dynamic> json) =>
-      _$CreateLobbyArgumentsFromJson(json);
-
-  final String? playerId;
-
-  final String? playerName;
-
-  @override
-  List<Object?> get props => [playerId, playerName];
-  @override
-  Map<String, dynamic> toJson() => _$CreateLobbyArgumentsToJson(this);
-}
-
-final CREATE_LOBBY_MUTATION_DOCUMENT = DocumentNode(definitions: [
+final PING_QUERY_DOCUMENT = DocumentNode(definitions: [
   OperationDefinitionNode(
-      type: OperationType.mutation,
-      name: NameNode(value: 'createLobby'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'playerId')),
-            type: NamedTypeNode(
-                name: NameNode(value: 'String'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: []),
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'playerName')),
-            type: NamedTypeNode(
-                name: NameNode(value: 'String'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
+      type: OperationType.query,
+      name: NameNode(value: 'ping'),
+      variableDefinitions: [],
       directives: [],
       selectionSet: SelectionSetNode(selections: [
         FieldNode(
-            name: NameNode(value: 'createLobby'),
+            name: NameNode(value: 'ping'),
             alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'playerId'),
-                  value: VariableNode(name: NameNode(value: 'playerId'))),
-              ArgumentNode(
-                  name: NameNode(value: 'playerName'),
-                  value: VariableNode(name: NameNode(value: 'playerName')))
-            ],
+            arguments: [],
             directives: [],
             selectionSet: null)
       ]))
 ]);
 
-class CreateLobbyMutation
-    extends GraphQLQuery<CreateLobby$MutationRoot, CreateLobbyArguments> {
-  CreateLobbyMutation({required this.variables});
+class PingQuery extends GraphQLQuery<Ping$QueryRoot, JsonSerializable> {
+  PingQuery();
 
   @override
-  final DocumentNode document = CREATE_LOBBY_MUTATION_DOCUMENT;
+  final DocumentNode document = PING_QUERY_DOCUMENT;
 
   @override
-  final String operationName = 'createLobby';
+  final String operationName = 'ping';
 
   @override
-  final CreateLobbyArguments variables;
-
+  List<Object?> get props => [document, operationName];
   @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  CreateLobby$MutationRoot parse(Map<String, dynamic> json) =>
-      CreateLobby$MutationRoot.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
-class JoinLobbyArguments extends JsonSerializable with EquatableMixin {
-  JoinLobbyArguments({this.playerId, this.playerName, this.roomId});
-
-  @override
-  factory JoinLobbyArguments.fromJson(Map<String, dynamic> json) =>
-      _$JoinLobbyArgumentsFromJson(json);
-
-  final String? playerId;
-
-  final String? playerName;
-
-  final String? roomId;
-
-  @override
-  List<Object?> get props => [playerId, playerName, roomId];
-  @override
-  Map<String, dynamic> toJson() => _$JoinLobbyArgumentsToJson(this);
-}
-
-final JOIN_LOBBY_MUTATION_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.mutation,
-      name: NameNode(value: 'joinLobby'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'playerId')),
-            type: NamedTypeNode(
-                name: NameNode(value: 'String'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: []),
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'playerName')),
-            type: NamedTypeNode(
-                name: NameNode(value: 'String'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: []),
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'roomId')),
-            type: NamedTypeNode(
-                name: NameNode(value: 'String'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'joinLobby'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'playerId'),
-                  value: VariableNode(name: NameNode(value: 'playerId'))),
-              ArgumentNode(
-                  name: NameNode(value: 'playerName'),
-                  value: VariableNode(name: NameNode(value: 'playerName'))),
-              ArgumentNode(
-                  name: NameNode(value: 'roomId'),
-                  value: VariableNode(name: NameNode(value: 'roomId')))
-            ],
-            directives: [],
-            selectionSet: null)
-      ]))
-]);
-
-class JoinLobbyMutation
-    extends GraphQLQuery<JoinLobby$MutationRoot, JoinLobbyArguments> {
-  JoinLobbyMutation({required this.variables});
-
-  @override
-  final DocumentNode document = JOIN_LOBBY_MUTATION_DOCUMENT;
-
-  @override
-  final String operationName = 'joinLobby';
-
-  @override
-  final JoinLobbyArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  JoinLobby$MutationRoot parse(Map<String, dynamic> json) =>
-      JoinLobby$MutationRoot.fromJson(json);
+  Ping$QueryRoot parse(Map<String, dynamic> json) =>
+      Ping$QueryRoot.fromJson(json);
 }

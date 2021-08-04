@@ -7,16 +7,107 @@ part of 'api.graphql.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+CreateLobby$MutationRoot _$CreateLobby$MutationRootFromJson(
+    Map<String, dynamic> json) {
+  return CreateLobby$MutationRoot()
+    ..createLobby = json['createLobby'] as String;
+}
+
+Map<String, dynamic> _$CreateLobby$MutationRootToJson(
+        CreateLobby$MutationRoot instance) =>
+    <String, dynamic>{
+      'createLobby': instance.createLobby,
+    };
+
+JoinLobby$MutationRoot _$JoinLobby$MutationRootFromJson(
+    Map<String, dynamic> json) {
+  return JoinLobby$MutationRoot()..joinLobby = json['joinLobby'] as String;
+}
+
+Map<String, dynamic> _$JoinLobby$MutationRootToJson(
+        JoinLobby$MutationRoot instance) =>
+    <String, dynamic>{
+      'joinLobby': instance.joinLobby,
+    };
+
+RoomFieldsMixin$CommonPlayer$GamePlayer$Player
+    _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$CommonPlayer$GamePlayer$Player()
+    ..id = json['id'] as String
+    ..name = json['name'] as String;
+}
+
+Map<String, dynamic> _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerToJson(
+        RoomFieldsMixin$CommonPlayer$GamePlayer$Player instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+    };
+
+RoomFieldsMixin$CommonPlayer$GamePlayer
+    _$RoomFieldsMixin$CommonPlayer$GamePlayerFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$CommonPlayer$GamePlayer()
+    ..isConnected = json['isConnected'] as bool
+    ..$$typename = json['__typename'] as String?
+    ..player = RoomFieldsMixin$CommonPlayer$GamePlayer$Player.fromJson(
+        json['player'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$RoomFieldsMixin$CommonPlayer$GamePlayerToJson(
+        RoomFieldsMixin$CommonPlayer$GamePlayer instance) =>
+    <String, dynamic>{
+      'isConnected': instance.isConnected,
+      '__typename': instance.$$typename,
+      'player': instance.player.toJson(),
+    };
+
+RoomFieldsMixin$CommonPlayer$LobbyPlayer$Player
+    _$RoomFieldsMixin$CommonPlayer$LobbyPlayer$PlayerFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$CommonPlayer$LobbyPlayer$Player()
+    ..id = json['id'] as String
+    ..name = json['name'] as String;
+}
+
+Map<String, dynamic> _$RoomFieldsMixin$CommonPlayer$LobbyPlayer$PlayerToJson(
+        RoomFieldsMixin$CommonPlayer$LobbyPlayer$Player instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+    };
+
+RoomFieldsMixin$CommonPlayer$LobbyPlayer
+    _$RoomFieldsMixin$CommonPlayer$LobbyPlayerFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$CommonPlayer$LobbyPlayer()
+    ..isConnected = json['isConnected'] as bool
+    ..$$typename = json['__typename'] as String?
+    ..player = RoomFieldsMixin$CommonPlayer$LobbyPlayer$Player.fromJson(
+        json['player'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$RoomFieldsMixin$CommonPlayer$LobbyPlayerToJson(
+        RoomFieldsMixin$CommonPlayer$LobbyPlayer instance) =>
+    <String, dynamic>{
+      'isConnected': instance.isConnected,
+      '__typename': instance.$$typename,
+      'player': instance.player.toJson(),
+    };
+
 RoomFieldsMixin$CommonPlayer _$RoomFieldsMixin$CommonPlayerFromJson(
     Map<String, dynamic> json) {
   return RoomFieldsMixin$CommonPlayer()
-    ..isConnected = json['isConnected'] as bool;
+    ..isConnected = json['isConnected'] as bool
+    ..$$typename = json['__typename'] as String?;
 }
 
 Map<String, dynamic> _$RoomFieldsMixin$CommonPlayerToJson(
         RoomFieldsMixin$CommonPlayer instance) =>
     <String, dynamic>{
       'isConnected': instance.isConnected,
+      '__typename': instance.$$typename,
     };
 
 RoomFieldsMixin$RoomState$LobbyData$LobbyPlayer$Player
@@ -594,42 +685,13 @@ Map<String, dynamic> _$GameMessages$SubscriptionToJson(
       'serverMessages': instance.serverMessages.toJson(),
     };
 
-CreateLobby$MutationRoot _$CreateLobby$MutationRootFromJson(
-    Map<String, dynamic> json) {
-  return CreateLobby$MutationRoot()
-    ..createLobby = json['createLobby'] as String;
+Ping$QueryRoot _$Ping$QueryRootFromJson(Map<String, dynamic> json) {
+  return Ping$QueryRoot()..ping = json['ping'] as String;
 }
 
-Map<String, dynamic> _$CreateLobby$MutationRootToJson(
-        CreateLobby$MutationRoot instance) =>
+Map<String, dynamic> _$Ping$QueryRootToJson(Ping$QueryRoot instance) =>
     <String, dynamic>{
-      'createLobby': instance.createLobby,
-    };
-
-JoinLobby$MutationRoot _$JoinLobby$MutationRootFromJson(
-    Map<String, dynamic> json) {
-  return JoinLobby$MutationRoot()..joinLobby = json['joinLobby'] as String;
-}
-
-Map<String, dynamic> _$JoinLobby$MutationRootToJson(
-        JoinLobby$MutationRoot instance) =>
-    <String, dynamic>{
-      'joinLobby': instance.joinLobby,
-    };
-
-GameMessagesArguments _$GameMessagesArgumentsFromJson(
-    Map<String, dynamic> json) {
-  return GameMessagesArguments(
-    roomId: json['roomId'] as String?,
-    playerId: json['playerId'] as String?,
-  );
-}
-
-Map<String, dynamic> _$GameMessagesArgumentsToJson(
-        GameMessagesArguments instance) =>
-    <String, dynamic>{
-      'roomId': instance.roomId,
-      'playerId': instance.playerId,
+      'ping': instance.ping,
     };
 
 CreateLobbyArguments _$CreateLobbyArgumentsFromJson(Map<String, dynamic> json) {
@@ -659,4 +721,19 @@ Map<String, dynamic> _$JoinLobbyArgumentsToJson(JoinLobbyArguments instance) =>
       'playerId': instance.playerId,
       'playerName': instance.playerName,
       'roomId': instance.roomId,
+    };
+
+GameMessagesArguments _$GameMessagesArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return GameMessagesArguments(
+    roomId: json['roomId'] as String?,
+    playerId: json['playerId'] as String?,
+  );
+}
+
+Map<String, dynamic> _$GameMessagesArgumentsToJson(
+        GameMessagesArguments instance) =>
+    <String, dynamic>{
+      'roomId': instance.roomId,
+      'playerId': instance.playerId,
     };

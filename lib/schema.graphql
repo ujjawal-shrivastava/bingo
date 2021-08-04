@@ -90,6 +90,7 @@ type PlayerLeft {
 type QueryRoot {
   hello: String!
   gameEvent(playerId: String!, roomId: String!): PlayerHandler!
+  ping: String!
 }
 
 type Room {

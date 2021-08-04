@@ -4,6 +4,7 @@ import 'package:artemis/client.dart';
 import 'package:artemis/schema/graphql_response.dart';
 import 'package:bingo/api/api.dart';
 import 'package:bingo/networking/clientProvider.dart';
+import 'package:bingo/screens/game.dart';
 import 'package:bingo/screens/lobby.dart';
 import 'package:flutter/material.dart';
 import 'package:gql_websocket_link/gql_websocket_link.dart';
@@ -79,16 +80,36 @@ class _GameMessageBuilderState extends State<GameMessageBuilder> {
           }
           if (ass.data != null) {
             var message = ass.data?.data?.serverMessages;
-            print("Message: $message");
+            print("Message: ${ass.data?.data} Error: ${ass.data?.errors}");
             if (message != null) {
+              RoomFieldsMixin? room;
               if (message
+                  is GameMessages$Subscription$ServerResponse$PlayerJoined) {
+                room = message.room;
+              } else if (message
                   is GameMessages$Subscription$ServerResponse$PlayerConnected) {
-                var room = message.room;
-                return Room(room: room);
+                room = message.room;
+              } else if (message
+                  is GameMessages$Subscription$ServerResponse$PlayerLeft) {
+                room = message.room;
+              } else if (message
+                  is GameMessages$Subscription$ServerResponse$GameMessage) {
+                room = message.room;
+              }
+              if (room != null) {
+                if (room.state is RoomFieldsMixin$RoomState$LobbyData) {
+                  return Room(room: room);
+                } else {
+                  return Game(room: room);
+                }
               }
             }
           }
-          return Container();
+          return Container(
+            child: Center(
+              child: Text("NOTHING"),
+            ),
+          );
         },
       ),
     );

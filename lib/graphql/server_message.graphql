@@ -6,6 +6,17 @@ fragment roomFields on Room {
   id
   players {
     isConnected
+    __typename
+    ... on GamePlayer {
+      player {
+        ...playerFields
+      }
+    }
+    ... on LobbyPlayer {
+      player {
+        ...playerFields
+      }
+    }
   }
   state {
     __typename
