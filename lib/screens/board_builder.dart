@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 
 class BoardBuilder extends StatefulWidget {
   final int boardSize;
+  final Function(List<List<int>> board) onReadyBoard;
 
   const BoardBuilder({
     required this.boardSize,
     Key? key,
+    required this.onReadyBoard,
   }) : super(key: key);
 
   @override
@@ -115,5 +117,16 @@ class _BoardBuilderState extends State<BoardBuilder> {
     setState(() {});
   }
 
-  submit() {}
+  submit() {
+    print("Ready board ");
+
+    List<List<int>> board = [];
+    for (int i = 0; i < widget.boardSize; i++) {
+      board.add([]);
+    }
+    for (int i = 0; i < cellValues.length; i++) {
+      board[i ~/ widget.boardSize].add(cellValues[i]);
+    }
+    widget.onReadyBoard(board);
+  }
 }

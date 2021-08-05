@@ -1,4 +1,6 @@
 import 'package:bingo/api/api.dart';
+import 'package:bingo/networking/clientProvider.dart';
+import 'package:bingo/screens/players.dart';
 import 'package:flutter/material.dart';
 import 'package:multiavatar/multiavatar.dart';
 import 'package:websafe_svg/websafe_svg.dart';
@@ -24,7 +26,21 @@ class Room extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(child: SettingsWidget()),
+                  Expanded(
+                    child: SettingsWidget(
+                      startGame: (boardSize) {
+                        GameClient.of(context)?.artemisClient.execute(
+                              StartGameQuery(
+                                variables: StartGameArguments(
+                                  playerId: GameClient.of(context)?.playerId,
+                                  roomId: room.id,
+                                  boardSize: boardSize,
+                                ),
+                              ),
+                            );
+                      },
+                    ),
+                  ),
                   Expanded(
                       child: Players(
                     players: room.players,
@@ -39,109 +55,11 @@ class Room extends StatelessWidget {
   }
 }
 
-class Players extends StatelessWidget {
-  final List<RoomFieldsMixin$CommonPlayer> players;
-
-  PlayerFieldsMixin playerFieldsOfCommonPlayer(
-      RoomFieldsMixin$CommonPlayer player) {
-    if (player is RoomFieldsMixin$CommonPlayer$GamePlayer) {
-      return player.player;
-    } else {
-      return (player as RoomFieldsMixin$CommonPlayer$LobbyPlayer).player;
-    }
-  }
-
-  const Players({
-    Key? key,
-    required this.players,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(20),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
-          border: Border.all(color: Colors.grey),
-        ),
-        padding: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Container(
-              child: Text(
-                "Players",
-                style: Theme.of(context).textTheme.headline5,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  child: Wrap(
-                    spacing: 20,
-                    children: [
-                      ...players.map(
-                        (player) => Opacity(
-                          opacity: player.isConnected ? 1 : 0.5,
-                          child: Column(
-                            children: [
-                              Stack(
-                                children: [
-                                  WebsafeSvg.string(
-                                    multiavatar(
-                                        playerFieldsOfCommonPlayer(player).id),
-                                    height: 100,
-                                    width: 100,
-                                  ),
-                                  Positioned(
-                                    right: 5,
-                                    bottom: 5,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: player.isConnected
-                                            ? Colors.green
-                                            : Colors.grey,
-                                        border: Border.all(
-                                          color: Theme.of(context)
-                                              .scaffoldBackgroundColor,
-                                          width: 2,
-                                        ),
-                                      ),
-                                      height: 20,
-                                      width: 20,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Container(
-                                child: Text(
-                                  playerFieldsOfCommonPlayer(player).name,
-                                  style: Theme.of(context).textTheme.headline6,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class SettingsWidget extends StatefulWidget {
+  final void Function(int) startGame;
   const SettingsWidget({
     Key? key,
+    required this.startGame,
   }) : super(key: key);
 
   @override
@@ -213,7 +131,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             Expanded(child: Container()),
             Container(
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  widget.startGame(boardSize);
+                },
                 child: Text("Start Game"),
               ),
             ),

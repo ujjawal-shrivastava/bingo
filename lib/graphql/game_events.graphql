@@ -1,0 +1,17 @@
+query startGame($playerId: String, $roomId: String, $boardSize: Int) {
+  gameEvent(playerId: $playerId, roomId: $roomId) {
+    startGame(boardSize: $boardSize)
+  }
+}
+
+query readyBoard($playerId: String, $roomId: String, $board: [[Int!]!]) {
+  gameEvent(playerId: $playerId, roomId: $roomId) {
+    readyBoard(board: $board)
+  }
+}
+
+query playerMove($playerId: String, $roomId: String, $number: Int) {
+  gameEvent(playerId: $playerId, roomId: $roomId) {
+    playerMove(number: $number)
+  }
+}

@@ -1,6 +1,8 @@
 import 'package:bingo/api/api.dart';
+import 'package:bingo/networking/clientProvider.dart';
 import 'package:bingo/screens/board_builder.dart';
 import 'package:bingo/screens/lobby.dart';
+import 'package:bingo/screens/players.dart';
 import 'package:flutter/material.dart';
 
 class Game extends StatelessWidget {
@@ -32,10 +34,10 @@ class Game extends StatelessWidget {
                   ),
                   Expanded(
                     flex: 7,
-                    child: BoardBuilder(
-                      boardSize:
-                          (room.state as RoomFieldsMixin$RoomState$GameData)
-                              .boardSize,
+                    child: buildBoard(
+                      context,
+                      GameClient.of(context)!,
+                      room.state as RoomFieldsMixin$RoomState$GameData,
                     ),
                   )
                 ],
@@ -45,5 +47,31 @@ class Game extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  buildBoard(BuildContext context, GameClient gameClient,
+      RoomFieldsMixin$RoomState$GameData roomState) {
+    if (roomState.gameState
+        is RoomFieldsMixin$RoomState$GameData$GameState$BoardCreation) {
+      return BoardBuilder(
+        onReadyBoard: (board) async {
+          print("Ready board $board ${gameClient.playerId}");
+
+          var response = await gameClient.artemisClient.execute(
+            ReadyBoardQuery(
+              variables: ReadyBoardArguments(
+                playerId: gameClient.playerId,
+                roomId: room.id,
+                board: board,
+              ),
+            ),
+          );
+          print("Board ready $response ${response.data} ${response.errors}");
+        },
+        boardSize: roomState.boardSize,
+      );
+    } else {
+      return Container();
+    }
   }
 }

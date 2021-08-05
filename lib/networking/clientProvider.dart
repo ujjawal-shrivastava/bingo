@@ -4,7 +4,6 @@ import 'package:artemis/artemis.dart';
 import 'package:bingo/api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
-import 'package:uuid/uuid.dart';
 
 class GameClient extends InheritedWidget {
   final ArtemisClient artemisClient;
@@ -13,7 +12,7 @@ class GameClient extends InheritedWidget {
 
   final String playerId;
 
-  TextEditingController playerName = TextEditingController();
+  final TextEditingController playerName = TextEditingController();
 
   GameClient(
       {Key? key,

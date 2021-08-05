@@ -694,6 +694,78 @@ Map<String, dynamic> _$Ping$QueryRootToJson(Ping$QueryRoot instance) =>
       'ping': instance.ping,
     };
 
+StartGame$QueryRoot$PlayerHandler _$StartGame$QueryRoot$PlayerHandlerFromJson(
+    Map<String, dynamic> json) {
+  return StartGame$QueryRoot$PlayerHandler()
+    ..startGame = json['startGame'] as bool;
+}
+
+Map<String, dynamic> _$StartGame$QueryRoot$PlayerHandlerToJson(
+        StartGame$QueryRoot$PlayerHandler instance) =>
+    <String, dynamic>{
+      'startGame': instance.startGame,
+    };
+
+StartGame$QueryRoot _$StartGame$QueryRootFromJson(Map<String, dynamic> json) {
+  return StartGame$QueryRoot()
+    ..gameEvent = StartGame$QueryRoot$PlayerHandler.fromJson(
+        json['gameEvent'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$StartGame$QueryRootToJson(
+        StartGame$QueryRoot instance) =>
+    <String, dynamic>{
+      'gameEvent': instance.gameEvent.toJson(),
+    };
+
+ReadyBoard$QueryRoot$PlayerHandler _$ReadyBoard$QueryRoot$PlayerHandlerFromJson(
+    Map<String, dynamic> json) {
+  return ReadyBoard$QueryRoot$PlayerHandler()
+    ..readyBoard = json['readyBoard'] as bool;
+}
+
+Map<String, dynamic> _$ReadyBoard$QueryRoot$PlayerHandlerToJson(
+        ReadyBoard$QueryRoot$PlayerHandler instance) =>
+    <String, dynamic>{
+      'readyBoard': instance.readyBoard,
+    };
+
+ReadyBoard$QueryRoot _$ReadyBoard$QueryRootFromJson(Map<String, dynamic> json) {
+  return ReadyBoard$QueryRoot()
+    ..gameEvent = ReadyBoard$QueryRoot$PlayerHandler.fromJson(
+        json['gameEvent'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$ReadyBoard$QueryRootToJson(
+        ReadyBoard$QueryRoot instance) =>
+    <String, dynamic>{
+      'gameEvent': instance.gameEvent.toJson(),
+    };
+
+PlayerMove$QueryRoot$PlayerHandler _$PlayerMove$QueryRoot$PlayerHandlerFromJson(
+    Map<String, dynamic> json) {
+  return PlayerMove$QueryRoot$PlayerHandler()
+    ..playerMove = json['playerMove'] as bool;
+}
+
+Map<String, dynamic> _$PlayerMove$QueryRoot$PlayerHandlerToJson(
+        PlayerMove$QueryRoot$PlayerHandler instance) =>
+    <String, dynamic>{
+      'playerMove': instance.playerMove,
+    };
+
+PlayerMove$QueryRoot _$PlayerMove$QueryRootFromJson(Map<String, dynamic> json) {
+  return PlayerMove$QueryRoot()
+    ..gameEvent = PlayerMove$QueryRoot$PlayerHandler.fromJson(
+        json['gameEvent'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$PlayerMove$QueryRootToJson(
+        PlayerMove$QueryRoot instance) =>
+    <String, dynamic>{
+      'gameEvent': instance.gameEvent.toJson(),
+    };
+
 CreateLobbyArguments _$CreateLobbyArgumentsFromJson(Map<String, dynamic> json) {
   return CreateLobbyArguments(
     playerId: json['playerId'] as String?,
@@ -736,4 +808,53 @@ Map<String, dynamic> _$GameMessagesArgumentsToJson(
     <String, dynamic>{
       'roomId': instance.roomId,
       'playerId': instance.playerId,
+    };
+
+StartGameArguments _$StartGameArgumentsFromJson(Map<String, dynamic> json) {
+  return StartGameArguments(
+    playerId: json['playerId'] as String?,
+    roomId: json['roomId'] as String?,
+    boardSize: json['boardSize'] as int?,
+  );
+}
+
+Map<String, dynamic> _$StartGameArgumentsToJson(StartGameArguments instance) =>
+    <String, dynamic>{
+      'playerId': instance.playerId,
+      'roomId': instance.roomId,
+      'boardSize': instance.boardSize,
+    };
+
+ReadyBoardArguments _$ReadyBoardArgumentsFromJson(Map<String, dynamic> json) {
+  return ReadyBoardArguments(
+    playerId: json['playerId'] as String?,
+    roomId: json['roomId'] as String?,
+    board: (json['board'] as List<dynamic>?)
+        ?.map((e) => (e as List<dynamic>).map((e) => e as int).toList())
+        .toList(),
+  );
+}
+
+Map<String, dynamic> _$ReadyBoardArgumentsToJson(
+        ReadyBoardArguments instance) =>
+    <String, dynamic>{
+      'playerId': instance.playerId,
+      'roomId': instance.roomId,
+      'board': instance.board,
+    };
+
+PlayerMoveArguments _$PlayerMoveArgumentsFromJson(Map<String, dynamic> json) {
+  return PlayerMoveArguments(
+    playerId: json['playerId'] as String?,
+    roomId: json['roomId'] as String?,
+    number: json['number'] as int?,
+  );
+}
+
+Map<String, dynamic> _$PlayerMoveArgumentsToJson(
+        PlayerMoveArguments instance) =>
+    <String, dynamic>{
+      'playerId': instance.playerId,
+      'roomId': instance.roomId,
+      'number': instance.number,
     };

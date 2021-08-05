@@ -12,18 +12,21 @@ import 'networking/messagesBuilder.dart';
 import 'screens/home.dart';
 
 void main() async {
-  final storage = new LocalStorage('storage', null, {'player_id': Uuid().v4()});
+  var playerId = Uuid().v4();
+  final storage = new LocalStorage('storage', null, {'player_id': playerId});
   await storage.ready;
   runApp(
     MyApp(
       storage: storage,
+      playerId: playerId,
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
   final LocalStorage storage;
-  MyApp({required this.storage});
+  final String playerId;
+  MyApp({required this.storage, required this.playerId});
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -54,7 +57,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GameClient(
       localStorage: widget.storage,
-      playerId: widget.storage.getItem('player_id') ?? Uuid().v4(),
+      playerId: widget.playerId,
       artemisClient: client,
       child: MaterialApp(
         title: 'Bingo Tingo',
