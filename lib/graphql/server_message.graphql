@@ -8,6 +8,9 @@ fragment roomFields on Room {
     isConnected
     __typename
     ... on GamePlayer {
+      board {
+        numbers
+      }
       player {
         ...playerFields
       }

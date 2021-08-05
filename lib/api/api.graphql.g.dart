@@ -30,6 +30,21 @@ Map<String, dynamic> _$JoinLobby$MutationRootToJson(
       'joinLobby': instance.joinLobby,
     };
 
+RoomFieldsMixin$CommonPlayer$GamePlayer$Board
+    _$RoomFieldsMixin$CommonPlayer$GamePlayer$BoardFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$CommonPlayer$GamePlayer$Board()
+    ..numbers = (json['numbers'] as List<dynamic>)
+        .map((e) => (e as List<dynamic>).map((e) => e as int).toList())
+        .toList();
+}
+
+Map<String, dynamic> _$RoomFieldsMixin$CommonPlayer$GamePlayer$BoardToJson(
+        RoomFieldsMixin$CommonPlayer$GamePlayer$Board instance) =>
+    <String, dynamic>{
+      'numbers': instance.numbers,
+    };
+
 RoomFieldsMixin$CommonPlayer$GamePlayer$Player
     _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerFromJson(
         Map<String, dynamic> json) {
@@ -51,6 +66,10 @@ RoomFieldsMixin$CommonPlayer$GamePlayer
   return RoomFieldsMixin$CommonPlayer$GamePlayer()
     ..isConnected = json['isConnected'] as bool
     ..$$typename = json['__typename'] as String?
+    ..board = json['board'] == null
+        ? null
+        : RoomFieldsMixin$CommonPlayer$GamePlayer$Board.fromJson(
+            json['board'] as Map<String, dynamic>)
     ..player = RoomFieldsMixin$CommonPlayer$GamePlayer$Player.fromJson(
         json['player'] as Map<String, dynamic>);
 }
@@ -60,6 +79,7 @@ Map<String, dynamic> _$RoomFieldsMixin$CommonPlayer$GamePlayerToJson(
     <String, dynamic>{
       'isConnected': instance.isConnected,
       '__typename': instance.$$typename,
+      'board': instance.board?.toJson(),
       'player': instance.player.toJson(),
     };
 

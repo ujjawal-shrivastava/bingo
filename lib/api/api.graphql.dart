@@ -48,6 +48,24 @@ class JoinLobby$MutationRoot extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$CommonPlayer$GamePlayer$Board extends JsonSerializable
+    with EquatableMixin {
+  RoomFieldsMixin$CommonPlayer$GamePlayer$Board();
+
+  factory RoomFieldsMixin$CommonPlayer$GamePlayer$Board.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$CommonPlayer$GamePlayer$BoardFromJson(json);
+
+  late List<List<int>> numbers;
+
+  @override
+  List<Object?> get props => [numbers];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$CommonPlayer$GamePlayer$BoardToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class RoomFieldsMixin$CommonPlayer$GamePlayer$Player extends JsonSerializable
     with EquatableMixin, PlayerFieldsMixin {
   RoomFieldsMixin$CommonPlayer$GamePlayer$Player();
@@ -72,10 +90,12 @@ class RoomFieldsMixin$CommonPlayer$GamePlayer
           Map<String, dynamic> json) =>
       _$RoomFieldsMixin$CommonPlayer$GamePlayerFromJson(json);
 
+  RoomFieldsMixin$CommonPlayer$GamePlayer$Board? board;
+
   late RoomFieldsMixin$CommonPlayer$GamePlayer$Player player;
 
   @override
-  List<Object?> get props => [player];
+  List<Object?> get props => [board, player];
   @override
   Map<String, dynamic> toJson() =>
       _$RoomFieldsMixin$CommonPlayer$GamePlayerToJson(this);
@@ -1221,6 +1241,19 @@ final GAME_MESSAGES_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
                           isNonNull: false)),
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'board'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'numbers'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
                     FieldNode(
                         name: NameNode(value: 'player'),
                         alias: null,

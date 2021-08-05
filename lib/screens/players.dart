@@ -85,9 +85,7 @@ class Players extends StatelessWidget {
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
-                                                color: player.isConnected
-                                                    ? Colors.green
-                                                    : Colors.grey,
+                                                color: getStatusColor(player),
                                                 border: Border.all(
                                                   color: Theme.of(context)
                                                       .scaffoldBackgroundColor,
@@ -134,5 +132,19 @@ class Players extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color getStatusColor(RoomFieldsMixin$CommonPlayer player) {
+    if (player is RoomFieldsMixin$CommonPlayer$GamePlayer) {
+      if (!player.isConnected) {
+        return Colors.grey;
+      } else if (player.board == null) {
+        return Colors.orange;
+      } else {
+        return Colors.green;
+      }
+    } else {
+      return player.isConnected ? Colors.green : Colors.grey;
+    }
   }
 }
