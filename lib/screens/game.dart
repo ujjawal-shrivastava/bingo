@@ -1,6 +1,7 @@
 import 'package:bingo/api/api.dart';
 import 'package:bingo/networking/clientProvider.dart';
 import 'package:bingo/screens/board_builder.dart';
+import 'package:bingo/screens/game_board.dart';
 import 'package:bingo/screens/lobby.dart';
 import 'package:bingo/screens/players.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,24 @@ class Game extends StatelessWidget {
         boardSize: roomState.boardSize,
       );
     } else {
-      return Container();
+      var gameRuningState = roomState.gameState
+          as RoomFieldsMixin$RoomState$GameData$GameState$GameRunning;
+
+      var player = room.players.firstWhere((element) =>
+              (element as RoomFieldsMixin$CommonPlayer$GamePlayer).player.id ==
+              GameClient.of(context)?.playerId)
+          as RoomFieldsMixin$CommonPlayer$GamePlayer;
+
+      var turnPlayer = room.players.firstWhere((element) =>
+          (element as RoomFieldsMixin$CommonPlayer$GamePlayer).player.id ==
+          gameRuningState.turn) as RoomFieldsMixin$CommonPlayer$GamePlayer;
+
+      return GameBoard(
+        selectedCells: gameRuningState.selectedNumbers,
+        board: player.board!,
+        turnPlayer: turnPlayer,
+        roomId: room.id,
+      );
     }
   }
 }
