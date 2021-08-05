@@ -15,6 +15,7 @@ void main() async {
   var playerId = Uuid().v4();
   final storage = new LocalStorage('storage', null, {'player_id': playerId});
   await storage.ready;
+  playerId = storage.getItem('player_id');
   runApp(
     MyApp(
       storage: storage,
