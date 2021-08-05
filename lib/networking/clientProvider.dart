@@ -70,6 +70,7 @@ class GameClient extends InheritedWidget {
     );
     print("Joining Room $roomId player $playerId");
     var result = await artemisClient.execute(createLobby);
+    print("Inside here!");
     if (result.data?.joinLobby == null) {
       print("Result $result Data ${result.data} Errors ${result.errors}");
       throw "Cannot join Lobby";

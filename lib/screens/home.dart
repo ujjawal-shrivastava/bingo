@@ -58,15 +58,19 @@ class _HomeState extends State<Home> {
                           padding: EdgeInsets.symmetric(
                               vertical: 20, horizontal: 40)),
                       onPressed: () async {
-                        late var roomId;
-                        if (roomIdController.text.isEmpty) {
-                          roomId = await GameClient.of(context)?.createRoom();
-                        } else {
-                          roomId = await GameClient.of(context)
-                              ?.joinRoom(roomIdController.text);
-                        }
-                        if (roomId != null) {
-                          Navigator.of(context).pushNamed('/room/$roomId');
+                        try {
+                          late var roomId;
+                          if (roomIdController.text.isEmpty) {
+                            roomId = await GameClient.of(context)?.createRoom();
+                          } else {
+                            roomId = await GameClient.of(context)
+                                ?.joinRoom(roomIdController.text);
+                          }
+                          if (roomId != null) {
+                            Navigator.of(context).pushNamed('/room/$roomId');
+                          }
+                        } catch (e) {
+                          print(e);
                         }
                       },
                       child: Text(roomIdController.text.isEmpty
