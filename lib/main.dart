@@ -39,8 +39,8 @@ class _MyAppState extends State<MyApp> {
       null,
       channelGenerator: () => WebSocketChannel.connect(
         Uri.parse(
-          'wss://bingotingo.herokuapp.com/',
-        ),
+            // 'wss://bingotingo.herokuapp.com/',
+            'ws://localhost:8000/'),
         protocols: ['graphql-ws'],
       ),
     ),
