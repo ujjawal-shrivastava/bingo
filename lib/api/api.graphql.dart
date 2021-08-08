@@ -33,6 +33,105 @@ class CreateLobby$MutationRoot extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class StartGame$QueryRoot$PlayerHandler extends JsonSerializable
+    with EquatableMixin {
+  StartGame$QueryRoot$PlayerHandler();
+
+  factory StartGame$QueryRoot$PlayerHandler.fromJson(
+          Map<String, dynamic> json) =>
+      _$StartGame$QueryRoot$PlayerHandlerFromJson(json);
+
+  late bool startGame;
+
+  @override
+  List<Object?> get props => [startGame];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$StartGame$QueryRoot$PlayerHandlerToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class StartGame$QueryRoot extends JsonSerializable with EquatableMixin {
+  StartGame$QueryRoot();
+
+  factory StartGame$QueryRoot.fromJson(Map<String, dynamic> json) =>
+      _$StartGame$QueryRootFromJson(json);
+
+  late StartGame$QueryRoot$PlayerHandler gameEvent;
+
+  @override
+  List<Object?> get props => [gameEvent];
+  @override
+  Map<String, dynamic> toJson() => _$StartGame$QueryRootToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ReadyBoard$QueryRoot$PlayerHandler extends JsonSerializable
+    with EquatableMixin {
+  ReadyBoard$QueryRoot$PlayerHandler();
+
+  factory ReadyBoard$QueryRoot$PlayerHandler.fromJson(
+          Map<String, dynamic> json) =>
+      _$ReadyBoard$QueryRoot$PlayerHandlerFromJson(json);
+
+  late bool readyBoard;
+
+  @override
+  List<Object?> get props => [readyBoard];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$ReadyBoard$QueryRoot$PlayerHandlerToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ReadyBoard$QueryRoot extends JsonSerializable with EquatableMixin {
+  ReadyBoard$QueryRoot();
+
+  factory ReadyBoard$QueryRoot.fromJson(Map<String, dynamic> json) =>
+      _$ReadyBoard$QueryRootFromJson(json);
+
+  late ReadyBoard$QueryRoot$PlayerHandler gameEvent;
+
+  @override
+  List<Object?> get props => [gameEvent];
+  @override
+  Map<String, dynamic> toJson() => _$ReadyBoard$QueryRootToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class PlayerMove$QueryRoot$PlayerHandler extends JsonSerializable
+    with EquatableMixin {
+  PlayerMove$QueryRoot$PlayerHandler();
+
+  factory PlayerMove$QueryRoot$PlayerHandler.fromJson(
+          Map<String, dynamic> json) =>
+      _$PlayerMove$QueryRoot$PlayerHandlerFromJson(json);
+
+  late bool playerMove;
+
+  @override
+  List<Object?> get props => [playerMove];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$PlayerMove$QueryRoot$PlayerHandlerToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class PlayerMove$QueryRoot extends JsonSerializable with EquatableMixin {
+  PlayerMove$QueryRoot();
+
+  factory PlayerMove$QueryRoot.fromJson(Map<String, dynamic> json) =>
+      _$PlayerMove$QueryRootFromJson(json);
+
+  late PlayerMove$QueryRoot$PlayerHandler gameEvent;
+
+  @override
+  List<Object?> get props => [gameEvent];
+  @override
+  Map<String, dynamic> toJson() => _$PlayerMove$QueryRootToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class JoinLobby$MutationRoot extends JsonSerializable with EquatableMixin {
   JoinLobby$MutationRoot();
 
@@ -48,6 +147,21 @@ class JoinLobby$MutationRoot extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class Ping$QueryRoot extends JsonSerializable with EquatableMixin {
+  Ping$QueryRoot();
+
+  factory Ping$QueryRoot.fromJson(Map<String, dynamic> json) =>
+      _$Ping$QueryRootFromJson(json);
+
+  late String ping;
+
+  @override
+  List<Object?> get props => [ping];
+  @override
+  Map<String, dynamic> toJson() => _$Ping$QueryRootToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class RoomFieldsMixin$CommonPlayer$GamePlayer$Board extends JsonSerializable
     with EquatableMixin {
   RoomFieldsMixin$CommonPlayer$GamePlayer$Board();
@@ -58,8 +172,10 @@ class RoomFieldsMixin$CommonPlayer$GamePlayer$Board extends JsonSerializable
 
   late List<List<int>> numbers;
 
+  late int score;
+
   @override
-  List<Object?> get props => [numbers];
+  List<Object?> get props => [numbers, score];
   @override
   Map<String, dynamic> toJson() =>
       _$RoomFieldsMixin$CommonPlayer$GamePlayer$BoardToJson(this);
@@ -894,120 +1010,6 @@ class GameMessages$Subscription extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Ping$QueryRoot extends JsonSerializable with EquatableMixin {
-  Ping$QueryRoot();
-
-  factory Ping$QueryRoot.fromJson(Map<String, dynamic> json) =>
-      _$Ping$QueryRootFromJson(json);
-
-  late String ping;
-
-  @override
-  List<Object?> get props => [ping];
-  @override
-  Map<String, dynamic> toJson() => _$Ping$QueryRootToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class StartGame$QueryRoot$PlayerHandler extends JsonSerializable
-    with EquatableMixin {
-  StartGame$QueryRoot$PlayerHandler();
-
-  factory StartGame$QueryRoot$PlayerHandler.fromJson(
-          Map<String, dynamic> json) =>
-      _$StartGame$QueryRoot$PlayerHandlerFromJson(json);
-
-  late bool startGame;
-
-  @override
-  List<Object?> get props => [startGame];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$StartGame$QueryRoot$PlayerHandlerToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class StartGame$QueryRoot extends JsonSerializable with EquatableMixin {
-  StartGame$QueryRoot();
-
-  factory StartGame$QueryRoot.fromJson(Map<String, dynamic> json) =>
-      _$StartGame$QueryRootFromJson(json);
-
-  late StartGame$QueryRoot$PlayerHandler gameEvent;
-
-  @override
-  List<Object?> get props => [gameEvent];
-  @override
-  Map<String, dynamic> toJson() => _$StartGame$QueryRootToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class ReadyBoard$QueryRoot$PlayerHandler extends JsonSerializable
-    with EquatableMixin {
-  ReadyBoard$QueryRoot$PlayerHandler();
-
-  factory ReadyBoard$QueryRoot$PlayerHandler.fromJson(
-          Map<String, dynamic> json) =>
-      _$ReadyBoard$QueryRoot$PlayerHandlerFromJson(json);
-
-  late bool readyBoard;
-
-  @override
-  List<Object?> get props => [readyBoard];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$ReadyBoard$QueryRoot$PlayerHandlerToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class ReadyBoard$QueryRoot extends JsonSerializable with EquatableMixin {
-  ReadyBoard$QueryRoot();
-
-  factory ReadyBoard$QueryRoot.fromJson(Map<String, dynamic> json) =>
-      _$ReadyBoard$QueryRootFromJson(json);
-
-  late ReadyBoard$QueryRoot$PlayerHandler gameEvent;
-
-  @override
-  List<Object?> get props => [gameEvent];
-  @override
-  Map<String, dynamic> toJson() => _$ReadyBoard$QueryRootToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class PlayerMove$QueryRoot$PlayerHandler extends JsonSerializable
-    with EquatableMixin {
-  PlayerMove$QueryRoot$PlayerHandler();
-
-  factory PlayerMove$QueryRoot$PlayerHandler.fromJson(
-          Map<String, dynamic> json) =>
-      _$PlayerMove$QueryRoot$PlayerHandlerFromJson(json);
-
-  late bool playerMove;
-
-  @override
-  List<Object?> get props => [playerMove];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$PlayerMove$QueryRoot$PlayerHandlerToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class PlayerMove$QueryRoot extends JsonSerializable with EquatableMixin {
-  PlayerMove$QueryRoot();
-
-  factory PlayerMove$QueryRoot.fromJson(Map<String, dynamic> json) =>
-      _$PlayerMove$QueryRootFromJson(json);
-
-  late PlayerMove$QueryRoot$PlayerHandler gameEvent;
-
-  @override
-  List<Object?> get props => [gameEvent];
-  @override
-  Map<String, dynamic> toJson() => _$PlayerMove$QueryRootToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
 class CreateLobbyArguments extends JsonSerializable with EquatableMixin {
   CreateLobbyArguments({this.playerId, this.playerName});
 
@@ -1079,6 +1081,287 @@ class CreateLobbyMutation
   @override
   CreateLobby$MutationRoot parse(Map<String, dynamic> json) =>
       CreateLobby$MutationRoot.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class StartGameArguments extends JsonSerializable with EquatableMixin {
+  StartGameArguments({this.playerId, this.roomId, this.boardSize});
+
+  @override
+  factory StartGameArguments.fromJson(Map<String, dynamic> json) =>
+      _$StartGameArgumentsFromJson(json);
+
+  final String? playerId;
+
+  final String? roomId;
+
+  final int? boardSize;
+
+  @override
+  List<Object?> get props => [playerId, roomId, boardSize];
+  @override
+  Map<String, dynamic> toJson() => _$StartGameArgumentsToJson(this);
+}
+
+final START_GAME_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'startGame'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'playerId')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'String'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'roomId')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'String'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'boardSize')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'gameEvent'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'playerId'),
+                  value: VariableNode(name: NameNode(value: 'playerId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'roomId'),
+                  value: VariableNode(name: NameNode(value: 'roomId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'startGame'),
+                  alias: null,
+                  arguments: [
+                    ArgumentNode(
+                        name: NameNode(value: 'boardSize'),
+                        value: VariableNode(name: NameNode(value: 'boardSize')))
+                  ],
+                  directives: [],
+                  selectionSet: null)
+            ]))
+      ]))
+]);
+
+class StartGameQuery
+    extends GraphQLQuery<StartGame$QueryRoot, StartGameArguments> {
+  StartGameQuery({required this.variables});
+
+  @override
+  final DocumentNode document = START_GAME_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'startGame';
+
+  @override
+  final StartGameArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  StartGame$QueryRoot parse(Map<String, dynamic> json) =>
+      StartGame$QueryRoot.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ReadyBoardArguments extends JsonSerializable with EquatableMixin {
+  ReadyBoardArguments({this.playerId, this.roomId, this.board});
+
+  @override
+  factory ReadyBoardArguments.fromJson(Map<String, dynamic> json) =>
+      _$ReadyBoardArgumentsFromJson(json);
+
+  final String? playerId;
+
+  final String? roomId;
+
+  final List<List<int>>? board;
+
+  @override
+  List<Object?> get props => [playerId, roomId, board];
+  @override
+  Map<String, dynamic> toJson() => _$ReadyBoardArgumentsToJson(this);
+}
+
+final READY_BOARD_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'readyBoard'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'playerId')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'String'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'roomId')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'String'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'board')),
+            type: ListTypeNode(
+                type: ListTypeNode(
+                    type: NamedTypeNode(
+                        name: NameNode(value: 'Int'), isNonNull: true),
+                    isNonNull: true),
+                isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'gameEvent'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'playerId'),
+                  value: VariableNode(name: NameNode(value: 'playerId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'roomId'),
+                  value: VariableNode(name: NameNode(value: 'roomId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'readyBoard'),
+                  alias: null,
+                  arguments: [
+                    ArgumentNode(
+                        name: NameNode(value: 'board'),
+                        value: VariableNode(name: NameNode(value: 'board')))
+                  ],
+                  directives: [],
+                  selectionSet: null)
+            ]))
+      ]))
+]);
+
+class ReadyBoardQuery
+    extends GraphQLQuery<ReadyBoard$QueryRoot, ReadyBoardArguments> {
+  ReadyBoardQuery({required this.variables});
+
+  @override
+  final DocumentNode document = READY_BOARD_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'readyBoard';
+
+  @override
+  final ReadyBoardArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  ReadyBoard$QueryRoot parse(Map<String, dynamic> json) =>
+      ReadyBoard$QueryRoot.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class PlayerMoveArguments extends JsonSerializable with EquatableMixin {
+  PlayerMoveArguments({this.playerId, this.roomId, this.number});
+
+  @override
+  factory PlayerMoveArguments.fromJson(Map<String, dynamic> json) =>
+      _$PlayerMoveArgumentsFromJson(json);
+
+  final String? playerId;
+
+  final String? roomId;
+
+  final int? number;
+
+  @override
+  List<Object?> get props => [playerId, roomId, number];
+  @override
+  Map<String, dynamic> toJson() => _$PlayerMoveArgumentsToJson(this);
+}
+
+final PLAYER_MOVE_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'playerMove'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'playerId')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'String'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'roomId')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'String'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'number')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'gameEvent'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'playerId'),
+                  value: VariableNode(name: NameNode(value: 'playerId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'roomId'),
+                  value: VariableNode(name: NameNode(value: 'roomId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'playerMove'),
+                  alias: null,
+                  arguments: [
+                    ArgumentNode(
+                        name: NameNode(value: 'number'),
+                        value: VariableNode(name: NameNode(value: 'number')))
+                  ],
+                  directives: [],
+                  selectionSet: null)
+            ]))
+      ]))
+]);
+
+class PlayerMoveQuery
+    extends GraphQLQuery<PlayerMove$QueryRoot, PlayerMoveArguments> {
+  PlayerMoveQuery({required this.variables});
+
+  @override
+  final DocumentNode document = PLAYER_MOVE_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'playerMove';
+
+  @override
+  final PlayerMoveArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  PlayerMove$QueryRoot parse(Map<String, dynamic> json) =>
+      PlayerMove$QueryRoot.fromJson(json);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -1166,6 +1449,38 @@ class JoinLobbyMutation
       JoinLobby$MutationRoot.fromJson(json);
 }
 
+final PING_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'ping'),
+      variableDefinitions: [],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'ping'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class PingQuery extends GraphQLQuery<Ping$QueryRoot, JsonSerializable> {
+  PingQuery();
+
+  @override
+  final DocumentNode document = PING_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'ping';
+
+  @override
+  List<Object?> get props => [document, operationName];
+  @override
+  Ping$QueryRoot parse(Map<String, dynamic> json) =>
+      Ping$QueryRoot.fromJson(json);
+}
+
 @JsonSerializable(explicitToJson: true)
 class GameMessagesArguments extends JsonSerializable with EquatableMixin {
   GameMessagesArguments({this.roomId, this.playerId});
@@ -1251,6 +1566,17 @@ final GAME_MESSAGES_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
                               name: NameNode(value: 'numbers'),
                               alias: null,
                               arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'score'),
+                              alias: null,
+                              arguments: [
+                                ArgumentNode(
+                                    name: NameNode(value: 'roomId'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'roomId')))
+                              ],
                               directives: [],
                               selectionSet: null)
                         ])),
@@ -1672,317 +1998,4 @@ class GameMessagesSubscription
   @override
   GameMessages$Subscription parse(Map<String, dynamic> json) =>
       GameMessages$Subscription.fromJson(json);
-}
-
-final PING_QUERY_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.query,
-      name: NameNode(value: 'ping'),
-      variableDefinitions: [],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'ping'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null)
-      ]))
-]);
-
-class PingQuery extends GraphQLQuery<Ping$QueryRoot, JsonSerializable> {
-  PingQuery();
-
-  @override
-  final DocumentNode document = PING_QUERY_DOCUMENT;
-
-  @override
-  final String operationName = 'ping';
-
-  @override
-  List<Object?> get props => [document, operationName];
-  @override
-  Ping$QueryRoot parse(Map<String, dynamic> json) =>
-      Ping$QueryRoot.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
-class StartGameArguments extends JsonSerializable with EquatableMixin {
-  StartGameArguments({this.playerId, this.roomId, this.boardSize});
-
-  @override
-  factory StartGameArguments.fromJson(Map<String, dynamic> json) =>
-      _$StartGameArgumentsFromJson(json);
-
-  final String? playerId;
-
-  final String? roomId;
-
-  final int? boardSize;
-
-  @override
-  List<Object?> get props => [playerId, roomId, boardSize];
-  @override
-  Map<String, dynamic> toJson() => _$StartGameArgumentsToJson(this);
-}
-
-final START_GAME_QUERY_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.query,
-      name: NameNode(value: 'startGame'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'playerId')),
-            type: NamedTypeNode(
-                name: NameNode(value: 'String'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: []),
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'roomId')),
-            type: NamedTypeNode(
-                name: NameNode(value: 'String'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: []),
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'boardSize')),
-            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'gameEvent'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'playerId'),
-                  value: VariableNode(name: NameNode(value: 'playerId'))),
-              ArgumentNode(
-                  name: NameNode(value: 'roomId'),
-                  value: VariableNode(name: NameNode(value: 'roomId')))
-            ],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                  name: NameNode(value: 'startGame'),
-                  alias: null,
-                  arguments: [
-                    ArgumentNode(
-                        name: NameNode(value: 'boardSize'),
-                        value: VariableNode(name: NameNode(value: 'boardSize')))
-                  ],
-                  directives: [],
-                  selectionSet: null)
-            ]))
-      ]))
-]);
-
-class StartGameQuery
-    extends GraphQLQuery<StartGame$QueryRoot, StartGameArguments> {
-  StartGameQuery({required this.variables});
-
-  @override
-  final DocumentNode document = START_GAME_QUERY_DOCUMENT;
-
-  @override
-  final String operationName = 'startGame';
-
-  @override
-  final StartGameArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  StartGame$QueryRoot parse(Map<String, dynamic> json) =>
-      StartGame$QueryRoot.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
-class ReadyBoardArguments extends JsonSerializable with EquatableMixin {
-  ReadyBoardArguments({this.playerId, this.roomId, this.board});
-
-  @override
-  factory ReadyBoardArguments.fromJson(Map<String, dynamic> json) =>
-      _$ReadyBoardArgumentsFromJson(json);
-
-  final String? playerId;
-
-  final String? roomId;
-
-  final List<List<int>>? board;
-
-  @override
-  List<Object?> get props => [playerId, roomId, board];
-  @override
-  Map<String, dynamic> toJson() => _$ReadyBoardArgumentsToJson(this);
-}
-
-final READY_BOARD_QUERY_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.query,
-      name: NameNode(value: 'readyBoard'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'playerId')),
-            type: NamedTypeNode(
-                name: NameNode(value: 'String'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: []),
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'roomId')),
-            type: NamedTypeNode(
-                name: NameNode(value: 'String'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: []),
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'board')),
-            type: ListTypeNode(
-                type: ListTypeNode(
-                    type: NamedTypeNode(
-                        name: NameNode(value: 'Int'), isNonNull: true),
-                    isNonNull: true),
-                isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'gameEvent'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'playerId'),
-                  value: VariableNode(name: NameNode(value: 'playerId'))),
-              ArgumentNode(
-                  name: NameNode(value: 'roomId'),
-                  value: VariableNode(name: NameNode(value: 'roomId')))
-            ],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                  name: NameNode(value: 'readyBoard'),
-                  alias: null,
-                  arguments: [
-                    ArgumentNode(
-                        name: NameNode(value: 'board'),
-                        value: VariableNode(name: NameNode(value: 'board')))
-                  ],
-                  directives: [],
-                  selectionSet: null)
-            ]))
-      ]))
-]);
-
-class ReadyBoardQuery
-    extends GraphQLQuery<ReadyBoard$QueryRoot, ReadyBoardArguments> {
-  ReadyBoardQuery({required this.variables});
-
-  @override
-  final DocumentNode document = READY_BOARD_QUERY_DOCUMENT;
-
-  @override
-  final String operationName = 'readyBoard';
-
-  @override
-  final ReadyBoardArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  ReadyBoard$QueryRoot parse(Map<String, dynamic> json) =>
-      ReadyBoard$QueryRoot.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
-class PlayerMoveArguments extends JsonSerializable with EquatableMixin {
-  PlayerMoveArguments({this.playerId, this.roomId, this.number});
-
-  @override
-  factory PlayerMoveArguments.fromJson(Map<String, dynamic> json) =>
-      _$PlayerMoveArgumentsFromJson(json);
-
-  final String? playerId;
-
-  final String? roomId;
-
-  final int? number;
-
-  @override
-  List<Object?> get props => [playerId, roomId, number];
-  @override
-  Map<String, dynamic> toJson() => _$PlayerMoveArgumentsToJson(this);
-}
-
-final PLAYER_MOVE_QUERY_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.query,
-      name: NameNode(value: 'playerMove'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'playerId')),
-            type: NamedTypeNode(
-                name: NameNode(value: 'String'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: []),
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'roomId')),
-            type: NamedTypeNode(
-                name: NameNode(value: 'String'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: []),
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'number')),
-            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'gameEvent'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'playerId'),
-                  value: VariableNode(name: NameNode(value: 'playerId'))),
-              ArgumentNode(
-                  name: NameNode(value: 'roomId'),
-                  value: VariableNode(name: NameNode(value: 'roomId')))
-            ],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                  name: NameNode(value: 'playerMove'),
-                  alias: null,
-                  arguments: [
-                    ArgumentNode(
-                        name: NameNode(value: 'number'),
-                        value: VariableNode(name: NameNode(value: 'number')))
-                  ],
-                  directives: [],
-                  selectionSet: null)
-            ]))
-      ]))
-]);
-
-class PlayerMoveQuery
-    extends GraphQLQuery<PlayerMove$QueryRoot, PlayerMoveArguments> {
-  PlayerMoveQuery({required this.variables});
-
-  @override
-  final DocumentNode document = PLAYER_MOVE_QUERY_DOCUMENT;
-
-  @override
-  final String operationName = 'playerMove';
-
-  @override
-  final PlayerMoveArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  PlayerMove$QueryRoot parse(Map<String, dynamic> json) =>
-      PlayerMove$QueryRoot.fromJson(json);
 }

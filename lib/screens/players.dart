@@ -107,6 +107,16 @@ class Players extends StatelessWidget {
                                               .headline6,
                                         ),
                                       ),
+                                      if (player
+                                          is RoomFieldsMixin$CommonPlayer$GamePlayer)
+                                        Container(
+                                          child: Text(
+                                            "${player.board?.score}/${player.board?.numbers.length}",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline6,
+                                          ),
+                                        ),
                                       // Container(
                                       //   child: Text(
                                       //     playerFieldsOfCommonPlayer(player).id,

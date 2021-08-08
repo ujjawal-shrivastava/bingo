@@ -19,6 +19,78 @@ Map<String, dynamic> _$CreateLobby$MutationRootToJson(
       'createLobby': instance.createLobby,
     };
 
+StartGame$QueryRoot$PlayerHandler _$StartGame$QueryRoot$PlayerHandlerFromJson(
+    Map<String, dynamic> json) {
+  return StartGame$QueryRoot$PlayerHandler()
+    ..startGame = json['startGame'] as bool;
+}
+
+Map<String, dynamic> _$StartGame$QueryRoot$PlayerHandlerToJson(
+        StartGame$QueryRoot$PlayerHandler instance) =>
+    <String, dynamic>{
+      'startGame': instance.startGame,
+    };
+
+StartGame$QueryRoot _$StartGame$QueryRootFromJson(Map<String, dynamic> json) {
+  return StartGame$QueryRoot()
+    ..gameEvent = StartGame$QueryRoot$PlayerHandler.fromJson(
+        json['gameEvent'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$StartGame$QueryRootToJson(
+        StartGame$QueryRoot instance) =>
+    <String, dynamic>{
+      'gameEvent': instance.gameEvent.toJson(),
+    };
+
+ReadyBoard$QueryRoot$PlayerHandler _$ReadyBoard$QueryRoot$PlayerHandlerFromJson(
+    Map<String, dynamic> json) {
+  return ReadyBoard$QueryRoot$PlayerHandler()
+    ..readyBoard = json['readyBoard'] as bool;
+}
+
+Map<String, dynamic> _$ReadyBoard$QueryRoot$PlayerHandlerToJson(
+        ReadyBoard$QueryRoot$PlayerHandler instance) =>
+    <String, dynamic>{
+      'readyBoard': instance.readyBoard,
+    };
+
+ReadyBoard$QueryRoot _$ReadyBoard$QueryRootFromJson(Map<String, dynamic> json) {
+  return ReadyBoard$QueryRoot()
+    ..gameEvent = ReadyBoard$QueryRoot$PlayerHandler.fromJson(
+        json['gameEvent'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$ReadyBoard$QueryRootToJson(
+        ReadyBoard$QueryRoot instance) =>
+    <String, dynamic>{
+      'gameEvent': instance.gameEvent.toJson(),
+    };
+
+PlayerMove$QueryRoot$PlayerHandler _$PlayerMove$QueryRoot$PlayerHandlerFromJson(
+    Map<String, dynamic> json) {
+  return PlayerMove$QueryRoot$PlayerHandler()
+    ..playerMove = json['playerMove'] as bool;
+}
+
+Map<String, dynamic> _$PlayerMove$QueryRoot$PlayerHandlerToJson(
+        PlayerMove$QueryRoot$PlayerHandler instance) =>
+    <String, dynamic>{
+      'playerMove': instance.playerMove,
+    };
+
+PlayerMove$QueryRoot _$PlayerMove$QueryRootFromJson(Map<String, dynamic> json) {
+  return PlayerMove$QueryRoot()
+    ..gameEvent = PlayerMove$QueryRoot$PlayerHandler.fromJson(
+        json['gameEvent'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$PlayerMove$QueryRootToJson(
+        PlayerMove$QueryRoot instance) =>
+    <String, dynamic>{
+      'gameEvent': instance.gameEvent.toJson(),
+    };
+
 JoinLobby$MutationRoot _$JoinLobby$MutationRootFromJson(
     Map<String, dynamic> json) {
   return JoinLobby$MutationRoot()..joinLobby = json['joinLobby'] as String;
@@ -30,19 +102,30 @@ Map<String, dynamic> _$JoinLobby$MutationRootToJson(
       'joinLobby': instance.joinLobby,
     };
 
+Ping$QueryRoot _$Ping$QueryRootFromJson(Map<String, dynamic> json) {
+  return Ping$QueryRoot()..ping = json['ping'] as String;
+}
+
+Map<String, dynamic> _$Ping$QueryRootToJson(Ping$QueryRoot instance) =>
+    <String, dynamic>{
+      'ping': instance.ping,
+    };
+
 RoomFieldsMixin$CommonPlayer$GamePlayer$Board
     _$RoomFieldsMixin$CommonPlayer$GamePlayer$BoardFromJson(
         Map<String, dynamic> json) {
   return RoomFieldsMixin$CommonPlayer$GamePlayer$Board()
     ..numbers = (json['numbers'] as List<dynamic>)
         .map((e) => (e as List<dynamic>).map((e) => e as int).toList())
-        .toList();
+        .toList()
+    ..score = json['score'] as int;
 }
 
 Map<String, dynamic> _$RoomFieldsMixin$CommonPlayer$GamePlayer$BoardToJson(
         RoomFieldsMixin$CommonPlayer$GamePlayer$Board instance) =>
     <String, dynamic>{
       'numbers': instance.numbers,
+      'score': instance.score,
     };
 
 RoomFieldsMixin$CommonPlayer$GamePlayer$Player
@@ -705,87 +788,6 @@ Map<String, dynamic> _$GameMessages$SubscriptionToJson(
       'serverMessages': instance.serverMessages.toJson(),
     };
 
-Ping$QueryRoot _$Ping$QueryRootFromJson(Map<String, dynamic> json) {
-  return Ping$QueryRoot()..ping = json['ping'] as String;
-}
-
-Map<String, dynamic> _$Ping$QueryRootToJson(Ping$QueryRoot instance) =>
-    <String, dynamic>{
-      'ping': instance.ping,
-    };
-
-StartGame$QueryRoot$PlayerHandler _$StartGame$QueryRoot$PlayerHandlerFromJson(
-    Map<String, dynamic> json) {
-  return StartGame$QueryRoot$PlayerHandler()
-    ..startGame = json['startGame'] as bool;
-}
-
-Map<String, dynamic> _$StartGame$QueryRoot$PlayerHandlerToJson(
-        StartGame$QueryRoot$PlayerHandler instance) =>
-    <String, dynamic>{
-      'startGame': instance.startGame,
-    };
-
-StartGame$QueryRoot _$StartGame$QueryRootFromJson(Map<String, dynamic> json) {
-  return StartGame$QueryRoot()
-    ..gameEvent = StartGame$QueryRoot$PlayerHandler.fromJson(
-        json['gameEvent'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$StartGame$QueryRootToJson(
-        StartGame$QueryRoot instance) =>
-    <String, dynamic>{
-      'gameEvent': instance.gameEvent.toJson(),
-    };
-
-ReadyBoard$QueryRoot$PlayerHandler _$ReadyBoard$QueryRoot$PlayerHandlerFromJson(
-    Map<String, dynamic> json) {
-  return ReadyBoard$QueryRoot$PlayerHandler()
-    ..readyBoard = json['readyBoard'] as bool;
-}
-
-Map<String, dynamic> _$ReadyBoard$QueryRoot$PlayerHandlerToJson(
-        ReadyBoard$QueryRoot$PlayerHandler instance) =>
-    <String, dynamic>{
-      'readyBoard': instance.readyBoard,
-    };
-
-ReadyBoard$QueryRoot _$ReadyBoard$QueryRootFromJson(Map<String, dynamic> json) {
-  return ReadyBoard$QueryRoot()
-    ..gameEvent = ReadyBoard$QueryRoot$PlayerHandler.fromJson(
-        json['gameEvent'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$ReadyBoard$QueryRootToJson(
-        ReadyBoard$QueryRoot instance) =>
-    <String, dynamic>{
-      'gameEvent': instance.gameEvent.toJson(),
-    };
-
-PlayerMove$QueryRoot$PlayerHandler _$PlayerMove$QueryRoot$PlayerHandlerFromJson(
-    Map<String, dynamic> json) {
-  return PlayerMove$QueryRoot$PlayerHandler()
-    ..playerMove = json['playerMove'] as bool;
-}
-
-Map<String, dynamic> _$PlayerMove$QueryRoot$PlayerHandlerToJson(
-        PlayerMove$QueryRoot$PlayerHandler instance) =>
-    <String, dynamic>{
-      'playerMove': instance.playerMove,
-    };
-
-PlayerMove$QueryRoot _$PlayerMove$QueryRootFromJson(Map<String, dynamic> json) {
-  return PlayerMove$QueryRoot()
-    ..gameEvent = PlayerMove$QueryRoot$PlayerHandler.fromJson(
-        json['gameEvent'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$PlayerMove$QueryRootToJson(
-        PlayerMove$QueryRoot instance) =>
-    <String, dynamic>{
-      'gameEvent': instance.gameEvent.toJson(),
-    };
-
 CreateLobbyArguments _$CreateLobbyArgumentsFromJson(Map<String, dynamic> json) {
   return CreateLobbyArguments(
     playerId: json['playerId'] as String?,
@@ -798,36 +800,6 @@ Map<String, dynamic> _$CreateLobbyArgumentsToJson(
     <String, dynamic>{
       'playerId': instance.playerId,
       'playerName': instance.playerName,
-    };
-
-JoinLobbyArguments _$JoinLobbyArgumentsFromJson(Map<String, dynamic> json) {
-  return JoinLobbyArguments(
-    playerId: json['playerId'] as String?,
-    playerName: json['playerName'] as String?,
-    roomId: json['roomId'] as String?,
-  );
-}
-
-Map<String, dynamic> _$JoinLobbyArgumentsToJson(JoinLobbyArguments instance) =>
-    <String, dynamic>{
-      'playerId': instance.playerId,
-      'playerName': instance.playerName,
-      'roomId': instance.roomId,
-    };
-
-GameMessagesArguments _$GameMessagesArgumentsFromJson(
-    Map<String, dynamic> json) {
-  return GameMessagesArguments(
-    roomId: json['roomId'] as String?,
-    playerId: json['playerId'] as String?,
-  );
-}
-
-Map<String, dynamic> _$GameMessagesArgumentsToJson(
-        GameMessagesArguments instance) =>
-    <String, dynamic>{
-      'roomId': instance.roomId,
-      'playerId': instance.playerId,
     };
 
 StartGameArguments _$StartGameArgumentsFromJson(Map<String, dynamic> json) {
@@ -877,4 +849,34 @@ Map<String, dynamic> _$PlayerMoveArgumentsToJson(
       'playerId': instance.playerId,
       'roomId': instance.roomId,
       'number': instance.number,
+    };
+
+JoinLobbyArguments _$JoinLobbyArgumentsFromJson(Map<String, dynamic> json) {
+  return JoinLobbyArguments(
+    playerId: json['playerId'] as String?,
+    playerName: json['playerName'] as String?,
+    roomId: json['roomId'] as String?,
+  );
+}
+
+Map<String, dynamic> _$JoinLobbyArgumentsToJson(JoinLobbyArguments instance) =>
+    <String, dynamic>{
+      'playerId': instance.playerId,
+      'playerName': instance.playerName,
+      'roomId': instance.roomId,
+    };
+
+GameMessagesArguments _$GameMessagesArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return GameMessagesArguments(
+    roomId: json['roomId'] as String?,
+    playerId: json['playerId'] as String?,
+  );
+}
+
+Map<String, dynamic> _$GameMessagesArgumentsToJson(
+        GameMessagesArguments instance) =>
+    <String, dynamic>{
+      'roomId': instance.roomId,
+      'playerId': instance.playerId,
     };

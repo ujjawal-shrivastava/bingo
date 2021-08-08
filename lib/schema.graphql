@@ -9,6 +9,7 @@ directive @ifdef on FIELD
 
 type Board {
   numbers: [[Int!]!]!
+  score(roomId: String!): Int!
 }
 
 type BoardCreation {
@@ -50,6 +51,7 @@ union GameState = BoardCreation | GameRunning
 
 type LobbyData {
   players: [LobbyPlayer!]!
+  lastGame: GameData
 }
 
 type LobbyPlayer implements CommonPlayer {
