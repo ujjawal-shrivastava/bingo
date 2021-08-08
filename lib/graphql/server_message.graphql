@@ -38,6 +38,7 @@ fragment roomFields on Room {
         }
         board {
           numbers
+          score(roomId: $roomId)
         }
       }
       boardSize
