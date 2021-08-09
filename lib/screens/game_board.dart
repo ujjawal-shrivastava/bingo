@@ -86,7 +86,17 @@ class _GameBoardState extends State<GameBoard> {
                                 child: Center(
                                   child: Text(
                                     e > 0 ? e.toString() : " ",
-                                    style: TextStyle(fontSize: 48),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        ?.copyWith(
+                                          fontSize: 48,
+                                          color: widget.selectedCells.any(
+                                                  (element) =>
+                                                      element.cellValue == e)
+                                              ? Colors.black
+                                              : Colors.white,
+                                        ),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
