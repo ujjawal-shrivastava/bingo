@@ -31,6 +31,8 @@ class Game extends StatelessWidget {
                     flex: 3,
                     child: Players(
                       players: room.players,
+                      ranks: (room.state as RoomFieldsMixin$RoomState$GameData)
+                          .leaderboard,
                     ),
                   ),
                   Expanded(

@@ -1687,7 +1687,12 @@ final GAME_MESSAGES_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
                           FieldNode(
                               name: NameNode(value: 'score'),
                               alias: null,
-                              arguments: [],
+                              arguments: [
+                                ArgumentNode(
+                                    name: NameNode(value: 'roomId'),
+                                    value: VariableNode(
+                                        name: NameNode(value: 'roomId')))
+                              ],
                               directives: [],
                               selectionSet: null)
                         ])),

@@ -10,7 +10,7 @@ fragment roomFields on Room {
     ... on GamePlayer {
       board {
         numbers
-        score
+        score(roomId: $roomId)
       }
       player {
         ...playerFields
