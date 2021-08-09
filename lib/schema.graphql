@@ -24,6 +24,7 @@ type GameData {
   players: [GamePlayer!]!
   boardSize: Int!
   gameState: GameState!
+  leaderboard: [Rank!]!
 }
 
 union GameEvents = GameStarted | RoomUpdate
@@ -49,9 +50,14 @@ type GameStarted {
 
 union GameState = BoardCreation | GameRunning
 
+type LastGame {
+  lastGame: GameData!
+  leaderBoard: [Rank!]!
+}
+
 type LobbyData {
   players: [LobbyPlayer!]!
-  lastGame: GameData
+  lastGame: LastGame
 }
 
 type LobbyPlayer implements CommonPlayer {
@@ -93,6 +99,11 @@ type QueryRoot {
   hello: String!
   gameEvent(playerId: String!, roomId: String!): PlayerHandler!
   ping: String!
+}
+
+type Rank {
+  rank: Int!
+  player: Player!
 }
 
 type Room {

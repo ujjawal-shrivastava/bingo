@@ -243,6 +243,72 @@ Map<String, dynamic> _$RoomFieldsMixin$RoomState$LobbyData$LobbyPlayerToJson(
       'player': instance.player.toJson(),
     };
 
+RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank$Player
+    _$RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank$PlayerFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank$Player()
+    ..id = json['id'] as String
+    ..name = json['name'] as String;
+}
+
+Map<String, dynamic>
+    _$RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank$PlayerToJson(
+            RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank$Player
+                instance) =>
+        <String, dynamic>{
+          'id': instance.id,
+          'name': instance.name,
+        };
+
+RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank
+    _$RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$RankFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank()
+    ..rank = json['rank'] as int
+    ..player = RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank$Player
+        .fromJson(json['player'] as Map<String, dynamic>);
+}
+
+Map<String,
+    dynamic> _$RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$RankToJson(
+        RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank instance) =>
+    <String, dynamic>{
+      'rank': instance.rank,
+      'player': instance.player.toJson(),
+    };
+
+RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData
+    _$RoomFieldsMixin$RoomState$LobbyData$LastGame$GameDataFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData()
+    ..leaderboard = (json['leaderboard'] as List<dynamic>)
+        .map((e) =>
+            RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank.fromJson(
+                e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic>
+    _$RoomFieldsMixin$RoomState$LobbyData$LastGame$GameDataToJson(
+            RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData instance) =>
+        <String, dynamic>{
+          'leaderboard': instance.leaderboard.map((e) => e.toJson()).toList(),
+        };
+
+RoomFieldsMixin$RoomState$LobbyData$LastGame
+    _$RoomFieldsMixin$RoomState$LobbyData$LastGameFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$LobbyData$LastGame()
+    ..lastGame = RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData.fromJson(
+        json['lastGame'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$RoomFieldsMixin$RoomState$LobbyData$LastGameToJson(
+        RoomFieldsMixin$RoomState$LobbyData$LastGame instance) =>
+    <String, dynamic>{
+      'lastGame': instance.lastGame.toJson(),
+    };
+
 RoomFieldsMixin$RoomState$LobbyData
     _$RoomFieldsMixin$RoomState$LobbyDataFromJson(Map<String, dynamic> json) {
   return RoomFieldsMixin$RoomState$LobbyData()
@@ -250,7 +316,11 @@ RoomFieldsMixin$RoomState$LobbyData
     ..players = (json['players'] as List<dynamic>)
         .map((e) => RoomFieldsMixin$RoomState$LobbyData$LobbyPlayer.fromJson(
             e as Map<String, dynamic>))
-        .toList();
+        .toList()
+    ..lastGame = json['lastGame'] == null
+        ? null
+        : RoomFieldsMixin$RoomState$LobbyData$LastGame.fromJson(
+            json['lastGame'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$RoomFieldsMixin$RoomState$LobbyDataToJson(
@@ -258,6 +328,38 @@ Map<String, dynamic> _$RoomFieldsMixin$RoomState$LobbyDataToJson(
     <String, dynamic>{
       '__typename': instance.$$typename,
       'players': instance.players.map((e) => e.toJson()).toList(),
+      'lastGame': instance.lastGame?.toJson(),
+    };
+
+RoomFieldsMixin$RoomState$GameData$Rank$Player
+    _$RoomFieldsMixin$RoomState$GameData$Rank$PlayerFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$GameData$Rank$Player()
+    ..id = json['id'] as String
+    ..name = json['name'] as String;
+}
+
+Map<String, dynamic> _$RoomFieldsMixin$RoomState$GameData$Rank$PlayerToJson(
+        RoomFieldsMixin$RoomState$GameData$Rank$Player instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+    };
+
+RoomFieldsMixin$RoomState$GameData$Rank
+    _$RoomFieldsMixin$RoomState$GameData$RankFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$GameData$Rank()
+    ..rank = json['rank'] as int
+    ..player = RoomFieldsMixin$RoomState$GameData$Rank$Player.fromJson(
+        json['player'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$RoomFieldsMixin$RoomState$GameData$RankToJson(
+        RoomFieldsMixin$RoomState$GameData$Rank instance) =>
+    <String, dynamic>{
+      'rank': instance.rank,
+      'player': instance.player.toJson(),
     };
 
 RoomFieldsMixin$RoomState$GameData$GamePlayer$Player
@@ -384,6 +486,10 @@ RoomFieldsMixin$RoomState$GameData _$RoomFieldsMixin$RoomState$GameDataFromJson(
     Map<String, dynamic> json) {
   return RoomFieldsMixin$RoomState$GameData()
     ..$$typename = json['__typename'] as String?
+    ..leaderboard = (json['leaderboard'] as List<dynamic>)
+        .map((e) => RoomFieldsMixin$RoomState$GameData$Rank.fromJson(
+            e as Map<String, dynamic>))
+        .toList()
     ..players = (json['players'] as List<dynamic>)
         .map((e) => RoomFieldsMixin$RoomState$GameData$GamePlayer.fromJson(
             e as Map<String, dynamic>))
@@ -397,6 +503,7 @@ Map<String, dynamic> _$RoomFieldsMixin$RoomState$GameDataToJson(
         RoomFieldsMixin$RoomState$GameData instance) =>
     <String, dynamic>{
       '__typename': instance.$$typename,
+      'leaderboard': instance.leaderboard.map((e) => e.toJson()).toList(),
       'players': instance.players.map((e) => e.toJson()).toList(),
       'boardSize': instance.boardSize,
       'gameState': instance.gameState.toJson(),

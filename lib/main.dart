@@ -46,13 +46,22 @@ class _MyAppState extends State<MyApp> {
       ),
     ),
   );
-  late Timer pingTimer;
   @override
   void initState() {
     super.initState();
-    pingTimer = Timer.periodic(Duration(seconds: 2), (timer) {
-      client.execute(PingQuery());
-    });
+
+    pingLoop();
+  }
+
+  pingLoop() async {
+    while (true) {
+      await Future.delayed(Duration(seconds: 3));
+      try {
+        await client.execute(PingQuery());
+      } catch (e) {
+        print('Error $e');
+      }
+    }
   }
 
   @override
@@ -73,15 +82,16 @@ class _MyAppState extends State<MyApp> {
           if (roomId != null) {
             print("RoomId $roomId");
             return MaterialPageRoute(
-              builder: (context) => GameMessageBuilder(
-                roomId: roomId.group(1) ?? '',
-                playerId: GameClient.of(context)!.playerId,
+              builder: (context) => Home(
+                initialRoomId: roomId.group(1) ?? '',
               ),
             );
           }
         },
         theme: ThemeData(
           primarySwatch: Colors.green,
+          fontFamily: 'Lato',
+          brightness: Brightness.dark,
         ),
       ),
     );
