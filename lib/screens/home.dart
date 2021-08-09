@@ -1,7 +1,10 @@
 import 'package:bingo/networking/clientProvider.dart';
+import 'package:bingo/networking/messagesBuilder.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
+  final String initialRoomId;
+  Home({this.initialRoomId = ''});
   @override
   _HomeState createState() => _HomeState();
 }
@@ -12,6 +15,9 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    if (widget.initialRoomId.isNotEmpty) {
+      roomIdController.text = widget.initialRoomId;
+    }
   }
 
   @override
@@ -53,8 +59,11 @@ class _HomeState extends State<Home> {
                   builder: (context, value, child) {
                     return ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          textStyle: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                          textStyle:
+                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                           padding: EdgeInsets.symmetric(
                               vertical: 20, horizontal: 40)),
                       onPressed: () async {
@@ -67,15 +76,24 @@ class _HomeState extends State<Home> {
                                 ?.joinRoom(roomIdController.text);
                           }
                           if (roomId != null) {
-                            Navigator.of(context).pushNamed('/room/$roomId');
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => GameMessageBuilder(
+                                    roomId: roomId,
+                                    playerId:
+                                        GameClient.of(context)?.playerId ?? ''),
+                              ),
+                            );
                           }
                         } catch (e) {
                           print(e);
                         }
                       },
-                      child: Text(roomIdController.text.isEmpty
-                          ? "Create Lobby"
-                          : "Join Lobby"),
+                      child: Text(
+                        roomIdController.text.isEmpty
+                            ? "Create Lobby"
+                            : "Join Lobby",
+                      ),
                     );
                   })
             ],

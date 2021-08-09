@@ -8,6 +8,7 @@ import 'package:bingo/api/api.dart';
 
 class Players extends StatelessWidget {
   final List<RoomFieldsMixin$CommonPlayer> players;
+  final List<RoomFieldsMixin$RoomState$GameData$Rank>? ranks;
 
   PlayerFieldsMixin playerFieldsOfCommonPlayer(
       RoomFieldsMixin$CommonPlayer player) {
@@ -21,6 +22,7 @@ class Players extends StatelessWidget {
   const Players({
     Key? key,
     required this.players,
+    this.ranks,
   }) : super(key: key);
 
   final minWidthPlayers = 100.0;
@@ -95,6 +97,9 @@ class Players extends StatelessWidget {
                                               ),
                                               height: 20,
                                               width: 20,
+                                              child: Text(getRank(
+                                                  playerFieldsOfCommonPlayer(
+                                                      player))),
                                             ),
                                           )
                                         ],
@@ -156,6 +161,21 @@ class Players extends StatelessWidget {
       }
     } else {
       return player.isConnected ? Colors.green : Colors.grey;
+    }
+  }
+
+  String getRank(PlayerFieldsMixin playerData) {
+    if (ranks != null) {
+      if (ranks!.any((element) => element.player.id == playerData.id)) {
+        var rank = ranks!
+            .firstWhere((element) => element.player.id == playerData.id)
+            .rank;
+        return rank.toString();
+      } else {
+        return " ";
+      }
+    } else {
+      return " ";
     }
   }
 }

@@ -30,15 +30,30 @@ fragment roomFields on Room {
           ...playerFields
         }
       }
+      lastGame {
+        lastGame {
+          leaderboard {
+            rank
+            player {
+              ...playerFields
+            }
+          }
+        }
+      }
     }
     ... on GameData {
+      leaderboard {
+        rank
+        player {
+          ...playerFields
+        }
+      }
       players {
         player {
           ...playerFields
         }
         board {
           numbers
-          score(roomId: $roomId)
         }
       }
       boardSize

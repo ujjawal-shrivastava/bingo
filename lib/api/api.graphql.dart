@@ -322,6 +322,82 @@ class RoomFieldsMixin$RoomState$LobbyData$LobbyPlayer extends JsonSerializable
 }
 
 @JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank$Player
+    extends JsonSerializable with EquatableMixin, PlayerFieldsMixin {
+  RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank$Player();
+
+  factory RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank$Player.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank$PlayerFromJson(
+          json);
+
+  @override
+  List<Object?> get props => [id, name];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank$PlayerToJson(
+          this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank
+    extends JsonSerializable with EquatableMixin {
+  RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank();
+
+  factory RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$RankFromJson(
+          json);
+
+  late int rank;
+
+  late RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank$Player player;
+
+  @override
+  List<Object?> get props => [rank, player];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$RankToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData
+    extends JsonSerializable with EquatableMixin {
+  RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData();
+
+  factory RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$RoomState$LobbyData$LastGame$GameDataFromJson(json);
+
+  late List<RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank>
+      leaderboard;
+
+  @override
+  List<Object?> get props => [leaderboard];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$RoomState$LobbyData$LastGame$GameDataToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$RoomState$LobbyData$LastGame extends JsonSerializable
+    with EquatableMixin {
+  RoomFieldsMixin$RoomState$LobbyData$LastGame();
+
+  factory RoomFieldsMixin$RoomState$LobbyData$LastGame.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$RoomState$LobbyData$LastGameFromJson(json);
+
+  late RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData lastGame;
+
+  @override
+  List<Object?> get props => [lastGame];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$RoomState$LobbyData$LastGameToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class RoomFieldsMixin$RoomState$LobbyData extends RoomFieldsMixin$RoomState
     with EquatableMixin {
   RoomFieldsMixin$RoomState$LobbyData();
@@ -332,11 +408,49 @@ class RoomFieldsMixin$RoomState$LobbyData extends RoomFieldsMixin$RoomState
 
   late List<RoomFieldsMixin$RoomState$LobbyData$LobbyPlayer> players;
 
+  RoomFieldsMixin$RoomState$LobbyData$LastGame? lastGame;
+
   @override
-  List<Object?> get props => [players];
+  List<Object?> get props => [players, lastGame];
   @override
   Map<String, dynamic> toJson() =>
       _$RoomFieldsMixin$RoomState$LobbyDataToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$RoomState$GameData$Rank$Player extends JsonSerializable
+    with EquatableMixin, PlayerFieldsMixin {
+  RoomFieldsMixin$RoomState$GameData$Rank$Player();
+
+  factory RoomFieldsMixin$RoomState$GameData$Rank$Player.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$RoomState$GameData$Rank$PlayerFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$RoomState$GameData$Rank$PlayerToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$RoomState$GameData$Rank extends JsonSerializable
+    with EquatableMixin {
+  RoomFieldsMixin$RoomState$GameData$Rank();
+
+  factory RoomFieldsMixin$RoomState$GameData$Rank.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$RoomState$GameData$RankFromJson(json);
+
+  late int rank;
+
+  late RoomFieldsMixin$RoomState$GameData$Rank$Player player;
+
+  @override
+  List<Object?> get props => [rank, player];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$RoomState$GameData$RankToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -506,6 +620,8 @@ class RoomFieldsMixin$RoomState$GameData extends RoomFieldsMixin$RoomState
           Map<String, dynamic> json) =>
       _$RoomFieldsMixin$RoomState$GameDataFromJson(json);
 
+  late List<RoomFieldsMixin$RoomState$GameData$Rank> leaderboard;
+
   late List<RoomFieldsMixin$RoomState$GameData$GamePlayer> players;
 
   late int boardSize;
@@ -513,7 +629,7 @@ class RoomFieldsMixin$RoomState$GameData extends RoomFieldsMixin$RoomState
   late RoomFieldsMixin$RoomState$GameData$GameState gameState;
 
   @override
-  List<Object?> get props => [players, boardSize, gameState];
+  List<Object?> get props => [leaderboard, players, boardSize, gameState];
   @override
   Map<String, dynamic> toJson() =>
       _$RoomFieldsMixin$RoomState$GameDataToJson(this);
@@ -1645,6 +1761,45 @@ final GAME_MESSAGES_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
                                     name: NameNode(value: 'playerFields'),
                                     directives: [])
                               ]))
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'lastGame'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'lastGame'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: SelectionSetNode(selections: [
+                                FieldNode(
+                                    name: NameNode(value: 'leaderboard'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: SelectionSetNode(selections: [
+                                      FieldNode(
+                                          name: NameNode(value: 'rank'),
+                                          alias: null,
+                                          arguments: [],
+                                          directives: [],
+                                          selectionSet: null),
+                                      FieldNode(
+                                          name: NameNode(value: 'player'),
+                                          alias: null,
+                                          arguments: [],
+                                          directives: [],
+                                          selectionSet: SelectionSetNode(
+                                              selections: [
+                                                FragmentSpreadNode(
+                                                    name: NameNode(
+                                                        value: 'playerFields'),
+                                                    directives: [])
+                                              ]))
+                                    ]))
+                              ]))
                         ]))
                   ])),
               InlineFragmentNode(
@@ -1653,6 +1808,29 @@ final GAME_MESSAGES_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
                           name: NameNode(value: 'GameData'), isNonNull: false)),
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'leaderboard'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'rank'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'player'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: SelectionSetNode(selections: [
+                                FragmentSpreadNode(
+                                    name: NameNode(value: 'playerFields'),
+                                    directives: [])
+                              ]))
+                        ])),
                     FieldNode(
                         name: NameNode(value: 'players'),
                         alias: null,
