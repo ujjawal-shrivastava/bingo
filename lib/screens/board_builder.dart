@@ -73,7 +73,7 @@ class _BoardBuilderState extends State<BoardBuilder> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.grey[300],
+                                color: Colors.grey.withOpacity(0.3),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               margin: EdgeInsets.all(10),
