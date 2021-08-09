@@ -95,7 +95,7 @@ class _GameBoardState extends State<GameBoard> {
                                 color: widget.selectedCells.any(
                                         (element) => element.cellValue == e)
                                     ? Colors.yellow
-                                    : Colors.grey[300],
+                                    : Colors.grey.withOpacity(0.3),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               margin: EdgeInsets.all(10),
