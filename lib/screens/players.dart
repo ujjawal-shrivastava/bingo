@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:bingo/widgets/circle_progress.dart';
 import 'package:flutter/material.dart';
 import 'package:multiavatar/multiavatar.dart';
 import 'package:websafe_svg/websafe_svg.dart';
