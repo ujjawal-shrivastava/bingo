@@ -8,7 +8,6 @@ import 'package:localstorage/localstorage.dart';
 import 'package:uuid/uuid.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'api/api.dart';
-import 'networking/messagesBuilder.dart';
 import 'screens/home.dart';
 
 void main() async {

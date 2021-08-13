@@ -28,7 +28,6 @@ class Players extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(0),
       child: LayoutBuilder(
         builder: (context, constraints) => FittedBox(
           fit: BoxFit.fitWidth,
@@ -42,9 +41,7 @@ class Players extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).canvasColor,
-                  border: Border.all(color: Colors.grey),
                 ),
-                padding: EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.max,
@@ -62,6 +59,8 @@ class Players extends StatelessWidget {
                     Expanded(
                       child: SingleChildScrollView(
                         child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 30),
                           child: Wrap(
                             spacing: 20,
                             children: [
@@ -77,12 +76,12 @@ class Players extends StatelessWidget {
                                                 playerFieldsOfCommonPlayer(
                                                         player)
                                                     .id),
-                                            height: 100,
-                                            width: 100,
+                                            height: 80,
+                                            width: 80,
                                           ),
                                           Positioned(
-                                            right: 5,
-                                            bottom: 5,
+                                            right: 2,
+                                            bottom: 2,
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
@@ -95,9 +94,14 @@ class Players extends StatelessWidget {
                                               ),
                                               height: 20,
                                               width: 20,
-                                              child: Text(getRank(
-                                                  playerFieldsOfCommonPlayer(
-                                                      player))),
+                                              child: Text(
+                                                getRank(
+                                                    playerFieldsOfCommonPlayer(
+                                                        player)),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1,
+                                              ),
                                             ),
                                           )
                                         ],
@@ -111,8 +115,9 @@ class Players extends StatelessWidget {
                                               .headline6,
                                         ),
                                       ),
-                                      if (player
-                                          is RoomFieldsMixin$CommonPlayer$GamePlayer)
+                                      if ((player
+                                              is RoomFieldsMixin$CommonPlayer$GamePlayer) &&
+                                          (player.board?.score != null))
                                         Container(
                                           child: Text(
                                             "${player.board?.score}/${player.board?.numbers.length}",
