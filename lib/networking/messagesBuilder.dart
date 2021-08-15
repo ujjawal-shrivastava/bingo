@@ -111,18 +111,22 @@ class _GameMessageBuilderState extends State<GameMessageBuilder> {
               }
             }
           }
-          return Container(
-            child: Center(
-              child: Column(
-                children: [
-                  CircularProgressIndicator(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  Text(
-                    "Bingo is Tingoing",
-                    style: Theme.of(context).textTheme.headline3,
-                  )
-                ],
+          return Scaffold(
+            body: Container(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      valueColor:
+                          AlwaysStoppedAnimation(Theme.of(context).buttonColor),
+                    ),
+                    Text(
+                      "Bingo is Tingoing",
+                      style: Theme.of(context).textTheme.headline3,
+                    )
+                  ],
+                ),
               ),
             ),
           );
