@@ -199,7 +199,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     decoration: BoxDecoration(
                         color: Theme.of(context).dividerColor,
                         borderRadius: BorderRadius.circular(5)),
-                    child: Center(child: Text("Connect at least 2 players!"))),
+                    child: Center(child: Text("Room not ready"))),
           ),
           ElevatedButton(
             onPressed: () => {Navigator.pop(context)},

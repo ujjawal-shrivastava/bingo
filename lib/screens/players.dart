@@ -53,6 +53,7 @@ class Players extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               horizontal: 20, vertical: 30),
                           child: Wrap(
+                            alignment: WrapAlignment.center,
                             spacing: 20,
                             children: [
                               ...players.map(
