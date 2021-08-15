@@ -93,6 +93,9 @@ class _GameMessageBuilderState extends State<GameMessageBuilder> {
                   is GameMessages$Subscription$ServerResponse$PlayerLeft) {
                 room = message.room;
               } else if (message
+                  is GameMessages$Subscription$ServerResponse$PlayerRemoved) {
+                room = message.room;
+              } else if (message
                   is GameMessages$Subscription$ServerResponse$GameMessage) {
                 room = message.room;
               }

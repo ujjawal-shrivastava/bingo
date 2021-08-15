@@ -67,6 +67,7 @@ type LobbyPlayer implements CommonPlayer {
 type MutationRoot {
   createLobby(playerId: String!, playerName: String!): String!
   joinLobby(playerId: String!, playerName: String!, roomId: String!): String!
+  disconnect(playerId: String!, roomId: String!): String!
 }
 
 type Player {
@@ -91,6 +92,11 @@ type PlayerJoined {
 }
 
 type PlayerLeft {
+  player: Player!
+  room: Room!
+}
+
+type PlayerRemoved {
   player: Player!
   room: Room!
 }
@@ -123,7 +129,12 @@ type SelectedCell {
   selectedBy: String!
 }
 
-union ServerResponse = PlayerJoined | PlayerConnected | PlayerLeft | GameMessage
+union ServerResponse =
+    PlayerJoined
+  | PlayerConnected
+  | PlayerLeft
+  | PlayerRemoved
+  | GameMessage
 
 type Subscription {
   serverMessages(roomId: String!, playerId: String!): ServerResponse!
