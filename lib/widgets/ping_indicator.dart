@@ -37,17 +37,35 @@ class _PingIndicatorState extends State<PingIndicator> {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: widget.ping.value?.toString() ?? 'Disconnected',
-      child: AnimatedContainer(
-        duration: Duration(
-          milliseconds: 300,
-        ),
-        curve: Curves.ease,
-        height: 20,
-        width: 20,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: pingColor,
+      message: "Latency/Ping",
+      child: Opacity(
+        opacity: 0.8,
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.5),
+              borderRadius: BorderRadius.circular(5)),
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+          child: Row(
+            children: [
+              AnimatedContainer(
+                duration: Duration(
+                  milliseconds: 300,
+                ),
+                curve: Curves.ease,
+                height: 15,
+                width: 15,
+                margin: EdgeInsets.only(right: 8),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: pingColor,
+                ),
+              ),
+              Text(
+                "${widget.ping.value?.toString() ?? '-'} ms",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ],
+          ),
         ),
       ),
     );
