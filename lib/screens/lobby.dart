@@ -1,12 +1,40 @@
 import 'package:bingo/api/api.dart';
 import 'package:bingo/networking/clientProvider.dart';
 import 'package:bingo/screens/players.dart';
+import 'package:bingo/widgets/game_result.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 
-class Room extends StatelessWidget {
+class Room extends StatefulWidget {
   final RoomFieldsMixin room;
   const Room({Key? key, required this.room}) : super(key: key);
+
+  @override
+  _RoomState createState() => _RoomState();
+}
+
+class _RoomState extends State<Room> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      if ((widget.room.state as RoomFieldsMixin$RoomState$LobbyData).lastGame !=
+          null) {
+        showDialog(
+          context: context,
+          builder: (context) => Dialog(
+            child: ResultDialog(
+              result: LastGameResult(
+                lastgame:
+                    (widget.room.state as RoomFieldsMixin$RoomState$LobbyData)
+                        .lastGame!,
+              ),
+            ),
+          ),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +48,10 @@ class Room extends StatelessWidget {
           automaticallyImplyLeading: false,
           title: Center(
             child: InkWell(
-              onTap: () => FlutterClipboard.copy(this.room.id.toString())
+              onTap: () => FlutterClipboard.copy(this.widget.room.id.toString())
                   .then((value) => showSnack(context, "Copied Room Code!")),
               child: Text(
-                "Room ${this.room.id}",
+                "Room ${this.widget.room.id}",
                 style: Theme.of(context).textTheme.headline6,
                 textAlign: TextAlign.center,
               ),
@@ -50,31 +78,23 @@ class Room extends StatelessWidget {
                                       variables: StartGameArguments(
                                         playerId:
                                             GameClient.of(context)?.playerId,
-                                        roomId: room.id,
+                                        roomId: widget.room.id,
                                         boardSize: boardSize,
                                       ),
                                     ),
                                   );
                             },
-                            canStart: room.players.length > 1 &&
-                                room.players
+                            canStart: widget.room.players.length > 1 &&
+                                widget.room.players
                                     .every((element) => element.isConnected)),
                       ),
                       SizedBox(
                         width: isScreenWide ? 20 : double.infinity,
                         height: isScreenWide ? double.infinity : 20,
                       ),
-                      (room.state as RoomFieldsMixin$RoomState$LobbyData)
-                                  .lastGame !=
-                              null
-                          ? LastGameResult(
-                              lastgame: (room.state
-                                      as RoomFieldsMixin$RoomState$LobbyData)
-                                  .lastGame!)
-                          : Container(),
                       Expanded(
                           child: Players(
-                        players: room.players,
+                        players: widget.room.players,
                       )),
                     ],
                   ),
@@ -196,6 +216,14 @@ class LastGameResult extends StatelessWidget {
   final RoomFieldsMixin$RoomState$LobbyData$LastGame lastgame;
   const LastGameResult({Key? key, required this.lastgame}) : super(key: key);
 
+  List<RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank> get firsts =>
+      getRanks()[1] ?? [];
+
+  List<RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank> get second =>
+      getRanks()[2] ?? [];
+  List<RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank> get third =>
+      getRanks()[3] ?? [];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -203,14 +231,21 @@ class LastGameResult extends StatelessWidget {
     );
   }
 
-  Map<int, Iterable<RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank>>
+  Map<int, List<RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank>>
       getRanks() {
-    final leaderboard = lastgame.lastGame.leaderboard;
-    var rank1 = leaderboard.where((element) => element.rank == 1);
-    var rank2 = leaderboard.where((element) => element.rank == 2);
-    var rank3 = leaderboard.where((element) => element.rank == 3);
-    var ranks = {1: rank1, 2: rank2, 3: rank3};
-    print(ranks.toString());
-    return ranks;
+    final leaderboard = lastgame.lastGame.leaderboard.fold<
+            Map<
+                int,
+                List<
+                    RoomFieldsMixin$RoomState$LobbyData$LastGame$GameData$Rank>>>(
+        {}, (previousValue, element) {
+      if (previousValue.containsKey(element.rank)) {
+        previousValue[element.rank]?.add(element);
+      } else {
+        previousValue[element.rank] = [element];
+      }
+      return previousValue;
+    });
+    return leaderboard;
   }
 }

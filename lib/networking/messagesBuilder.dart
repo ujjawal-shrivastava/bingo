@@ -98,7 +98,10 @@ class _GameMessageBuilderState extends State<GameMessageBuilder> {
               }
               if (room != null) {
                 if (room.state is RoomFieldsMixin$RoomState$LobbyData) {
-                  return Room(room: room);
+                  return Room(
+                    key: Key(room.id),
+                    room: room,
+                  );
                 } else {
                   return Game(room: room);
                 }

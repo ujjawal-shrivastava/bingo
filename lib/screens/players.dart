@@ -8,15 +8,6 @@ class Players extends StatelessWidget {
   final List<RoomFieldsMixin$CommonPlayer> players;
   final List<RoomFieldsMixin$RoomState$GameData$Rank>? ranks;
 
-  PlayerFieldsMixin playerFieldsOfCommonPlayer(
-      RoomFieldsMixin$CommonPlayer player) {
-    if (player is RoomFieldsMixin$CommonPlayer$GamePlayer) {
-      return player.player;
-    } else {
-      return (player as RoomFieldsMixin$CommonPlayer$LobbyPlayer).player;
-    }
-  }
-
   const Players({
     Key? key,
     required this.players,
@@ -65,78 +56,7 @@ class Players extends StatelessWidget {
                             spacing: 20,
                             children: [
                               ...players.map(
-                                (player) => Opacity(
-                                  opacity: player.isConnected ? 1 : 0.5,
-                                  child: Column(
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          WebsafeSvg.string(
-                                            multiavatar(
-                                                playerFieldsOfCommonPlayer(
-                                                        player)
-                                                    .id),
-                                            height: 80,
-                                            width: 80,
-                                          ),
-                                          Positioned(
-                                            right: 2,
-                                            bottom: 2,
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: getStatusColor(player),
-                                                border: Border.all(
-                                                  color: Theme.of(context)
-                                                      .scaffoldBackgroundColor,
-                                                  width: 2,
-                                                ),
-                                              ),
-                                              height: 20,
-                                              width: 20,
-                                              child: Text(
-                                                getRank(
-                                                    playerFieldsOfCommonPlayer(
-                                                        player)),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyText1,
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Container(
-                                        child: Text(
-                                          playerFieldsOfCommonPlayer(player)
-                                              .name,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headline6,
-                                        ),
-                                      ),
-                                      if ((player
-                                              is RoomFieldsMixin$CommonPlayer$GamePlayer) &&
-                                          (player.board?.score != null))
-                                        Container(
-                                          child: Text(
-                                            "${player.board?.score}/${player.board?.numbers.length}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headline6,
-                                          ),
-                                        ),
-                                      // Container(
-                                      //   child: Text(
-                                      //     playerFieldsOfCommonPlayer(player).id,
-                                      //     style: Theme.of(context)
-                                      //         .textTheme
-                                      //         .subtitle1,
-                                      //   ),
-                                      // )
-                                    ],
-                                  ),
-                                ),
+                                (player) => buildPlayerWidget(player, context),
                               )
                             ],
                           ),
@@ -153,32 +73,134 @@ class Players extends StatelessWidget {
     );
   }
 
-  Color getStatusColor(RoomFieldsMixin$CommonPlayer player) {
-    if (player is RoomFieldsMixin$CommonPlayer$GamePlayer) {
-      if (!player.isConnected) {
-        return Colors.grey;
-      } else if (player.board == null) {
-        return Colors.orange;
-      } else {
-        return Colors.green;
-      }
-    } else {
-      return player.isConnected ? Colors.green : Colors.grey;
-    }
+  Widget buildPlayerWidget(
+      RoomFieldsMixin$CommonPlayer player, BuildContext context) {
+    return CommonPlayerWidget(
+      player: player,
+      rank: getRank(playerFieldsOfCommonPlayer(player)),
+    );
   }
 
-  String getRank(PlayerFieldsMixin playerData) {
+  int? getRank(PlayerFieldsMixin playerData) {
     if (ranks != null) {
       if (ranks!.any((element) => element.player.id == playerData.id)) {
         var rank = ranks!
             .firstWhere((element) => element.player.id == playerData.id)
             .rank;
-        return rank.toString();
-      } else {
-        return " ";
+        return rank;
       }
-    } else {
-      return " ";
     }
+  }
+}
+
+PlayerFieldsMixin playerFieldsOfCommonPlayer(
+    RoomFieldsMixin$CommonPlayer player) {
+  if (player is RoomFieldsMixin$CommonPlayer$GamePlayer) {
+    return player.player;
+  } else {
+    return (player as RoomFieldsMixin$CommonPlayer$LobbyPlayer).player;
+  }
+}
+
+Color getStatusColor(RoomFieldsMixin$CommonPlayer player) {
+  if (player is RoomFieldsMixin$CommonPlayer$GamePlayer) {
+    if (!player.isConnected) {
+      return Colors.grey;
+    } else if (player.board == null) {
+      return Colors.orange;
+    } else {
+      return Colors.green;
+    }
+  } else {
+    return player.isConnected ? Colors.green : Colors.grey;
+  }
+}
+
+class CommonPlayerWidget extends StatelessWidget {
+  final RoomFieldsMixin$CommonPlayer player;
+  final int? rank;
+  CommonPlayerWidget({
+    required this.player,
+    this.rank,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return Opacity(
+      opacity: player.isConnected ? 1 : 0.5,
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              PlayerAvatar(player: playerFieldsOfCommonPlayer(player)),
+              Positioned(
+                right: 2,
+                bottom: 2,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: getStatusColor(player),
+                    border: Border.all(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      width: 2,
+                    ),
+                  ),
+                  height: 20,
+                  width: 20,
+                  child: Text(
+                    rank?.toString() ?? " ",
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                ),
+              )
+            ],
+          ),
+          Container(
+            child: Text(
+              playerFieldsOfCommonPlayer(player).name,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+          ),
+          if ((player is RoomFieldsMixin$CommonPlayer$GamePlayer) &&
+              ((player as RoomFieldsMixin$CommonPlayer$GamePlayer)
+                      .board
+                      ?.score !=
+                  null))
+            Container(
+              child: Text(
+                "${(player as RoomFieldsMixin$CommonPlayer$GamePlayer).board?.score}/${(player as RoomFieldsMixin$CommonPlayer$GamePlayer).board?.numbers.length}",
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ),
+          // Container(
+          //   child: Text(
+          //     playerFieldsOfCommonPlayer(player).id,
+          //     style: Theme.of(context)
+          //         .textTheme
+          //         .subtitle1,
+          //   ),
+          // )
+        ],
+      ),
+    );
+  }
+}
+
+class PlayerAvatar extends StatelessWidget {
+  const PlayerAvatar({
+    Key? key,
+    required this.player,
+  }) : super(key: key);
+
+  final PlayerFieldsMixin player;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: WebsafeSvg.string(
+        multiavatar(player.id),
+        height: 80,
+        width: 80,
+      ),
+    );
   }
 }
