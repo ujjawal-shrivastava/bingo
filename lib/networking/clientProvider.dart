@@ -87,6 +87,14 @@ class GameClient extends InheritedWidget {
     );
   }
 
+  Future kick(String roomId, String playerId) async {
+    await artemisClient.execute(
+      DisconnectMutation(
+        variables: DisconnectArguments(playerId: playerId, roomId: roomId),
+      ),
+    );
+  }
+
   Future<Stream<GraphQLResponse<GameMessages$Subscription>>> connect(
       String roomId) async {
     if (playerName.text.isEmpty) {

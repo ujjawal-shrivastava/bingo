@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:bingo/networking/clientProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:multiavatar/multiavatar.dart';
 import 'package:websafe_svg/websafe_svg.dart';
@@ -8,9 +9,12 @@ class Players extends StatelessWidget {
   final List<RoomFieldsMixin$CommonPlayer> players;
   final List<RoomFieldsMixin$RoomState$GameData$Rank>? ranks;
 
+  final Function(String) onKickPlayer;
+
   const Players({
     Key? key,
     required this.players,
+    required this.onKickPlayer,
     this.ranks,
   }) : super(key: key);
 
@@ -78,6 +82,7 @@ class Players extends StatelessWidget {
       RoomFieldsMixin$CommonPlayer player, BuildContext context) {
     return CommonPlayerWidget(
       player: player,
+      onKickPlayer: onKickPlayer,
       rank: getRank(playerFieldsOfCommonPlayer(player)),
     );
   }
@@ -120,68 +125,128 @@ Color getStatusColor(RoomFieldsMixin$CommonPlayer player) {
 class CommonPlayerWidget extends StatelessWidget {
   final RoomFieldsMixin$CommonPlayer player;
   final int? rank;
+  final Function(String) onKickPlayer;
+
   CommonPlayerWidget({
     required this.player,
+    required this.onKickPlayer,
     this.rank,
   });
   @override
   Widget build(BuildContext context) {
-    return Opacity(
-      opacity: player.isConnected ? 1 : 0.5,
-      child: Column(
-        children: [
-          Stack(
+    return Stack(
+      children: [
+        Opacity(
+          opacity: player.isConnected ? 1 : 0.5,
+          child: Column(
             children: [
-              PlayerAvatar(player: playerFieldsOfCommonPlayer(player)),
-              Positioned(
-                right: 2,
-                bottom: 2,
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: getStatusColor(player),
-                    border: Border.all(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      width: 2,
+              Stack(
+                children: [
+                  PlayerAvatar(player: playerFieldsOfCommonPlayer(player)),
+                  Positioned(
+                    right: 2,
+                    bottom: 2,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: getStatusColor(player),
+                        border: Border.all(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          width: 2,
+                        ),
+                      ),
+                      height: 20,
+                      width: 20,
+                      child: Text(
+                        rank?.toString() ?? " ",
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
                     ),
-                  ),
-                  height: 20,
-                  width: 20,
+                  )
+                ],
+              ),
+              Container(
+                child: Text(
+                  playerFieldsOfCommonPlayer(player).name,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ),
+              if ((player is RoomFieldsMixin$CommonPlayer$GamePlayer) &&
+                  ((player as RoomFieldsMixin$CommonPlayer$GamePlayer)
+                          .board
+                          ?.score !=
+                      null))
+                Container(
                   child: Text(
-                    rank?.toString() ?? " ",
-                    style: Theme.of(context).textTheme.bodyText1,
+                    "${(player as RoomFieldsMixin$CommonPlayer$GamePlayer).board?.score}/${(player as RoomFieldsMixin$CommonPlayer$GamePlayer).board?.numbers.length}",
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                 ),
-              )
+              // Container(
+              //   child: Text(
+              //     playerFieldsOfCommonPlayer(player).id,
+              //     style: Theme.of(context)
+              //         .textTheme
+              //         .subtitle1,
+              //   ),
+              // )
             ],
           ),
-          Container(
-            child: Text(
-              playerFieldsOfCommonPlayer(player).name,
-              style: Theme.of(context).textTheme.headline6,
-            ),
-          ),
-          if ((player is RoomFieldsMixin$CommonPlayer$GamePlayer) &&
-              ((player as RoomFieldsMixin$CommonPlayer$GamePlayer)
-                      .board
-                      ?.score !=
-                  null))
-            Container(
-              child: Text(
-                "${(player as RoomFieldsMixin$CommonPlayer$GamePlayer).board?.score}/${(player as RoomFieldsMixin$CommonPlayer$GamePlayer).board?.numbers.length}",
-                style: Theme.of(context).textTheme.headline6,
+        ),
+        if (!player.isConnected)
+          Positioned.fill(
+            child: InkWell(
+              onTap: () async {
+                var shouldKick = await showDialog<bool>(
+                    context: context,
+                    builder: (context) => Dialog(
+                          child: Column(
+                            // crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(top: 20),
+                                child: Icon(Icons.person_remove,
+                                    color: Colors.red),
+                              ),
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 10),
+                                child: Text(
+                                  'Kick ${playerFieldsOfCommonPlayer(player).name}',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 5),
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(true);
+                                  },
+                                  child: Text('Confirm'),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 5),
+                                child: TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(false);
+                                  },
+                                  child: Text('Cancel'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ));
+                if (shouldKick == true) {
+                  onKickPlayer(playerFieldsOfCommonPlayer(player).id);
+                }
+              },
+              child: Center(
+                child: Icon(Icons.person_remove, color: Colors.red),
               ),
             ),
-          // Container(
-          //   child: Text(
-          //     playerFieldsOfCommonPlayer(player).id,
-          //     style: Theme.of(context)
-          //         .textTheme
-          //         .subtitle1,
-          //   ),
-          // )
-        ],
-      ),
+          ),
+      ],
     );
   }
 }
