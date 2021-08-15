@@ -98,9 +98,14 @@ class _RoomState extends State<Room> {
                         height: isScreenWide ? double.infinity : 20,
                       ),
                       Expanded(
-                          child: Players(
-                        players: widget.room.players,
-                      )),
+                        child: Players(
+                          players: widget.room.players,
+                          onKickPlayer: (playerId) async {
+                            GameClient.of(context)
+                                ?.kick(widget.room.id, playerId);
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 )

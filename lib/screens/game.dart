@@ -39,6 +39,9 @@ class Game extends StatelessWidget {
                       players: room.players,
                       ranks: (room.state as RoomFieldsMixin$RoomState$GameData)
                           .leaderboard,
+                      onKickPlayer: (playerId) async {
+                        GameClient.of(context)?.kick(room.id, playerId);
+                      },
                     ),
                   ),
                   Expanded(

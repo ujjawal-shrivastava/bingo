@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:bingo/networking/clientProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:multiavatar/multiavatar.dart';
 import 'package:websafe_svg/websafe_svg.dart';
@@ -8,9 +9,12 @@ class Players extends StatelessWidget {
   final List<RoomFieldsMixin$CommonPlayer> players;
   final List<RoomFieldsMixin$RoomState$GameData$Rank>? ranks;
 
+  final Function(String) onKickPlayer;
+
   const Players({
     Key? key,
     required this.players,
+    required this.onKickPlayer,
     this.ranks,
   }) : super(key: key);
 
@@ -78,6 +82,7 @@ class Players extends StatelessWidget {
       RoomFieldsMixin$CommonPlayer player, BuildContext context) {
     return CommonPlayerWidget(
       player: player,
+      onKickPlayer: onKickPlayer,
       rank: getRank(playerFieldsOfCommonPlayer(player)),
     );
   }
@@ -120,8 +125,11 @@ Color getStatusColor(RoomFieldsMixin$CommonPlayer player) {
 class CommonPlayerWidget extends StatelessWidget {
   final RoomFieldsMixin$CommonPlayer player;
   final int? rank;
+  final Function(String) onKickPlayer;
+
   CommonPlayerWidget({
     required this.player,
+    required this.onKickPlayer,
     this.rank,
   });
   @override
@@ -133,6 +141,56 @@ class CommonPlayerWidget extends StatelessWidget {
           Stack(
             children: [
               PlayerAvatar(player: playerFieldsOfCommonPlayer(player)),
+              if (!player.isConnected)
+                Positioned.fill(
+                  child: InkWell(
+                    onTap: () async {
+                      var shouldKick = await showDialog<bool>(
+                          context: context,
+                          builder: (context) => Dialog(
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(top: 20),
+                                      child: Center(
+                                        child: Icon(Icons.person_remove,
+                                            color: Colors.red),
+                                      ),
+                                    ),
+                                    Container(
+                                      margin:
+                                          EdgeInsets.symmetric(vertical: 10),
+                                      child: Text(
+                                        'Kick ${playerFieldsOfCommonPlayer(player).name}',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop(true);
+                                      },
+                                      child: Text('Confirm'),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop(false);
+                                      },
+                                      child: Text('Cancel'),
+                                    ),
+                                  ],
+                                ),
+                              ));
+                      if (shouldKick == true) {
+                        onKickPlayer(playerFieldsOfCommonPlayer(player).id);
+                      }
+                    },
+                    child: Center(
+                      child: Icon(Icons.person_remove, color: Colors.red),
+                    ),
+                  ),
+                ),
               Positioned(
                 right: 2,
                 bottom: 2,
