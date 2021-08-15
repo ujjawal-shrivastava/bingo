@@ -84,6 +84,11 @@ class _RoomState extends State<Room> {
                                     ),
                                   );
                             },
+                            leaveRoom: () async {
+                              await GameClient.of(context)
+                                  ?.disconnect(widget.room.id);
+                              Navigator.pop(context);
+                            },
                             canStart: widget.room.players.length > 1 &&
                                 widget.room.players
                                     .every((element) => element.isConnected)),
@@ -115,9 +120,14 @@ class _RoomState extends State<Room> {
 
 class SettingsWidget extends StatefulWidget {
   final void Function(int) startGame;
+  final Function leaveRoom;
   final bool canStart;
+
   const SettingsWidget(
-      {Key? key, required this.startGame, required this.canStart})
+      {Key? key,
+      required this.startGame,
+      required this.canStart,
+      required this.leaveRoom})
       : super(key: key);
 
   @override
@@ -202,7 +212,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     child: Center(child: Text("Room not ready"))),
           ),
           ElevatedButton(
-            onPressed: () => {Navigator.pop(context)},
+            onPressed: () {
+              widget.leaveRoom();
+            },
             child: Text("Leave Room"),
             style: ElevatedButton.styleFrom(primary: Colors.red),
           )

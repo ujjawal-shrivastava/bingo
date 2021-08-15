@@ -1,0 +1,3 @@
+mutation disconnect($playerId: String, $roomId: String) {
+  disconnect(playerId: $playerId, roomId: $roomId)
+}

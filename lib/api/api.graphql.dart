@@ -833,6 +833,61 @@ class GameMessages$Subscription$ServerResponse$PlayerLeft
 }
 
 @JsonSerializable(explicitToJson: true)
+class GameMessages$Subscription$ServerResponse$PlayerRemoved$Player
+    extends JsonSerializable with EquatableMixin, PlayerFieldsMixin {
+  GameMessages$Subscription$ServerResponse$PlayerRemoved$Player();
+
+  factory GameMessages$Subscription$ServerResponse$PlayerRemoved$Player.fromJson(
+          Map<String, dynamic> json) =>
+      _$GameMessages$Subscription$ServerResponse$PlayerRemoved$PlayerFromJson(
+          json);
+
+  @override
+  List<Object?> get props => [id, name];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$GameMessages$Subscription$ServerResponse$PlayerRemoved$PlayerToJson(
+          this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class GameMessages$Subscription$ServerResponse$PlayerRemoved$Room
+    extends JsonSerializable with EquatableMixin, RoomFieldsMixin {
+  GameMessages$Subscription$ServerResponse$PlayerRemoved$Room();
+
+  factory GameMessages$Subscription$ServerResponse$PlayerRemoved$Room.fromJson(
+          Map<String, dynamic> json) =>
+      _$GameMessages$Subscription$ServerResponse$PlayerRemoved$RoomFromJson(
+          json);
+
+  @override
+  List<Object?> get props => [id, players, state];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$GameMessages$Subscription$ServerResponse$PlayerRemoved$RoomToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class GameMessages$Subscription$ServerResponse$PlayerRemoved
+    extends GameMessages$Subscription$ServerResponse with EquatableMixin {
+  GameMessages$Subscription$ServerResponse$PlayerRemoved();
+
+  factory GameMessages$Subscription$ServerResponse$PlayerRemoved.fromJson(
+          Map<String, dynamic> json) =>
+      _$GameMessages$Subscription$ServerResponse$PlayerRemovedFromJson(json);
+
+  late GameMessages$Subscription$ServerResponse$PlayerRemoved$Player player;
+
+  late GameMessages$Subscription$ServerResponse$PlayerRemoved$Room room;
+
+  @override
+  List<Object?> get props => [player, room];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$GameMessages$Subscription$ServerResponse$PlayerRemovedToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class GameMessages$Subscription$ServerResponse$GameMessage$Room
     extends JsonSerializable with EquatableMixin, RoomFieldsMixin {
   GameMessages$Subscription$ServerResponse$GameMessage$Room();
@@ -1075,6 +1130,9 @@ class GameMessages$Subscription$ServerResponse extends JsonSerializable
       case r'PlayerLeft':
         return GameMessages$Subscription$ServerResponse$PlayerLeft.fromJson(
             json);
+      case r'PlayerRemoved':
+        return GameMessages$Subscription$ServerResponse$PlayerRemoved.fromJson(
+            json);
       case r'GameMessage':
         return GameMessages$Subscription$ServerResponse$GameMessage.fromJson(
             json);
@@ -1101,6 +1159,9 @@ class GameMessages$Subscription$ServerResponse extends JsonSerializable
       case r'PlayerLeft':
         return (this as GameMessages$Subscription$ServerResponse$PlayerLeft)
             .toJson();
+      case r'PlayerRemoved':
+        return (this as GameMessages$Subscription$ServerResponse$PlayerRemoved)
+            .toJson();
       case r'GameMessage':
         return (this as GameMessages$Subscription$ServerResponse$GameMessage)
             .toJson();
@@ -1123,6 +1184,21 @@ class GameMessages$Subscription extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [serverMessages];
   @override
   Map<String, dynamic> toJson() => _$GameMessages$SubscriptionToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Disconnect$MutationRoot extends JsonSerializable with EquatableMixin {
+  Disconnect$MutationRoot();
+
+  factory Disconnect$MutationRoot.fromJson(Map<String, dynamic> json) =>
+      _$Disconnect$MutationRootFromJson(json);
+
+  late String disconnect;
+
+  @override
+  List<Object?> get props => [disconnect];
+  @override
+  Map<String, dynamic> toJson() => _$Disconnect$MutationRootToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -2055,6 +2131,34 @@ final GAME_MESSAGES_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
               InlineFragmentNode(
                   typeCondition: TypeConditionNode(
                       on: NamedTypeNode(
+                          name: NameNode(value: 'PlayerRemoved'),
+                          isNonNull: false)),
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'player'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FragmentSpreadNode(
+                              name: NameNode(value: 'playerFields'),
+                              directives: [])
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'room'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FragmentSpreadNode(
+                              name: NameNode(value: 'roomFields'),
+                              directives: [])
+                        ]))
+                  ])),
+              InlineFragmentNode(
+                  typeCondition: TypeConditionNode(
+                      on: NamedTypeNode(
                           name: NameNode(value: 'GameMessage'),
                           isNonNull: false)),
                   directives: [],
@@ -2176,4 +2280,78 @@ class GameMessagesSubscription
   @override
   GameMessages$Subscription parse(Map<String, dynamic> json) =>
       GameMessages$Subscription.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class DisconnectArguments extends JsonSerializable with EquatableMixin {
+  DisconnectArguments({this.playerId, this.roomId});
+
+  @override
+  factory DisconnectArguments.fromJson(Map<String, dynamic> json) =>
+      _$DisconnectArgumentsFromJson(json);
+
+  final String? playerId;
+
+  final String? roomId;
+
+  @override
+  List<Object?> get props => [playerId, roomId];
+  @override
+  Map<String, dynamic> toJson() => _$DisconnectArgumentsToJson(this);
+}
+
+final DISCONNECT_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'disconnect'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'playerId')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'String'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'roomId')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'String'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'disconnect'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'playerId'),
+                  value: VariableNode(name: NameNode(value: 'playerId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'roomId'),
+                  value: VariableNode(name: NameNode(value: 'roomId')))
+            ],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class DisconnectMutation
+    extends GraphQLQuery<Disconnect$MutationRoot, DisconnectArguments> {
+  DisconnectMutation({required this.variables});
+
+  @override
+  final DocumentNode document = DISCONNECT_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'disconnect';
+
+  @override
+  final DisconnectArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  Disconnect$MutationRoot parse(Map<String, dynamic> json) =>
+      Disconnect$MutationRoot.fromJson(json);
 }
