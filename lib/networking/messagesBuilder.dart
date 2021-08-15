@@ -113,7 +113,17 @@ class _GameMessageBuilderState extends State<GameMessageBuilder> {
           }
           return Container(
             child: Center(
-              child: Text("NOTHING"),
+              child: Column(
+                children: [
+                  CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  Text(
+                    "Bingo is Tingoing",
+                    style: Theme.of(context).textTheme.headline3,
+                  )
+                ],
+              ),
             ),
           );
         },
