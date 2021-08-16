@@ -2,7 +2,6 @@ import 'package:bingo/api/api.dart';
 import 'package:bingo/networking/clientProvider.dart';
 import 'package:bingo/screens/board_builder.dart';
 import 'package:bingo/screens/game_board.dart';
-import 'package:bingo/screens/lobby.dart';
 import 'package:bingo/screens/players.dart';
 import 'package:flutter/material.dart';
 
@@ -12,19 +11,26 @@ class Game extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isScreenWide = MediaQuery.of(context).size.width >= 768;
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Center(
+          child: Text(
+            "Room ${this.room.id}",
+            style: Theme.of(context).textTheme.headline6,
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ),
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SelectableText(
-              "Room ${this.room.id}",
-              style: Theme.of(context).textTheme.headline4,
-              textAlign: TextAlign.center,
-            ),
             Expanded(
-              child: Row(
+              child: Flex(
+                direction: isScreenWide ? Axis.horizontal : Axis.vertical,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Expanded(
@@ -33,6 +39,9 @@ class Game extends StatelessWidget {
                       players: room.players,
                       ranks: (room.state as RoomFieldsMixin$RoomState$GameData)
                           .leaderboard,
+                      onKickPlayer: (playerId) async {
+                        GameClient.of(context)?.kick(room.id, playerId);
+                      },
                     ),
                   ),
                   Expanded(

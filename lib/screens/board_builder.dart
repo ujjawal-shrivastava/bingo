@@ -30,9 +30,11 @@ class _BoardBuilderState extends State<BoardBuilder> {
 
   @override
   Widget build(BuildContext context) {
+    bool isScreenWide = MediaQuery.of(context).size.width >= 768;
     return Container(
-      padding: EdgeInsets.all(40),
-      child: Row(
+      padding: EdgeInsets.all(20),
+      child: Flex(
+        direction: isScreenWide ? Axis.horizontal : Axis.vertical,
         children: [
           Expanded(
             child: Align(
@@ -87,15 +89,20 @@ class _BoardBuilderState extends State<BoardBuilder> {
               ),
             ),
           ),
-          Column(
-            children: [
-              IconButton(onPressed: refresh, icon: Icon(Icons.refresh)),
-              IconButton(onPressed: shuffle, icon: Icon(Icons.shuffle)),
-              IconButton(
-                onPressed: isComplete ? submit : null,
-                icon: Icon(Icons.check),
-              ),
-            ],
+          Container(
+            margin: EdgeInsets.only(bottom: 20),
+            child: Flex(
+              direction: isScreenWide ? Axis.vertical : Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(onPressed: refresh, icon: Icon(Icons.refresh)),
+                IconButton(onPressed: shuffle, icon: Icon(Icons.shuffle)),
+                IconButton(
+                  onPressed: isComplete ? submit : null,
+                  icon: Icon(Icons.check),
+                ),
+              ],
+            ),
           )
         ],
       ),

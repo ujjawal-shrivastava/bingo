@@ -93,21 +93,41 @@ class _GameMessageBuilderState extends State<GameMessageBuilder> {
                   is GameMessages$Subscription$ServerResponse$PlayerLeft) {
                 room = message.room;
               } else if (message
+                  is GameMessages$Subscription$ServerResponse$PlayerRemoved) {
+                room = message.room;
+              } else if (message
                   is GameMessages$Subscription$ServerResponse$GameMessage) {
                 room = message.room;
               }
               if (room != null) {
                 if (room.state is RoomFieldsMixin$RoomState$LobbyData) {
-                  return Room(room: room);
+                  return Room(
+                    key: Key(room.id),
+                    room: room,
+                  );
                 } else {
                   return Game(room: room);
                 }
               }
             }
           }
-          return Container(
-            child: Center(
-              child: Text("NOTHING"),
+          return Scaffold(
+            body: Container(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      valueColor:
+                          AlwaysStoppedAnimation(Theme.of(context).buttonColor),
+                    ),
+                    Text(
+                      "Bingo is Tingoing",
+                      style: Theme.of(context).textTheme.headline3,
+                    )
+                  ],
+                ),
+              ),
             ),
           );
         },

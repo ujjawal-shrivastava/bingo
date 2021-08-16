@@ -101,6 +101,14 @@ subscription gameMessages($roomId: String, $playerId: String) {
         ...roomFields
       }
     }
+    ... on PlayerRemoved {
+      player {
+        ...playerFields
+      }
+      room {
+        ...roomFields
+      }
+    }
     ... on GameMessage {
       room {
         ...roomFields

@@ -702,6 +702,68 @@ Map<String, dynamic>
           'room': instance.room.toJson(),
         };
 
+GameMessages$Subscription$ServerResponse$PlayerRemoved$Player
+    _$GameMessages$Subscription$ServerResponse$PlayerRemoved$PlayerFromJson(
+        Map<String, dynamic> json) {
+  return GameMessages$Subscription$ServerResponse$PlayerRemoved$Player()
+    ..id = json['id'] as String
+    ..name = json['name'] as String;
+}
+
+Map<String, dynamic>
+    _$GameMessages$Subscription$ServerResponse$PlayerRemoved$PlayerToJson(
+            GameMessages$Subscription$ServerResponse$PlayerRemoved$Player
+                instance) =>
+        <String, dynamic>{
+          'id': instance.id,
+          'name': instance.name,
+        };
+
+GameMessages$Subscription$ServerResponse$PlayerRemoved$Room
+    _$GameMessages$Subscription$ServerResponse$PlayerRemoved$RoomFromJson(
+        Map<String, dynamic> json) {
+  return GameMessages$Subscription$ServerResponse$PlayerRemoved$Room()
+    ..id = json['id'] as String
+    ..players = (json['players'] as List<dynamic>)
+        .map((e) =>
+            RoomFieldsMixin$CommonPlayer.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..state = RoomFieldsMixin$RoomState.fromJson(
+        json['state'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic>
+    _$GameMessages$Subscription$ServerResponse$PlayerRemoved$RoomToJson(
+            GameMessages$Subscription$ServerResponse$PlayerRemoved$Room
+                instance) =>
+        <String, dynamic>{
+          'id': instance.id,
+          'players': instance.players.map((e) => e.toJson()).toList(),
+          'state': instance.state.toJson(),
+        };
+
+GameMessages$Subscription$ServerResponse$PlayerRemoved
+    _$GameMessages$Subscription$ServerResponse$PlayerRemovedFromJson(
+        Map<String, dynamic> json) {
+  return GameMessages$Subscription$ServerResponse$PlayerRemoved()
+    ..$$typename = json['__typename'] as String?
+    ..player =
+        GameMessages$Subscription$ServerResponse$PlayerRemoved$Player.fromJson(
+            json['player'] as Map<String, dynamic>)
+    ..room =
+        GameMessages$Subscription$ServerResponse$PlayerRemoved$Room.fromJson(
+            json['room'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic>
+    _$GameMessages$Subscription$ServerResponse$PlayerRemovedToJson(
+            GameMessages$Subscription$ServerResponse$PlayerRemoved instance) =>
+        <String, dynamic>{
+          '__typename': instance.$$typename,
+          'player': instance.player.toJson(),
+          'room': instance.room.toJson(),
+        };
+
 GameMessages$Subscription$ServerResponse$GameMessage$Room
     _$GameMessages$Subscription$ServerResponse$GameMessage$RoomFromJson(
         Map<String, dynamic> json) {
@@ -895,6 +957,17 @@ Map<String, dynamic> _$GameMessages$SubscriptionToJson(
       'serverMessages': instance.serverMessages.toJson(),
     };
 
+Disconnect$MutationRoot _$Disconnect$MutationRootFromJson(
+    Map<String, dynamic> json) {
+  return Disconnect$MutationRoot()..disconnect = json['disconnect'] as String;
+}
+
+Map<String, dynamic> _$Disconnect$MutationRootToJson(
+        Disconnect$MutationRoot instance) =>
+    <String, dynamic>{
+      'disconnect': instance.disconnect,
+    };
+
 CreateLobbyArguments _$CreateLobbyArgumentsFromJson(Map<String, dynamic> json) {
   return CreateLobbyArguments(
     playerId: json['playerId'] as String?,
@@ -986,4 +1059,18 @@ Map<String, dynamic> _$GameMessagesArgumentsToJson(
     <String, dynamic>{
       'roomId': instance.roomId,
       'playerId': instance.playerId,
+    };
+
+DisconnectArguments _$DisconnectArgumentsFromJson(Map<String, dynamic> json) {
+  return DisconnectArguments(
+    playerId: json['playerId'] as String?,
+    roomId: json['roomId'] as String?,
+  );
+}
+
+Map<String, dynamic> _$DisconnectArgumentsToJson(
+        DisconnectArguments instance) =>
+    <String, dynamic>{
+      'playerId': instance.playerId,
+      'roomId': instance.roomId,
     };

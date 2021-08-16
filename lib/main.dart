@@ -8,8 +8,8 @@ import 'package:localstorage/localstorage.dart';
 import 'package:uuid/uuid.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'api/api.dart';
-import 'networking/messagesBuilder.dart';
 import 'screens/home.dart';
+import 'widgets/ping_indicator.dart';
 
 void main() async {
   var playerId = Uuid().v4();
@@ -46,6 +46,9 @@ class _MyAppState extends State<MyApp> {
       ),
     ),
   );
+
+  var ping = ValueNotifier<int?>(null);
+
   @override
   void initState() {
     super.initState();
@@ -55,10 +58,15 @@ class _MyAppState extends State<MyApp> {
 
   pingLoop() async {
     while (true) {
-      await Future.delayed(Duration(seconds: 3));
+      await Future.delayed(Duration(seconds: 1));
+      var tim = DateTime.now();
       try {
-        await client.execute(PingQuery());
+        await client.execute(PingQuery()).timeout(Duration(seconds: 5));
+        var cping = DateTime.now().difference(tim);
+        print("Ping ${cping.inMilliseconds}ms");
+        ping.value = cping.inMilliseconds;
       } catch (e) {
+        ping.value = null;
         print('Error $e');
       }
     }
@@ -71,27 +79,43 @@ class _MyAppState extends State<MyApp> {
       playerId: widget.playerId,
       artemisClient: client,
       child: MaterialApp(
-        title: 'Bingo Tingo',
-        routes: {
-          '/': (context) => Home(),
-        },
-        onGenerateRoute: (settings) {
-          var reg = RegExp(r'\/room\/(\w+)');
-          print("Room Path ${settings.name}");
-          var roomId = reg.firstMatch(settings.name ?? '');
-          if (roomId != null) {
-            print("RoomId $roomId");
-            return MaterialPageRoute(
-              builder: (context) => Home(
-                initialRoomId: roomId.group(1) ?? '',
-              ),
+        home: MaterialApp(
+          title: 'Bingo Tingo',
+          routes: {
+            '/': (context) => Home(),
+          },
+          builder: (context, child) {
+            return Stack(
+              children: [
+                if (child != null) child,
+                Positioned(
+                  right: 10,
+                  top: 10,
+                  child: PingIndicator(
+                    ping: ping,
+                  ),
+                ),
+              ],
             );
-          }
-        },
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-          fontFamily: 'Lato',
-          brightness: Brightness.dark,
+          },
+          onGenerateRoute: (settings) {
+            var reg = RegExp(r'\/room\/(\w+)');
+            print("Room Path ${settings.name}");
+            var roomId = reg.firstMatch(settings.name ?? '');
+            if (roomId != null) {
+              print("RoomId $roomId");
+              return MaterialPageRoute(
+                builder: (context) => Home(
+                  initialRoomId: roomId.group(1) ?? '',
+                ),
+              );
+            }
+          },
+          theme: ThemeData(
+            primarySwatch: Colors.green,
+            fontFamily: 'Lato',
+            brightness: Brightness.dark,
+          ),
         ),
       ),
     );
