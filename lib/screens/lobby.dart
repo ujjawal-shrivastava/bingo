@@ -23,12 +23,27 @@ class _RoomState extends State<Room> {
         showDialog(
           context: context,
           builder: (context) => Dialog(
-            child: ResultDialog(
-              result: LastGameResult(
-                lastgame:
-                    (widget.room.state as RoomFieldsMixin$RoomState$LobbyData)
+            child: Stack(
+              fit: StackFit.passthrough,
+              children: [
+                ResultDialog(
+                  result: LastGameResult(
+                    lastgame: (widget.room.state
+                            as RoomFieldsMixin$RoomState$LobbyData)
                         .lastGame!,
-              ),
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: Icon(Icons.close),
+                  ),
+                )
+              ],
             ),
           ),
         );
