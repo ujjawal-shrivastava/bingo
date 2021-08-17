@@ -5,6 +5,7 @@ import 'package:bingo/networking/clientProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:gql_websocket_link/gql_websocket_link.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:url_strategy/url_strategy.dart';
 import 'package:uuid/uuid.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'api/api.dart';
@@ -16,6 +17,7 @@ void main() async {
   final storage = new LocalStorage('storage', null, {'player_id': playerId});
   await storage.ready;
   playerId = storage.getItem('player_id') ?? playerId;
+  setPathUrlStrategy();
   runApp(
     MyApp(
       storage: storage,
