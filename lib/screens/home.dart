@@ -84,7 +84,7 @@ class _HomeState extends State<Home> {
                                   settings:
                                       RouteSettings(name: '/room/$roomId'),
                                   builder: (context) => GameMessageBuilder(
-                                      key: roomId,
+                                      key: Key(roomId),
                                       roomId: roomId,
                                       playerId:
                                           GameClient.of(context)?.playerId ??
