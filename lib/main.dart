@@ -102,9 +102,10 @@ class _MyAppState extends State<MyApp> {
           print("Room Path ${settings.name}");
           var roomId = reg.firstMatch(settings.name ?? '');
           if (roomId != null) {
-            print("RoomId $roomId");
+            print("RoomId ${roomId.group(0)}");
             return MaterialPageRoute(
               builder: (context) => Home(
+                key: Key(roomId.group(1) ?? ''),
                 initialRoomId: roomId.group(1) ?? '',
               ),
             );
