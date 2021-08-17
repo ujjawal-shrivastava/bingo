@@ -79,43 +79,41 @@ class _MyAppState extends State<MyApp> {
       playerId: widget.playerId,
       artemisClient: client,
       child: MaterialApp(
-        home: MaterialApp(
-          title: 'Bingo Tingo',
-          routes: {
-            '/': (context) => Home(),
-          },
-          builder: (context, child) {
-            return Stack(
-              children: [
-                if (child != null) child,
-                Positioned(
-                  right: 10,
-                  top: 10,
-                  child: PingIndicator(
-                    ping: ping,
-                  ),
+        title: 'Bingo Tingo',
+        routes: {
+          '/': (context) => Home(),
+        },
+        builder: (context, child) {
+          return Stack(
+            children: [
+              if (child != null) child,
+              Positioned(
+                right: 10,
+                top: 10,
+                child: PingIndicator(
+                  ping: ping,
                 ),
-              ],
+              ),
+            ],
+          );
+        },
+        onGenerateRoute: (settings) {
+          var reg = RegExp(r'\/room\/(\w+)');
+          print("Room Path ${settings.name}");
+          var roomId = reg.firstMatch(settings.name ?? '');
+          if (roomId != null) {
+            print("RoomId $roomId");
+            return MaterialPageRoute(
+              builder: (context) => Home(
+                initialRoomId: roomId.group(1) ?? '',
+              ),
             );
-          },
-          onGenerateRoute: (settings) {
-            var reg = RegExp(r'\/room\/(\w+)');
-            print("Room Path ${settings.name}");
-            var roomId = reg.firstMatch(settings.name ?? '');
-            if (roomId != null) {
-              print("RoomId $roomId");
-              return MaterialPageRoute(
-                builder: (context) => Home(
-                  initialRoomId: roomId.group(1) ?? '',
-                ),
-              );
-            }
-          },
-          theme: ThemeData(
-            primarySwatch: Colors.green,
-            fontFamily: 'Lato',
-            brightness: Brightness.dark,
-          ),
+          }
+        },
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+          fontFamily: 'Lato',
+          brightness: Brightness.dark,
         ),
       ),
     );
