@@ -37,6 +37,7 @@ dependencies:
   multiavatar: ^0.1.5
   websafe_svg: ^2.0.0
   url_strategy: ^0.2.0
+  share_plus: ^2.1.4
 
 dev_dependencies:
   flutter_test:
