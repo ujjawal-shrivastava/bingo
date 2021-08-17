@@ -36,6 +36,18 @@ class _GameBoardState extends State<GameBoard> {
 
   @override
   Widget build(BuildContext context) {
+    Color getCellColor(int value) {
+      if (widget.selectedCells.isNotEmpty &&
+          widget.selectedCells.last.cellValue == value) {
+        return Colors.deepOrange;
+      } else if (widget.selectedCells
+          .any((element) => element.cellValue == value)) {
+        return Colors.yellow;
+      } else {
+        return Colors.grey.withOpacity(0.3);
+      }
+    }
+
     return Container(
       padding: EdgeInsets.all(20),
       child: Column(
@@ -102,10 +114,7 @@ class _GameBoardState extends State<GameBoard> {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                color: widget.selectedCells.any(
-                                        (element) => element.cellValue == e)
-                                    ? Colors.yellow
-                                    : Colors.grey.withOpacity(0.3),
+                                color: getCellColor(e),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               margin: EdgeInsets.all(10),

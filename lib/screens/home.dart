@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
   final String initialRoomId;
-  Home({this.initialRoomId = ''});
+  Home({this.initialRoomId = '', Key? key}) : super(key: key);
   @override
   _HomeState createState() => _HomeState();
 }
@@ -81,7 +81,9 @@ class _HomeState extends State<Home> {
                             if (roomId != null) {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
+                                  settings: RouteSettings(name: '/$roomId'),
                                   builder: (context) => GameMessageBuilder(
+                                      key: Key(roomId),
                                       roomId: roomId,
                                       playerId:
                                           GameClient.of(context)?.playerId ??
