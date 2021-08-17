@@ -1,9 +1,13 @@
+import 'dart:ui';
+
 import 'package:bingo/api/api.dart';
 import 'package:bingo/networking/clientProvider.dart';
 import 'package:bingo/screens/players.dart';
 import 'package:bingo/widgets/game_result.dart';
 import 'package:clipboard/clipboard.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Room extends StatefulWidget {
   final RoomFieldsMixin room;
@@ -61,17 +65,55 @@ class _RoomState extends State<Room> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Center(
-            child: InkWell(
-              onTap: () => FlutterClipboard.copy(this.widget.room.id.toString())
-                  .then((value) => showSnack(context, "Copied Room Code!")),
-              child: Text(
-                "Room ${this.widget.room.id}",
-                style: Theme.of(context).textTheme.headline6,
-                textAlign: TextAlign.center,
+          title: Stack(alignment: AlignmentDirectional.centerStart, children: [
+            Positioned(
+                child: Opacity(
+              opacity: 0.8,
+              child: InkWell(
+                onTap: () => {
+                  Share.share(kIsWeb
+                      ? "Join me for a quick game at : ${Uri.base}"
+                      : this.widget.room.id.toString())
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(5)),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(right: 3),
+                          child: Icon(Icons.add,
+                              color:
+                                  Theme.of(context).textTheme.bodyText1?.color,
+                              size: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  ?.fontSize)),
+                      Text(
+                        "Invite",
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )),
+            Center(
+              child: InkWell(
+                onTap: () =>
+                    FlutterClipboard.copy(this.widget.room.id.toString()).then(
+                        (value) => showSnack(context, "Copied Room Code!")),
+                child: Text(
+                  "Room ${this.widget.room.id}",
+                  style: Theme.of(context).textTheme.headline6,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-          ),
+          ]),
         ),
         body: SafeArea(
           child: Container(
