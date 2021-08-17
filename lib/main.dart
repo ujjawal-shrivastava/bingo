@@ -98,7 +98,7 @@ class _MyAppState extends State<MyApp> {
           );
         },
         onGenerateRoute: (settings) {
-          var reg = RegExp(r'\/room\/(\w+)');
+          var reg = RegExp(r'\/(\w+)');
           print("Room Path ${settings.name}");
           var roomId = reg.firstMatch(settings.name ?? '');
           if (roomId != null) {

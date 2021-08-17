@@ -81,8 +81,7 @@ class _HomeState extends State<Home> {
                             if (roomId != null) {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  settings:
-                                      RouteSettings(name: '/room/$roomId'),
+                                  settings: RouteSettings(name: '/$roomId'),
                                   builder: (context) => GameMessageBuilder(
                                       key: Key(roomId),
                                       roomId: roomId,
