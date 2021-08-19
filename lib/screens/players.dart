@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:bingo/networking/clientProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:multiavatar/multiavatar.dart';
 import 'package:websafe_svg/websafe_svg.dart';
@@ -137,7 +136,7 @@ class CommonPlayerWidget extends StatelessWidget {
     return Stack(
       children: [
         Opacity(
-          opacity: player.isConnected ? 1 : 0.5,
+          opacity: player.isConnected ? 1 : 0.2,
           child: Column(
             children: [
               Stack(
@@ -195,54 +194,106 @@ class CommonPlayerWidget extends StatelessWidget {
         ),
         if (!player.isConnected)
           Positioned.fill(
-            child: InkWell(
-              onTap: () async {
-                var shouldKick = await showDialog<bool>(
-                    context: context,
-                    builder: (context) => Dialog(
-                          child: Column(
-                            // crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(top: 20),
-                                child: Icon(Icons.person_remove,
-                                    color: Colors.red),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(vertical: 10),
-                                child: Text(
-                                  'Kick ${playerFieldsOfCommonPlayer(player).name}',
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 5),
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop(true);
-                                  },
-                                  child: Text('Confirm'),
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: 5),
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop(false);
-                                  },
-                                  child: Text('Cancel'),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ));
-                if (shouldKick == true) {
-                  onKickPlayer(playerFieldsOfCommonPlayer(player).id);
-                }
-              },
-              child: Center(
-                child: Icon(Icons.person_remove, color: Colors.red),
+            bottom: 24,
+            child: Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.transparent),
+              child: InkWell(
+                onTap: () async {
+                  var shouldKick = await showDialog<bool>(
+                      context: context,
+                      builder: (context) => Dialog(
+                            child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    width: double.infinity,
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 15, vertical: 15),
+                                    decoration: BoxDecoration(
+                                        color:
+                                            Theme.of(context).primaryColorDark),
+                                    child: Text(
+                                      "Kick Player?",
+                                      style:
+                                          Theme.of(context).textTheme.headline6,
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 30, vertical: 50),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          child: Icon(
+                                            Icons.person_remove,
+                                            color: Colors.red,
+                                            size: 60,
+                                          ),
+                                        ),
+                                        Container(
+                                          child: Text(
+                                            'Are you sure you want to kick "${playerFieldsOfCommonPlayer(player).name}" out of this room?',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1,
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container()
+                                ]),
+                            // child: Column(
+                            //   mainAxisSize: MainAxisSize.min,
+                            //   children: [
+                            //     Container(
+                            //       margin: EdgeInsets.only(top: 20),
+                            //       child: Icon(Icons.person_remove,
+                            //           color: Colors.red),
+                            //     ),
+                            //     Container(
+                            //       margin: EdgeInsets.symmetric(vertical: 10),
+                            //       child: Text(
+                            //         'Kick ${playerFieldsOfCommonPlayer(player).name}',
+                            //         textAlign: TextAlign.center,
+                            //       ),
+                            //     ),
+                            //     Container(
+                            //       margin: EdgeInsets.only(top: 5),
+                            //       child: ElevatedButton(
+                            //         onPressed: () {
+                            //           Navigator.of(context).pop(true);
+                            //         },
+                            //         child: Text('Confirm'),
+                            //       ),
+                            //     ),
+                            //     Container(
+                            //       margin: EdgeInsets.only(top: 5),
+                            //       child: TextButton(
+                            //         onPressed: () {
+                            //           Navigator.of(context).pop(false);
+                            //         },
+                            //         child: Text('Cancel'),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
+                          ));
+                  if (shouldKick == true) {
+                    onKickPlayer(playerFieldsOfCommonPlayer(player).id);
+                  }
+                },
+                child: Center(
+                  child: Container(
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.black.withOpacity(0.5)),
+                      child: Icon(Icons.person_remove, color: Colors.white)),
+                ),
               ),
             ),
           ),
