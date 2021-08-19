@@ -73,7 +73,7 @@ class _RoomState extends State<Room> {
                 onTap: () => {
                   Share.share(kIsWeb
                       ? "Join me for a quick game at : ${Uri.base}"
-                      : this.widget.room.id.toString())
+                      : this.widget.room.id)
                 },
                 child: Container(
                   decoration: BoxDecoration(
@@ -92,10 +92,9 @@ class _RoomState extends State<Room> {
                                   .textTheme
                                   .bodyText1
                                   ?.fontSize)),
-                      Text(
-                        "Invite",
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
+                      Text("Invite",
+                          style: Theme.of(context).textTheme.bodyText1,
+                          overflow: TextOverflow.visible),
                     ],
                   ),
                 ),
