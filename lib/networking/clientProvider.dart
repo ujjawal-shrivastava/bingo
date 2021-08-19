@@ -12,7 +12,11 @@ class GameClient extends InheritedWidget {
 
   final String playerId;
 
-  final TextEditingController playerName = TextEditingController();
+  late final String initialPlayerName =
+      localStorage.getItem('player_name') ?? "";
+
+  late final TextEditingController playerName =
+      TextEditingController(text: initialPlayerName);
 
   GameClient(
       {Key? key,
@@ -41,6 +45,7 @@ class GameClient extends InheritedWidget {
       throw "Name empty";
     }
     print("Create room player $playerId");
+    localStorage.setItem('player_name', playerName.text);
 
     var createLobby = CreateLobbyMutation(
       variables: CreateLobbyArguments(
@@ -69,6 +74,7 @@ class GameClient extends InheritedWidget {
       ),
     );
     print("Joining Room $roomId player $playerId");
+    localStorage.setItem('player_name', playerName.text);
     var result = await artemisClient.execute(createLobby);
     print("Inside here!");
     if (result.data?.joinLobby == null) {
