@@ -205,83 +205,122 @@ class CommonPlayerWidget extends StatelessWidget {
                   var shouldKick = await showDialog<bool>(
                       context: context,
                       builder: (context) => Dialog(
-                            child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    width: double.infinity,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 15),
-                                    decoration: BoxDecoration(
-                                        color:
-                                            Theme.of(context).primaryColorDark),
-                                    child: Text(
-                                      "Kick Player?",
-                                      style:
-                                          Theme.of(context).textTheme.headline6,
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 30, vertical: 50),
-                                    child: Row(
+                              child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                constraints: BoxConstraints(maxWidth: 500),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(4),
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          child: Icon(
-                                            Icons.person_remove,
-                                            color: Colors.red,
-                                            size: 60,
+                                          padding: EdgeInsets.all(30),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.person_remove,
+                                                size: Theme.of(context)
+                                                    .textTheme
+                                                    .headline2
+                                                    ?.fontSize,
+                                              ),
+                                              SizedBox(height: 16),
+                                              Text("Are You Sure?",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline5),
+                                              SizedBox(height: 10),
+                                              Text(
+                                                  "You are about to kick ${playerFieldsOfCommonPlayer(player).name} out of the room. Are you sure about that?",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1,
+                                                  textAlign: TextAlign.center),
+                                            ],
                                           ),
                                         ),
-                                        Container(
-                                          child: Text(
-                                            'Are you sure you want to kick "${playerFieldsOfCommonPlayer(player).name}" out of this room?',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container()
-                                ]),
-                            // child: Column(
-                            //   mainAxisSize: MainAxisSize.min,
-                            //   children: [
-                            //     Container(
-                            //       margin: EdgeInsets.only(top: 20),
-                            //       child: Icon(Icons.person_remove,
-                            //           color: Colors.red),
-                            //     ),
-                            //     Container(
-                            //       margin: EdgeInsets.symmetric(vertical: 10),
-                            //       child: Text(
-                            //         'Kick ${playerFieldsOfCommonPlayer(player).name}',
-                            //         textAlign: TextAlign.center,
-                            //       ),
-                            //     ),
-                            //     Container(
-                            //       margin: EdgeInsets.only(top: 5),
-                            //       child: ElevatedButton(
-                            //         onPressed: () {
-                            //           Navigator.of(context).pop(true);
-                            //         },
-                            //         child: Text('Confirm'),
-                            //       ),
-                            //     ),
-                            //     Container(
-                            //       margin: EdgeInsets.only(top: 5),
-                            //       child: TextButton(
-                            //         onPressed: () {
-                            //           Navigator.of(context).pop(false);
-                            //         },
-                            //         child: Text('Cancel'),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-                          ));
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                                child: InkWell(
+                                              onTap: () => Navigator.of(context)
+                                                  .pop(false),
+                                              child: Container(
+                                                padding: EdgeInsets.all(18),
+                                                color: Theme.of(context)
+                                                    .dividerColor,
+                                                child: Center(
+                                                    child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.clear,
+                                                      size: Theme.of(context)
+                                                          .textTheme
+                                                          .subtitle1
+                                                          ?.fontSize,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    Text(
+                                                      "Cancel",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .subtitle1,
+                                                    ),
+                                                  ],
+                                                )),
+                                              ),
+                                            )),
+                                            Expanded(
+                                                child: InkWell(
+                                              onTap: () => Navigator.of(context)
+                                                  .pop(true),
+                                              child: Container(
+                                                padding: EdgeInsets.all(18),
+                                                color: Theme.of(context)
+                                                    .errorColor,
+                                                child: Center(
+                                                    child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.block,
+                                                      size: Theme.of(context)
+                                                          .textTheme
+                                                          .subtitle1
+                                                          ?.fontSize,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    Text(
+                                                      "Kick",
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .subtitle1,
+                                                    ),
+                                                  ],
+                                                )),
+                                              ),
+                                            ))
+                                          ],
+                                        ),
+                                        //
+                                      ]),
+                                ),
+                              ),
+                            ],
+                          )));
                   if (shouldKick == true) {
                     onKickPlayer(playerFieldsOfCommonPlayer(player).id);
                   }
