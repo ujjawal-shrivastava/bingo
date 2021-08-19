@@ -1,6 +1,7 @@
 import 'package:bingo/networking/clientProvider.dart';
 import 'package:bingo/networking/messagesBuilder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Home extends StatefulWidget {
   final String initialRoomId;
@@ -49,6 +50,9 @@ class _HomeState extends State<Home> {
                   ),
                   child: TextField(
                     textCapitalization: TextCapitalization.characters,
+                    inputFormatters: [
+                      UpperCaseTextFormatter(),
+                    ],
                     controller: roomIdController,
                     decoration: InputDecoration(
                       labelText: 'Room Id',
@@ -108,5 +112,14 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+}
+
+class UpperCaseTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    return TextEditingValue(
+        text: newValue.text.toUpperCase(), selection: newValue.selection);
   }
 }
