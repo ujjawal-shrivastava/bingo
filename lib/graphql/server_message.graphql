@@ -8,9 +8,14 @@ fragment roomFields on Room {
     isConnected
     __typename
     ... on GamePlayer {
-      board {
-        numbers
-        score(roomId: $roomId)
+      data {
+        __typename
+        ... on BingoPlayerData {
+          board {
+            numbers
+            score(roomId: $roomId)
+          }
+        }
       }
       player {
         ...playerFields
@@ -52,21 +57,31 @@ fragment roomFields on Room {
         player {
           ...playerFields
         }
-        board {
-          numbers
+        data {
+          __typename
+          ... on BingoPlayerData {
+            board {
+              numbers
+            }
+          }
         }
       }
-      boardSize
-      gameState {
+      game {
         __typename
-        ... on BoardCreation {
-          ready
-        }
-        ... on GameRunning {
-          turn
-          selectedNumbers {
-            selectedBy
-            cellValue
+        ... on Bingo {
+          boardSize
+          gameState {
+            __typename
+            ... on BoardCreation {
+              ready
+            }
+            ... on GameRunning {
+              turn
+              selectedNumbers {
+                selectedBy
+                cellValue
+              }
+            }
           }
         }
       }
@@ -74,7 +89,7 @@ fragment roomFields on Room {
   }
 }
 
-subscription gameMessages($roomId: String, $playerId: String) {
+subscription gameMessages($roomId: String!, $playerId: String!) {
   serverMessages(roomId: $roomId, playerId: $playerId) {
     __typename
     ... on PlayerJoined {
@@ -116,14 +131,8 @@ subscription gameMessages($roomId: String, $playerId: String) {
       event {
         __typename
         ... on GameStarted {
-          gameState {
+          game{
             __typename
-            ... on BoardCreation {
-              ready
-            }
-            ... on GameRunning {
-              turn
-            }
           }
         }
         ... on RoomUpdate {

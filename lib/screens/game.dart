@@ -63,15 +63,16 @@ class Game extends StatelessWidget {
 
   buildBoard(BuildContext context, GameClient gameClient,
       RoomFieldsMixin$RoomState$GameData roomState) {
-    if (roomState.gameState
-        is RoomFieldsMixin$RoomState$GameData$GameState$BoardCreation) {
+    if ((roomState.game as RoomFieldsMixin$RoomState$GameData$Game$Bingo)
+            .gameState
+        is RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$BoardCreation) {
       return BoardBuilder(
         onReadyBoard: (board) async {
           print("Ready board $board ${gameClient.playerId}");
 
           var response = await gameClient.artemisClient.execute(
-            ReadyBoardQuery(
-              variables: ReadyBoardArguments(
+            BingoReadyBoardQuery(
+              variables: BingoReadyBoardArguments(
                 playerId: gameClient.playerId,
                 roomId: room.id,
                 board: board,
@@ -80,11 +81,15 @@ class Game extends StatelessWidget {
           );
           print("Board ready $response ${response.data} ${response.errors}");
         },
-        boardSize: roomState.boardSize,
+        boardSize:
+            (roomState.game as RoomFieldsMixin$RoomState$GameData$Game$Bingo)
+                .boardSize,
       );
     } else {
-      var gameRuningState = roomState.gameState
-          as RoomFieldsMixin$RoomState$GameData$GameState$GameRunning;
+      var gameRuningState = (roomState.game
+                  as RoomFieldsMixin$RoomState$GameData$Game$Bingo)
+              .gameState
+          as RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$GameRunning;
 
       var player = room.players.firstWhere((element) =>
               (element as RoomFieldsMixin$CommonPlayer$GamePlayer).player.id ==
@@ -97,7 +102,9 @@ class Game extends StatelessWidget {
 
       return GameBoard(
         selectedCells: gameRuningState.selectedNumbers,
-        board: player.board!,
+        board: (player.data
+                as RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData)
+            .board!,
         turnPlayer: turnPlayer,
         roomId: room.id,
       );

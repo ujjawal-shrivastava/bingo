@@ -1,3 +1,3 @@
-mutation createLobby($playerId: String, $playerName: String) {
+mutation createLobby($playerId: String!, $playerName: String!) {
   createLobby(playerId: $playerId, playerName: $playerName)
 }

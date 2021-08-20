@@ -19,74 +19,119 @@ Map<String, dynamic> _$CreateLobby$MutationRootToJson(
       'createLobby': instance.createLobby,
     };
 
-StartGame$QueryRoot$PlayerHandler _$StartGame$QueryRoot$PlayerHandlerFromJson(
-    Map<String, dynamic> json) {
-  return StartGame$QueryRoot$PlayerHandler()
+BingoStartGame$QueryRoot$GameInputs$BingoInputs
+    _$BingoStartGame$QueryRoot$GameInputs$BingoInputsFromJson(
+        Map<String, dynamic> json) {
+  return BingoStartGame$QueryRoot$GameInputs$BingoInputs()
     ..startGame = json['startGame'] as bool;
 }
 
-Map<String, dynamic> _$StartGame$QueryRoot$PlayerHandlerToJson(
-        StartGame$QueryRoot$PlayerHandler instance) =>
+Map<String, dynamic> _$BingoStartGame$QueryRoot$GameInputs$BingoInputsToJson(
+        BingoStartGame$QueryRoot$GameInputs$BingoInputs instance) =>
     <String, dynamic>{
       'startGame': instance.startGame,
     };
 
-StartGame$QueryRoot _$StartGame$QueryRootFromJson(Map<String, dynamic> json) {
-  return StartGame$QueryRoot()
-    ..gameEvent = StartGame$QueryRoot$PlayerHandler.fromJson(
+BingoStartGame$QueryRoot$GameInputs
+    _$BingoStartGame$QueryRoot$GameInputsFromJson(Map<String, dynamic> json) {
+  return BingoStartGame$QueryRoot$GameInputs()
+    ..bingoInputs = BingoStartGame$QueryRoot$GameInputs$BingoInputs.fromJson(
+        json['bingoInputs'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$BingoStartGame$QueryRoot$GameInputsToJson(
+        BingoStartGame$QueryRoot$GameInputs instance) =>
+    <String, dynamic>{
+      'bingoInputs': instance.bingoInputs.toJson(),
+    };
+
+BingoStartGame$QueryRoot _$BingoStartGame$QueryRootFromJson(
+    Map<String, dynamic> json) {
+  return BingoStartGame$QueryRoot()
+    ..gameEvent = BingoStartGame$QueryRoot$GameInputs.fromJson(
         json['gameEvent'] as Map<String, dynamic>);
 }
 
-Map<String, dynamic> _$StartGame$QueryRootToJson(
-        StartGame$QueryRoot instance) =>
+Map<String, dynamic> _$BingoStartGame$QueryRootToJson(
+        BingoStartGame$QueryRoot instance) =>
     <String, dynamic>{
       'gameEvent': instance.gameEvent.toJson(),
     };
 
-ReadyBoard$QueryRoot$PlayerHandler _$ReadyBoard$QueryRoot$PlayerHandlerFromJson(
-    Map<String, dynamic> json) {
-  return ReadyBoard$QueryRoot$PlayerHandler()
+BingoReadyBoard$QueryRoot$GameInputs$BingoInputs
+    _$BingoReadyBoard$QueryRoot$GameInputs$BingoInputsFromJson(
+        Map<String, dynamic> json) {
+  return BingoReadyBoard$QueryRoot$GameInputs$BingoInputs()
     ..readyBoard = json['readyBoard'] as bool;
 }
 
-Map<String, dynamic> _$ReadyBoard$QueryRoot$PlayerHandlerToJson(
-        ReadyBoard$QueryRoot$PlayerHandler instance) =>
+Map<String, dynamic> _$BingoReadyBoard$QueryRoot$GameInputs$BingoInputsToJson(
+        BingoReadyBoard$QueryRoot$GameInputs$BingoInputs instance) =>
     <String, dynamic>{
       'readyBoard': instance.readyBoard,
     };
 
-ReadyBoard$QueryRoot _$ReadyBoard$QueryRootFromJson(Map<String, dynamic> json) {
-  return ReadyBoard$QueryRoot()
-    ..gameEvent = ReadyBoard$QueryRoot$PlayerHandler.fromJson(
+BingoReadyBoard$QueryRoot$GameInputs
+    _$BingoReadyBoard$QueryRoot$GameInputsFromJson(Map<String, dynamic> json) {
+  return BingoReadyBoard$QueryRoot$GameInputs()
+    ..bingoInputs = BingoReadyBoard$QueryRoot$GameInputs$BingoInputs.fromJson(
+        json['bingoInputs'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$BingoReadyBoard$QueryRoot$GameInputsToJson(
+        BingoReadyBoard$QueryRoot$GameInputs instance) =>
+    <String, dynamic>{
+      'bingoInputs': instance.bingoInputs.toJson(),
+    };
+
+BingoReadyBoard$QueryRoot _$BingoReadyBoard$QueryRootFromJson(
+    Map<String, dynamic> json) {
+  return BingoReadyBoard$QueryRoot()
+    ..gameEvent = BingoReadyBoard$QueryRoot$GameInputs.fromJson(
         json['gameEvent'] as Map<String, dynamic>);
 }
 
-Map<String, dynamic> _$ReadyBoard$QueryRootToJson(
-        ReadyBoard$QueryRoot instance) =>
+Map<String, dynamic> _$BingoReadyBoard$QueryRootToJson(
+        BingoReadyBoard$QueryRoot instance) =>
     <String, dynamic>{
       'gameEvent': instance.gameEvent.toJson(),
     };
 
-PlayerMove$QueryRoot$PlayerHandler _$PlayerMove$QueryRoot$PlayerHandlerFromJson(
-    Map<String, dynamic> json) {
-  return PlayerMove$QueryRoot$PlayerHandler()
+BingoPlayerMov$QueryRoot$GameInputs$BingoInputs
+    _$BingoPlayerMov$QueryRoot$GameInputs$BingoInputsFromJson(
+        Map<String, dynamic> json) {
+  return BingoPlayerMov$QueryRoot$GameInputs$BingoInputs()
     ..playerMove = json['playerMove'] as bool;
 }
 
-Map<String, dynamic> _$PlayerMove$QueryRoot$PlayerHandlerToJson(
-        PlayerMove$QueryRoot$PlayerHandler instance) =>
+Map<String, dynamic> _$BingoPlayerMov$QueryRoot$GameInputs$BingoInputsToJson(
+        BingoPlayerMov$QueryRoot$GameInputs$BingoInputs instance) =>
     <String, dynamic>{
       'playerMove': instance.playerMove,
     };
 
-PlayerMove$QueryRoot _$PlayerMove$QueryRootFromJson(Map<String, dynamic> json) {
-  return PlayerMove$QueryRoot()
-    ..gameEvent = PlayerMove$QueryRoot$PlayerHandler.fromJson(
+BingoPlayerMov$QueryRoot$GameInputs
+    _$BingoPlayerMov$QueryRoot$GameInputsFromJson(Map<String, dynamic> json) {
+  return BingoPlayerMov$QueryRoot$GameInputs()
+    ..bingoInputs = BingoPlayerMov$QueryRoot$GameInputs$BingoInputs.fromJson(
+        json['bingoInputs'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$BingoPlayerMov$QueryRoot$GameInputsToJson(
+        BingoPlayerMov$QueryRoot$GameInputs instance) =>
+    <String, dynamic>{
+      'bingoInputs': instance.bingoInputs.toJson(),
+    };
+
+BingoPlayerMov$QueryRoot _$BingoPlayerMov$QueryRootFromJson(
+    Map<String, dynamic> json) {
+  return BingoPlayerMov$QueryRoot()
+    ..gameEvent = BingoPlayerMov$QueryRoot$GameInputs.fromJson(
         json['gameEvent'] as Map<String, dynamic>);
 }
 
-Map<String, dynamic> _$PlayerMove$QueryRootToJson(
-        PlayerMove$QueryRoot instance) =>
+Map<String, dynamic> _$BingoPlayerMov$QueryRootToJson(
+        BingoPlayerMov$QueryRoot instance) =>
     <String, dynamic>{
       'gameEvent': instance.gameEvent.toJson(),
     };
@@ -111,22 +156,69 @@ Map<String, dynamic> _$Ping$QueryRootToJson(Ping$QueryRoot instance) =>
       'ping': instance.ping,
     };
 
-RoomFieldsMixin$CommonPlayer$GamePlayer$Board
-    _$RoomFieldsMixin$CommonPlayer$GamePlayer$BoardFromJson(
+Disconnect$MutationRoot _$Disconnect$MutationRootFromJson(
+    Map<String, dynamic> json) {
+  return Disconnect$MutationRoot()..disconnect = json['disconnect'] as String;
+}
+
+Map<String, dynamic> _$Disconnect$MutationRootToJson(
+        Disconnect$MutationRoot instance) =>
+    <String, dynamic>{
+      'disconnect': instance.disconnect,
+    };
+
+RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData$Board
+    _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData$BoardFromJson(
         Map<String, dynamic> json) {
-  return RoomFieldsMixin$CommonPlayer$GamePlayer$Board()
+  return RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData$Board()
     ..numbers = (json['numbers'] as List<dynamic>)
         .map((e) => (e as List<dynamic>).map((e) => e as int).toList())
         .toList()
     ..score = json['score'] as int;
 }
 
-Map<String, dynamic> _$RoomFieldsMixin$CommonPlayer$GamePlayer$BoardToJson(
-        RoomFieldsMixin$CommonPlayer$GamePlayer$Board instance) =>
-    <String, dynamic>{
-      'numbers': instance.numbers,
-      'score': instance.score,
-    };
+Map<String, dynamic>
+    _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData$BoardToJson(
+            RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData$Board
+                instance) =>
+        <String, dynamic>{
+          'numbers': instance.numbers,
+          'score': instance.score,
+        };
+
+RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData
+    _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerDataFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData()
+    ..$$typename = json['__typename'] as String?
+    ..board = json['board'] == null
+        ? null
+        : RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData$Board
+            .fromJson(json['board'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic>
+    _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerDataToJson(
+            RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData
+                instance) =>
+        <String, dynamic>{
+          '__typename': instance.$$typename,
+          'board': instance.board?.toJson(),
+        };
+
+RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData
+    _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameDataFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData()
+    ..$$typename = json['__typename'] as String?;
+}
+
+Map<String, dynamic>
+    _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameDataToJson(
+            RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData instance) =>
+        <String, dynamic>{
+          '__typename': instance.$$typename,
+        };
 
 RoomFieldsMixin$CommonPlayer$GamePlayer$Player
     _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerFromJson(
@@ -149,10 +241,8 @@ RoomFieldsMixin$CommonPlayer$GamePlayer
   return RoomFieldsMixin$CommonPlayer$GamePlayer()
     ..isConnected = json['isConnected'] as bool
     ..$$typename = json['__typename'] as String?
-    ..board = json['board'] == null
-        ? null
-        : RoomFieldsMixin$CommonPlayer$GamePlayer$Board.fromJson(
-            json['board'] as Map<String, dynamic>)
+    ..data = RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData.fromJson(
+        json['data'] as Map<String, dynamic>)
     ..player = RoomFieldsMixin$CommonPlayer$GamePlayer$Player.fromJson(
         json['player'] as Map<String, dynamic>);
 }
@@ -162,7 +252,7 @@ Map<String, dynamic> _$RoomFieldsMixin$CommonPlayer$GamePlayerToJson(
     <String, dynamic>{
       'isConnected': instance.isConnected,
       '__typename': instance.$$typename,
-      'board': instance.board?.toJson(),
+      'data': instance.data.toJson(),
       'player': instance.player.toJson(),
     };
 
@@ -378,20 +468,56 @@ Map<String, dynamic>
           'name': instance.name,
         };
 
-RoomFieldsMixin$RoomState$GameData$GamePlayer$Board
-    _$RoomFieldsMixin$RoomState$GameData$GamePlayer$BoardFromJson(
+RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BingoPlayerData$Board
+    _$RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BingoPlayerData$BoardFromJson(
         Map<String, dynamic> json) {
-  return RoomFieldsMixin$RoomState$GameData$GamePlayer$Board()
+  return RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BingoPlayerData$Board()
     ..numbers = (json['numbers'] as List<dynamic>)
         .map((e) => (e as List<dynamic>).map((e) => e as int).toList())
         .toList();
 }
 
 Map<String, dynamic>
-    _$RoomFieldsMixin$RoomState$GameData$GamePlayer$BoardToJson(
-            RoomFieldsMixin$RoomState$GameData$GamePlayer$Board instance) =>
+    _$RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BingoPlayerData$BoardToJson(
+            RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BingoPlayerData$Board
+                instance) =>
         <String, dynamic>{
           'numbers': instance.numbers,
+        };
+
+RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BingoPlayerData
+    _$RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BingoPlayerDataFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BingoPlayerData()
+    ..$$typename = json['__typename'] as String?
+    ..board = json['board'] == null
+        ? null
+        : RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BingoPlayerData$Board
+            .fromJson(json['board'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic>
+    _$RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BingoPlayerDataToJson(
+            RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BingoPlayerData
+                instance) =>
+        <String, dynamic>{
+          '__typename': instance.$$typename,
+          'board': instance.board?.toJson(),
+        };
+
+RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData
+    _$RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameDataFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData()
+    ..$$typename = json['__typename'] as String?;
+}
+
+Map<String, dynamic>
+    _$RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameDataToJson(
+            RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData
+                instance) =>
+        <String, dynamic>{
+          '__typename': instance.$$typename,
         };
 
 RoomFieldsMixin$RoomState$GameData$GamePlayer
@@ -400,84 +526,118 @@ RoomFieldsMixin$RoomState$GameData$GamePlayer
   return RoomFieldsMixin$RoomState$GameData$GamePlayer()
     ..player = RoomFieldsMixin$RoomState$GameData$GamePlayer$Player.fromJson(
         json['player'] as Map<String, dynamic>)
-    ..board = json['board'] == null
-        ? null
-        : RoomFieldsMixin$RoomState$GameData$GamePlayer$Board.fromJson(
-            json['board'] as Map<String, dynamic>);
+    ..data =
+        RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData.fromJson(
+            json['data'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$RoomFieldsMixin$RoomState$GameData$GamePlayerToJson(
         RoomFieldsMixin$RoomState$GameData$GamePlayer instance) =>
     <String, dynamic>{
       'player': instance.player.toJson(),
-      'board': instance.board?.toJson(),
+      'data': instance.data.toJson(),
     };
 
-RoomFieldsMixin$RoomState$GameData$GameState$BoardCreation
-    _$RoomFieldsMixin$RoomState$GameData$GameState$BoardCreationFromJson(
+RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$BoardCreation
+    _$RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$BoardCreationFromJson(
         Map<String, dynamic> json) {
-  return RoomFieldsMixin$RoomState$GameData$GameState$BoardCreation()
+  return RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$BoardCreation()
     ..$$typename = json['__typename'] as String?
     ..ready = (json['ready'] as List<dynamic>).map((e) => e as String).toList();
 }
 
-Map<String,
-    dynamic> _$RoomFieldsMixin$RoomState$GameData$GameState$BoardCreationToJson(
-        RoomFieldsMixin$RoomState$GameData$GameState$BoardCreation instance) =>
-    <String, dynamic>{
-      '__typename': instance.$$typename,
-      'ready': instance.ready,
-    };
+Map<String, dynamic>
+    _$RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$BoardCreationToJson(
+            RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$BoardCreation
+                instance) =>
+        <String, dynamic>{
+          '__typename': instance.$$typename,
+          'ready': instance.ready,
+        };
 
-RoomFieldsMixin$RoomState$GameData$GameState$GameRunning$SelectedCell
-    _$RoomFieldsMixin$RoomState$GameData$GameState$GameRunning$SelectedCellFromJson(
+RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$GameRunning$SelectedCell
+    _$RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$GameRunning$SelectedCellFromJson(
         Map<String, dynamic> json) {
-  return RoomFieldsMixin$RoomState$GameData$GameState$GameRunning$SelectedCell()
+  return RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$GameRunning$SelectedCell()
     ..selectedBy = json['selectedBy'] as String
     ..cellValue = json['cellValue'] as int;
 }
 
 Map<String, dynamic>
-    _$RoomFieldsMixin$RoomState$GameData$GameState$GameRunning$SelectedCellToJson(
-            RoomFieldsMixin$RoomState$GameData$GameState$GameRunning$SelectedCell
+    _$RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$GameRunning$SelectedCellToJson(
+            RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$GameRunning$SelectedCell
                 instance) =>
         <String, dynamic>{
           'selectedBy': instance.selectedBy,
           'cellValue': instance.cellValue,
         };
 
-RoomFieldsMixin$RoomState$GameData$GameState$GameRunning
-    _$RoomFieldsMixin$RoomState$GameData$GameState$GameRunningFromJson(
+RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$GameRunning
+    _$RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$GameRunningFromJson(
         Map<String, dynamic> json) {
-  return RoomFieldsMixin$RoomState$GameData$GameState$GameRunning()
+  return RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$GameRunning()
     ..$$typename = json['__typename'] as String?
     ..turn = json['turn'] as String
     ..selectedNumbers = (json['selectedNumbers'] as List<dynamic>)
         .map((e) =>
-            RoomFieldsMixin$RoomState$GameData$GameState$GameRunning$SelectedCell
+            RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$GameRunning$SelectedCell
                 .fromJson(e as Map<String, dynamic>))
         .toList();
 }
 
-Map<String,
-    dynamic> _$RoomFieldsMixin$RoomState$GameData$GameState$GameRunningToJson(
-        RoomFieldsMixin$RoomState$GameData$GameState$GameRunning instance) =>
-    <String, dynamic>{
-      '__typename': instance.$$typename,
-      'turn': instance.turn,
-      'selectedNumbers':
-          instance.selectedNumbers.map((e) => e.toJson()).toList(),
-    };
+Map<String, dynamic>
+    _$RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$GameRunningToJson(
+            RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$GameRunning
+                instance) =>
+        <String, dynamic>{
+          '__typename': instance.$$typename,
+          'turn': instance.turn,
+          'selectedNumbers':
+              instance.selectedNumbers.map((e) => e.toJson()).toList(),
+        };
 
-RoomFieldsMixin$RoomState$GameData$GameState
-    _$RoomFieldsMixin$RoomState$GameData$GameStateFromJson(
+RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState
+    _$RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameStateFromJson(
         Map<String, dynamic> json) {
-  return RoomFieldsMixin$RoomState$GameData$GameState()
+  return RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState()
     ..$$typename = json['__typename'] as String?;
 }
 
-Map<String, dynamic> _$RoomFieldsMixin$RoomState$GameData$GameStateToJson(
-        RoomFieldsMixin$RoomState$GameData$GameState instance) =>
+Map<String, dynamic>
+    _$RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameStateToJson(
+            RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState instance) =>
+        <String, dynamic>{
+          '__typename': instance.$$typename,
+        };
+
+RoomFieldsMixin$RoomState$GameData$Game$Bingo
+    _$RoomFieldsMixin$RoomState$GameData$Game$BingoFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$GameData$Game$Bingo()
+    ..$$typename = json['__typename'] as String?
+    ..boardSize = json['boardSize'] as int
+    ..gameState =
+        RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState.fromJson(
+            json['gameState'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$RoomFieldsMixin$RoomState$GameData$Game$BingoToJson(
+        RoomFieldsMixin$RoomState$GameData$Game$Bingo instance) =>
+    <String, dynamic>{
+      '__typename': instance.$$typename,
+      'boardSize': instance.boardSize,
+      'gameState': instance.gameState.toJson(),
+    };
+
+RoomFieldsMixin$RoomState$GameData$Game
+    _$RoomFieldsMixin$RoomState$GameData$GameFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$GameData$Game()
+    ..$$typename = json['__typename'] as String?;
+}
+
+Map<String, dynamic> _$RoomFieldsMixin$RoomState$GameData$GameToJson(
+        RoomFieldsMixin$RoomState$GameData$Game instance) =>
     <String, dynamic>{
       '__typename': instance.$$typename,
     };
@@ -494,9 +654,8 @@ RoomFieldsMixin$RoomState$GameData _$RoomFieldsMixin$RoomState$GameDataFromJson(
         .map((e) => RoomFieldsMixin$RoomState$GameData$GamePlayer.fromJson(
             e as Map<String, dynamic>))
         .toList()
-    ..boardSize = json['boardSize'] as int
-    ..gameState = RoomFieldsMixin$RoomState$GameData$GameState.fromJson(
-        json['gameState'] as Map<String, dynamic>);
+    ..game = RoomFieldsMixin$RoomState$GameData$Game.fromJson(
+        json['game'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$RoomFieldsMixin$RoomState$GameDataToJson(
@@ -505,8 +664,7 @@ Map<String, dynamic> _$RoomFieldsMixin$RoomState$GameDataToJson(
       '__typename': instance.$$typename,
       'leaderboard': instance.leaderboard.map((e) => e.toJson()).toList(),
       'players': instance.players.map((e) => e.toJson()).toList(),
-      'boardSize': instance.boardSize,
-      'gameState': instance.gameState.toJson(),
+      'game': instance.game.toJson(),
     };
 
 RoomFieldsMixin$RoomState _$RoomFieldsMixin$RoomStateFromJson(
@@ -786,50 +944,16 @@ Map<String,
       'state': instance.state.toJson(),
     };
 
-GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameState$BoardCreation
-    _$GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameState$BoardCreationFromJson(
+GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$Game
+    _$GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameFromJson(
         Map<String, dynamic> json) {
-  return GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameState$BoardCreation()
-    ..$$typename = json['__typename'] as String?
-    ..ready = (json['ready'] as List<dynamic>).map((e) => e as String).toList();
-}
-
-Map<String, dynamic>
-    _$GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameState$BoardCreationToJson(
-            GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameState$BoardCreation
-                instance) =>
-        <String, dynamic>{
-          '__typename': instance.$$typename,
-          'ready': instance.ready,
-        };
-
-GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameState$GameRunning
-    _$GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameState$GameRunningFromJson(
-        Map<String, dynamic> json) {
-  return GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameState$GameRunning()
-    ..$$typename = json['__typename'] as String?
-    ..turn = json['turn'] as String;
-}
-
-Map<String, dynamic>
-    _$GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameState$GameRunningToJson(
-            GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameState$GameRunning
-                instance) =>
-        <String, dynamic>{
-          '__typename': instance.$$typename,
-          'turn': instance.turn,
-        };
-
-GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameState
-    _$GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameStateFromJson(
-        Map<String, dynamic> json) {
-  return GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameState()
+  return GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$Game()
     ..$$typename = json['__typename'] as String?;
 }
 
 Map<String, dynamic>
-    _$GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameStateToJson(
-            GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameState
+    _$GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameToJson(
+            GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$Game
                 instance) =>
         <String, dynamic>{
           '__typename': instance.$$typename,
@@ -840,9 +964,9 @@ GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted
         Map<String, dynamic> json) {
   return GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted()
     ..$$typename = json['__typename'] as String?
-    ..gameState =
-        GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$GameState
-            .fromJson(json['gameState'] as Map<String, dynamic>);
+    ..game =
+        GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$GameStarted$Game
+            .fromJson(json['game'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic>
@@ -851,7 +975,7 @@ Map<String, dynamic>
                 instance) =>
         <String, dynamic>{
           '__typename': instance.$$typename,
-          'gameState': instance.gameState.toJson(),
+          'game': instance.game.toJson(),
         };
 
 GameMessages$Subscription$ServerResponse$GameMessage$GameEvents$RoomUpdate$Room
@@ -957,21 +1081,10 @@ Map<String, dynamic> _$GameMessages$SubscriptionToJson(
       'serverMessages': instance.serverMessages.toJson(),
     };
 
-Disconnect$MutationRoot _$Disconnect$MutationRootFromJson(
-    Map<String, dynamic> json) {
-  return Disconnect$MutationRoot()..disconnect = json['disconnect'] as String;
-}
-
-Map<String, dynamic> _$Disconnect$MutationRootToJson(
-        Disconnect$MutationRoot instance) =>
-    <String, dynamic>{
-      'disconnect': instance.disconnect,
-    };
-
 CreateLobbyArguments _$CreateLobbyArgumentsFromJson(Map<String, dynamic> json) {
   return CreateLobbyArguments(
-    playerId: json['playerId'] as String?,
-    playerName: json['playerName'] as String?,
+    playerId: json['playerId'] as String,
+    playerName: json['playerName'] as String,
   );
 }
 
@@ -982,49 +1095,53 @@ Map<String, dynamic> _$CreateLobbyArgumentsToJson(
       'playerName': instance.playerName,
     };
 
-StartGameArguments _$StartGameArgumentsFromJson(Map<String, dynamic> json) {
-  return StartGameArguments(
-    playerId: json['playerId'] as String?,
-    roomId: json['roomId'] as String?,
-    boardSize: json['boardSize'] as int?,
+BingoStartGameArguments _$BingoStartGameArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return BingoStartGameArguments(
+    playerId: json['playerId'] as String,
+    roomId: json['roomId'] as String,
+    boardSize: json['boardSize'] as int,
   );
 }
 
-Map<String, dynamic> _$StartGameArgumentsToJson(StartGameArguments instance) =>
+Map<String, dynamic> _$BingoStartGameArgumentsToJson(
+        BingoStartGameArguments instance) =>
     <String, dynamic>{
       'playerId': instance.playerId,
       'roomId': instance.roomId,
       'boardSize': instance.boardSize,
     };
 
-ReadyBoardArguments _$ReadyBoardArgumentsFromJson(Map<String, dynamic> json) {
-  return ReadyBoardArguments(
-    playerId: json['playerId'] as String?,
-    roomId: json['roomId'] as String?,
-    board: (json['board'] as List<dynamic>?)
-        ?.map((e) => (e as List<dynamic>).map((e) => e as int).toList())
+BingoReadyBoardArguments _$BingoReadyBoardArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return BingoReadyBoardArguments(
+    playerId: json['playerId'] as String,
+    roomId: json['roomId'] as String,
+    board: (json['board'] as List<dynamic>)
+        .map((e) => (e as List<dynamic>).map((e) => e as int).toList())
         .toList(),
   );
 }
 
-Map<String, dynamic> _$ReadyBoardArgumentsToJson(
-        ReadyBoardArguments instance) =>
+Map<String, dynamic> _$BingoReadyBoardArgumentsToJson(
+        BingoReadyBoardArguments instance) =>
     <String, dynamic>{
       'playerId': instance.playerId,
       'roomId': instance.roomId,
       'board': instance.board,
     };
 
-PlayerMoveArguments _$PlayerMoveArgumentsFromJson(Map<String, dynamic> json) {
-  return PlayerMoveArguments(
-    playerId: json['playerId'] as String?,
-    roomId: json['roomId'] as String?,
-    number: json['number'] as int?,
+BingoPlayerMovArguments _$BingoPlayerMovArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return BingoPlayerMovArguments(
+    playerId: json['playerId'] as String,
+    roomId: json['roomId'] as String,
+    number: json['number'] as int,
   );
 }
 
-Map<String, dynamic> _$PlayerMoveArgumentsToJson(
-        PlayerMoveArguments instance) =>
+Map<String, dynamic> _$BingoPlayerMovArgumentsToJson(
+        BingoPlayerMovArguments instance) =>
     <String, dynamic>{
       'playerId': instance.playerId,
       'roomId': instance.roomId,
@@ -1033,9 +1150,9 @@ Map<String, dynamic> _$PlayerMoveArgumentsToJson(
 
 JoinLobbyArguments _$JoinLobbyArgumentsFromJson(Map<String, dynamic> json) {
   return JoinLobbyArguments(
-    playerId: json['playerId'] as String?,
-    playerName: json['playerName'] as String?,
-    roomId: json['roomId'] as String?,
+    playerId: json['playerId'] as String,
+    playerName: json['playerName'] as String,
+    roomId: json['roomId'] as String,
   );
 }
 
@@ -1046,25 +1163,10 @@ Map<String, dynamic> _$JoinLobbyArgumentsToJson(JoinLobbyArguments instance) =>
       'roomId': instance.roomId,
     };
 
-GameMessagesArguments _$GameMessagesArgumentsFromJson(
-    Map<String, dynamic> json) {
-  return GameMessagesArguments(
-    roomId: json['roomId'] as String?,
-    playerId: json['playerId'] as String?,
-  );
-}
-
-Map<String, dynamic> _$GameMessagesArgumentsToJson(
-        GameMessagesArguments instance) =>
-    <String, dynamic>{
-      'roomId': instance.roomId,
-      'playerId': instance.playerId,
-    };
-
 DisconnectArguments _$DisconnectArgumentsFromJson(Map<String, dynamic> json) {
   return DisconnectArguments(
-    playerId: json['playerId'] as String?,
-    roomId: json['roomId'] as String?,
+    playerId: json['playerId'] as String,
+    roomId: json['roomId'] as String,
   );
 }
 
@@ -1073,4 +1175,19 @@ Map<String, dynamic> _$DisconnectArgumentsToJson(
     <String, dynamic>{
       'playerId': instance.playerId,
       'roomId': instance.roomId,
+    };
+
+GameMessagesArguments _$GameMessagesArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return GameMessagesArguments(
+    roomId: json['roomId'] as String,
+    playerId: json['playerId'] as String,
+  );
+}
+
+Map<String, dynamic> _$GameMessagesArgumentsToJson(
+        GameMessagesArguments instance) =>
+    <String, dynamic>{
+      'roomId': instance.roomId,
+      'playerId': instance.playerId,
     };
