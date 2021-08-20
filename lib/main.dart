@@ -41,7 +41,8 @@ class _MyAppState extends State<MyApp> {
       null,
       channelGenerator: () => WebSocketChannel.connect(
         Uri.parse(
-          'wss://bingostage.herokuapp.com/',
+          String.fromEnvironment('BACKEND_URL',
+              defaultValue: 'wss://bingostage.herokuapp.com/'),
           // 'ws://localhost:8000/',
         ),
         protocols: ['graphql-ws'],
