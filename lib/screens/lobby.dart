@@ -130,10 +130,10 @@ class _RoomState extends State<Room> {
                         child: SettingsWidget(
                             startGame: (boardSize) {
                               GameClient.of(context)?.artemisClient.execute(
-                                    StartGameQuery(
-                                      variables: StartGameArguments(
+                                    BingoStartGameQuery(
+                                      variables: BingoStartGameArguments(
                                         playerId:
-                                            GameClient.of(context)?.playerId,
+                                            GameClient.of(context)!.playerId,
                                         roomId: widget.room.id,
                                         boardSize: boardSize,
                                       ),

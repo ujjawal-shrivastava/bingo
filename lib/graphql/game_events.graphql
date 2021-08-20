@@ -1,17 +1,23 @@
-query startGame($playerId: String, $roomId: String, $boardSize: Int) {
+query bingoStartGame($playerId: String!, $roomId: String!, $boardSize: Int!) {
   gameEvent(playerId: $playerId, roomId: $roomId) {
-    startGame(boardSize: $boardSize)
+    bingoInputs{
+      startGame(boardSize: $boardSize)
+    }
   }
 }
 
-query readyBoard($playerId: String, $roomId: String, $board: [[Int!]!]) {
+query bingoReadyBoard($playerId: String!, $roomId: String!, $board: [[Int!]!]!) {
   gameEvent(playerId: $playerId, roomId: $roomId) {
-    readyBoard(board: $board)
+    bingoInputs{
+      readyBoard(board: $board)
+    }
   }
 }
 
-query playerMove($playerId: String, $roomId: String, $number: Int) {
+query bingoPlayerMov($playerId: String!, $roomId: String!, $number: Int!) {
   gameEvent(playerId: $playerId, roomId: $roomId) {
-    playerMove(number: $number)
+    bingoInputs{
+      playerMove(number: $number)
+    }
   }
 }

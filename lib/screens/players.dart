@@ -111,7 +111,10 @@ Color getStatusColor(RoomFieldsMixin$CommonPlayer player) {
   if (player is RoomFieldsMixin$CommonPlayer$GamePlayer) {
     if (!player.isConnected) {
       return Colors.grey;
-    } else if (player.board == null) {
+    } else if ((player.data
+                as RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData)
+            .board ==
+        null) {
       return Colors.orange;
     } else {
       return Colors.green;
@@ -171,13 +174,14 @@ class CommonPlayerWidget extends StatelessWidget {
                 ),
               ),
               if ((player is RoomFieldsMixin$CommonPlayer$GamePlayer) &&
-                  ((player as RoomFieldsMixin$CommonPlayer$GamePlayer)
+                  (((player as RoomFieldsMixin$CommonPlayer$GamePlayer).data
+                              as RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData)
                           .board
                           ?.score !=
                       null))
                 Container(
                   child: Text(
-                    "${(player as RoomFieldsMixin$CommonPlayer$GamePlayer).board?.score}/${(player as RoomFieldsMixin$CommonPlayer$GamePlayer).board?.numbers.length}",
+                    "${((player as RoomFieldsMixin$CommonPlayer$GamePlayer).data as RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData).board?.score}/${((player as RoomFieldsMixin$CommonPlayer$GamePlayer).data as RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData).board?.numbers.length}",
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 ),

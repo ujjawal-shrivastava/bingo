@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 
 class GameBoard extends StatefulWidget {
   final List<
-          RoomFieldsMixin$RoomState$GameData$GameState$GameRunning$SelectedCell>
+          RoomFieldsMixin$RoomState$GameData$Game$Bingo$GameState$GameRunning$SelectedCell>
       selectedCells;
 
-  final RoomFieldsMixin$CommonPlayer$GamePlayer$Board board;
+  final RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData$Board
+      board;
   final RoomFieldsMixin$CommonPlayer$GamePlayer turnPlayer;
   final String roomId;
   const GameBoard({
@@ -79,10 +80,10 @@ class _GameBoardState extends State<GameBoard> {
                               var result = await GameClient.of(context)
                                   ?.artemisClient
                                   .execute(
-                                    PlayerMoveQuery(
-                                      variables: PlayerMoveArguments(
+                                    BingoPlayerMovQuery(
+                                      variables: BingoPlayerMovArguments(
                                         playerId:
-                                            GameClient.of(context)?.playerId,
+                                            GameClient.of(context)!.playerId,
                                         roomId: widget.roomId,
                                         number: e,
                                       ),

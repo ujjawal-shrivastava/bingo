@@ -7,6 +7,21 @@ schema {
 # Directs the executor to query only when the field exists.
 directive @ifdef on FIELD
 
+type Bingo {
+  gameState: GameState!
+  boardSize: Int!
+}
+
+type BingoInputs {
+  startGame(boardSize: Int!): Boolean!
+  readyBoard(board: [[Int!]!]!): Boolean!
+  playerMove(number: Int!): Boolean!
+}
+
+type BingoPlayerData {
+  board: Board
+}
+
 type Board {
   numbers: [[Int!]!]!
   score(roomId: String!): Int!
@@ -20,14 +35,19 @@ interface CommonPlayer {
   isConnected: Boolean!
 }
 
+union Game = Bingo
+
 type GameData {
   players: [GamePlayer!]!
-  boardSize: Int!
-  gameState: GameState!
+  game: Game!
   leaderboard: [Rank!]!
 }
 
 union GameEvents = GameStarted | RoomUpdate
+
+type GameInputs {
+  bingoInputs: BingoInputs!
+}
 
 type GameMessage {
   event: GameEvents!
@@ -36,7 +56,8 @@ type GameMessage {
 
 type GamePlayer implements CommonPlayer {
   player: Player!
-  board: Board
+  data: PlayerGameData!
+  isConnected: Boolean!
 }
 
 type GameRunning {
@@ -45,7 +66,7 @@ type GameRunning {
 }
 
 type GameStarted {
-  gameState: GameState!
+  game: Game!
 }
 
 union GameState = BoardCreation | GameRunning
@@ -62,6 +83,7 @@ type LobbyData {
 
 type LobbyPlayer implements CommonPlayer {
   player: Player!
+  isConnected: Boolean!
 }
 
 type MutationRoot {
@@ -80,11 +102,7 @@ type PlayerConnected {
   room: Room!
 }
 
-type PlayerHandler {
-  startGame(boardSize: Int!): Boolean!
-  readyBoard(board: [[Int!]!]!): Boolean!
-  playerMove(number: Int!): Boolean!
-}
+union PlayerGameData = BingoPlayerData
 
 type PlayerJoined {
   player: Player!
@@ -103,7 +121,7 @@ type PlayerRemoved {
 
 type QueryRoot {
   hello: String!
-  gameEvent(playerId: String!, roomId: String!): PlayerHandler!
+  gameEvent(playerId: String!, roomId: String!): GameInputs!
   ping: String!
 }
 
