@@ -111,7 +111,10 @@ Color getStatusColor(RoomFieldsMixin$CommonPlayer player) {
   if (player is RoomFieldsMixin$CommonPlayer$GamePlayer) {
     if (!player.isConnected) {
       return Colors.grey;
-    } else if (player.data == null) {
+    } else if ((player.data
+                as RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData)
+            .board ==
+        null) {
       return Colors.orange;
     } else {
       return Colors.green;
