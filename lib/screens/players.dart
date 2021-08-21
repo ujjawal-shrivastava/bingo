@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:bingo/utils/ordinal.dart';
 import 'package:flutter/material.dart';
 import 'package:multiavatar/multiavatar.dart';
 import 'package:websafe_svg/websafe_svg.dart';
@@ -210,22 +211,32 @@ class CommonPlayerWidget extends StatelessWidget {
                       ),
                       height: 20,
                       width: 20,
-                      child: Text(
-                        rank?.toString() ?? " ",
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
                     ),
                   )
                 ],
               ),
               Container(
-                child: Text(
-                  playerFieldsOfCommonPlayer(player).name,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6
-                      ?.copyWith(color: playerColor),
-                ),
+                child: RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                    text: playerFieldsOfCommonPlayer(player).name,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6
+                        ?.copyWith(color: playerColor),
+                  ),
+                  WidgetSpan(
+                    child: Transform.translate(
+                      offset: const Offset(2, -8),
+                      child: Text(
+                        rank != null ? ordinal(rank!).toString() : ' ',
+                        //superscript is usually smaller in size
+                        textScaleFactor: 0.8,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  )
+                ])),
               ),
               if (score != null)
                 Container(
