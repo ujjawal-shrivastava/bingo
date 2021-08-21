@@ -1,4 +1,5 @@
 import 'package:bingo/networking/clientProvider.dart';
+import 'package:bingo/screens/players.dart';
 import 'package:flutter/material.dart';
 import 'package:bingo/api/api.dart';
 
@@ -23,7 +24,7 @@ class BoxesBoard extends StatefulWidget {
 class _BoxesBoardState extends State<BoxesBoard> {
   Color getCellColor(RoomFieldsMixin$RoomState$GameData$Game$Boxes$Cell e) {
     if (e.occupiedBy != null) {
-      return Colors.black;
+      return getPlayerColor(e.occupiedBy!);
     } else {
       return Colors.grey.withOpacity(0.1);
     }
@@ -36,6 +37,7 @@ class _BoxesBoardState extends State<BoxesBoard> {
   int dragvertexradius = 40;
 
   Offset dragupoffset = Offset.zero;
+  int dragIndex = -1;
 
   callMove(int edgeId) {
     // print('send edgeId $edgeId ');
@@ -48,6 +50,24 @@ class _BoxesBoardState extends State<BoxesBoard> {
             ),
           ),
         );
+  }
+
+  Color getPlayerColor(String playerId) {
+    var player = widget.gameData.players
+        .firstWhere((element) => element.player.id == playerId);
+    var color = (player.data
+            as RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BoxesPlayerData)
+        .color;
+    return HexColor.getColorFromHex(color);
+  }
+
+  bool isEdgeOccupied(int id) {
+    return widget.data.horizontalEdges
+        .followedBy(widget.data.verticalEdges)
+        .any((element) =>
+            (element
+                is RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied) &&
+            element.id == id);
   }
 
   @override
@@ -128,7 +148,7 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                     var width = 2.0;
                                     if (edge
                                         is RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied) {
-                                      color = Colors.black;
+                                      color = Colors.grey;
                                       width = 20;
                                     }
                                     late int edgeId;
@@ -142,10 +162,13 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                       edgeId = -1;
                                     }
                                     return Container(
-                                      width: width,
-                                      color: color,
+                                      width: 20,
                                       child: Center(
-                                          child: Text(edgeId.toString())),
+                                        child: Container(
+                                          width: width,
+                                          color: color,
+                                        ),
+                                      ),
                                     );
                                   })
                                 ],
@@ -174,7 +197,7 @@ class _BoxesBoardState extends State<BoxesBoard> {
 
                                     if (edge
                                         is RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied) {
-                                      color = Colors.black;
+                                      color = Colors.grey;
                                       width = 20;
                                     }
                                     late int edgeId;
@@ -189,11 +212,11 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                     }
                                     return Expanded(
                                       child: Container(
-                                        height: width,
-                                        color: color,
+                                        height: 20,
                                         child: Center(
-                                          child: Text(
-                                            edgeId.toString(),
+                                          child: Container(
+                                            height: width,
+                                            color: color,
                                           ),
                                         ),
                                       ),
@@ -206,10 +229,10 @@ class _BoxesBoardState extends State<BoxesBoard> {
                         ),
                       ),
                       Positioned.fill(
-                        left: -vertexradius / 2,
-                        right: -vertexradius / 2,
-                        top: -vertexradius / 2,
-                        bottom: -vertexradius / 2,
+                        // left: -vertexradius / 2,
+                        // right: -vertexradius / 2,
+                        // top: -vertexradius / 2,
+                        // bottom: -vertexradius / 2,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -229,6 +252,7 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                       onDragStarted: () {
                                         setState(() {
                                           dragupoffset = Offset.zero;
+                                          dragIndex = index;
                                         });
                                       },
                                       onDragUpdate: (up) {
@@ -239,24 +263,30 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                       onDragEnd: (_) {
                                         setState(() {
                                           dragupoffset = Offset.zero;
+                                          dragIndex = -1;
                                         });
                                       },
                                       childWhenDragging: Container(
                                         width: vertexradius.toDouble(),
                                         height: vertexradius.toDouble(),
                                         decoration: BoxDecoration(
-                                          color: Colors.blue,
+                                          color: Colors.white,
                                           shape: BoxShape.circle,
                                         ),
                                         child: CustomPaint(
                                           painter: DragLinePainter(
                                             movedOffset: dragupoffset,
+                                            linecolor: getPlayerColor(
+                                                    GameClient.of(context)!
+                                                        .playerId)
+                                                .withOpacity(0.5),
+                                            lineWidth: 30,
                                           ),
                                           child: Container(
                                             width: vertexradius.toDouble(),
                                             height: vertexradius.toDouble(),
                                             decoration: BoxDecoration(
-                                              color: Colors.blue,
+                                              color: Colors.white,
                                               shape: BoxShape.circle,
                                             ),
                                           ),
@@ -266,7 +296,7 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                         width: vertexradius.toDouble(),
                                         height: vertexradius.toDouble(),
                                         decoration: BoxDecoration(
-                                          color: Colors.blue,
+                                          color: Colors.white,
                                           shape: BoxShape.circle,
                                         ),
                                       ),
@@ -300,15 +330,77 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                             }
                                           }
                                         },
-                                        builder: (context, accept, reject) =>
-                                            Container(
-                                          width: vertexradius.toDouble(),
-                                          height: vertexradius.toDouble(),
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
+                                        builder: (context, accept, reject) {
+                                          bool canAccept = false;
+                                          var ci = dragIndex ~/
+                                              (widget.data.width + 1);
+                                          var cj = dragIndex %
+                                              (widget.data.width + 1);
+                                          var edgeId = 0;
+                                          if (ci == i) {
+                                            if (cj - j == 1) {
+                                              edgeId = widget.data
+                                                      .horizontalEdges.length +
+                                                  index +
+                                                  1 -
+                                                  i;
+                                              canAccept = true;
+                                            } else if (j - cj == 1) {
+                                              edgeId = widget.data
+                                                      .horizontalEdges.length +
+                                                  dragIndex +
+                                                  1 -
+                                                  i;
+                                              canAccept = true;
+                                            }
+                                          } else if (cj == j) {
+                                            if (ci - i == 1) {
+                                              edgeId = index + 1;
+                                              canAccept = true;
+                                            } else if (i - ci == 1) {
+                                              edgeId = dragIndex + 1;
+                                              canAccept = true;
+                                            }
+                                          }
+                                          if (dragIndex < 0) {
+                                            canAccept = false;
+                                          } else if (isEdgeOccupied(edgeId)) {
+                                            canAccept = false;
+                                          }
+                                          return Stack(
+                                            clipBehavior: Clip.none,
+                                            children: [
+                                              Container(
+                                                width: vertexradius.toDouble(),
+                                                height: vertexradius.toDouble(),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                              ),
+                                              if (canAccept)
+                                                Positioned.fill(
+                                                  left: -10,
+                                                  right: -10,
+                                                  top: -10,
+                                                  bottom: -10,
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      border: Border.all(
+                                                        width: 2,
+                                                        color: getPlayerColor(
+                                                            GameClient.of(
+                                                                    context)!
+                                                                .playerId),
+                                                      ),
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                  ),
+                                                ),
+                                            ],
+                                          );
+                                        },
                                       ),
                                     );
                                   })
@@ -332,12 +424,17 @@ class _BoxesBoardState extends State<BoxesBoard> {
 
 class DragLinePainter extends CustomPainter {
   final Offset movedOffset;
-  DragLinePainter({required this.movedOffset});
+  final Color linecolor;
+  final int lineWidth;
+  DragLinePainter(
+      {required this.movedOffset,
+      required this.lineWidth,
+      required this.linecolor});
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
-      ..color = Colors.white
-      ..strokeWidth = 30;
+      ..color = linecolor
+      ..strokeWidth = lineWidth.toDouble();
     canvas.drawLine(
       Offset.zero.translate(size.width / 2, size.height / 2),
       movedOffset.translate(size.width / 2, size.height / 2),
@@ -347,7 +444,7 @@ class DragLinePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+    // return true;
     if (oldDelegate is DragLinePainter) {
       return movedOffset != oldDelegate.movedOffset;
     } else {
