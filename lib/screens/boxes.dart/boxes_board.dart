@@ -300,37 +300,8 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                           shape: BoxShape.circle,
                                         ),
                                       ),
-                                      child: DragTarget<int>(
-                                        onAccept: (comingIndex) {
-                                          var ci = comingIndex ~/
-                                              (widget.data.width + 1);
-                                          var cj = comingIndex %
-                                              (widget.data.width + 1);
-                                          if (ci == i) {
-                                            print(
-                                                'currentIndex $index $comingIndex');
-                                            if (cj - j == 1) {
-                                              callMove(widget.data
-                                                      .horizontalEdges.length +
-                                                  index +
-                                                  1 -
-                                                  i);
-                                            } else if (j - cj == 1) {
-                                              callMove(widget.data
-                                                      .horizontalEdges.length +
-                                                  comingIndex +
-                                                  1 -
-                                                  i);
-                                            }
-                                          } else if (cj == j) {
-                                            if (ci - i == 1) {
-                                              callMove(index + 1);
-                                            } else if (i - ci == 1) {
-                                              callMove(comingIndex + 1);
-                                            }
-                                          }
-                                        },
-                                        builder: (context, accept, reject) {
+                                      child: Builder(
+                                        builder: (context) {
                                           bool canAccept = false;
                                           var ci = dragIndex ~/
                                               (widget.data.width + 1);
@@ -384,17 +355,26 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                                   right: -10,
                                                   top: -10,
                                                   bottom: -10,
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border.all(
-                                                        width: 2,
-                                                        color: getPlayerColor(
-                                                            GameClient.of(
-                                                                    context)!
-                                                                .playerId),
+                                                  child: DragTarget<int>(
+                                                    onAccept: (comingIndex) {
+                                                      callMove(edgeId);
+                                                    },
+                                                    builder: (context, accept,
+                                                            reject) =>
+                                                        Container(
+                                                      decoration: BoxDecoration(
+                                                        color: accept.isNotEmpty
+                                                            ? Colors.yellow
+                                                            : Colors.white,
+                                                        border: Border.all(
+                                                          width: 2,
+                                                          color: getPlayerColor(
+                                                              GameClient.of(
+                                                                      context)!
+                                                                  .playerId),
+                                                        ),
+                                                        shape: BoxShape.circle,
                                                       ),
-                                                      shape: BoxShape.circle,
                                                     ),
                                                   ),
                                                 ),
