@@ -218,6 +218,7 @@ class _SettingsWidgetState extends State<SettingsWidget>
   int get bingoBoardDivisions => (maxBingoBoard - minBingoBoard) ~/ 2;
 
   int boxesBoardWidth = 5;
+  int boxesBoardHeight = 5;
   int get minBoxesBoardWidth => 5;
   int get maxBoxesBoardWidth => 10;
   int get boxesBoardDivisions => (maxBoxesBoardWidth - minBoxesBoardWidth) ~/ 1;
@@ -260,8 +261,8 @@ class _SettingsWidgetState extends State<SettingsWidget>
             child: TabBarView(
               controller: pageController,
               children: [
-                buildBingoSetting(),
-                buildBoxesSetting(),
+                SingleChildScrollView(child: buildBingoSetting()),
+                SingleChildScrollView(child: buildBoxesSetting()),
               ],
             ),
           ),
@@ -273,7 +274,8 @@ class _SettingsWidgetState extends State<SettingsWidget>
                       if (pageController.index == 0) {
                         widget.startBingoGame(bingoBoardSize);
                       } else {
-                        widget.startBoxesGame(boxesBoardWidth, boxesBoardWidth);
+                        widget.startBoxesGame(
+                            boxesBoardWidth, boxesBoardHeight);
                       }
                     },
                     child: Text("Start Game"),
@@ -347,7 +349,7 @@ class _SettingsWidgetState extends State<SettingsWidget>
               left: 20,
               top: 20,
             ),
-            child: Text("Board Size"),
+            child: Text("Board Width"),
           ),
           Slider(
             min: minBoxesBoardWidth.toDouble(),
@@ -360,6 +362,37 @@ class _SettingsWidgetState extends State<SettingsWidget>
               });
             },
             label: '$boxesBoardWidth',
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(boxesBoardDivisions + 1,
+                      (index) => index * 1 + minBoxesBoardWidth)
+                  .map((e) => Text(e.toString()))
+                  .toList(),
+            ),
+          ),
+
+          //Height Slider
+          Container(
+            margin: EdgeInsets.only(
+              left: 20,
+              top: 20,
+            ),
+            child: Text("Board Height"),
+          ),
+          Slider(
+            min: minBoxesBoardWidth.toDouble(),
+            max: maxBoxesBoardWidth.toDouble(),
+            value: boxesBoardHeight.toDouble(),
+            divisions: boxesBoardDivisions,
+            onChanged: (val) {
+              setState(() {
+                boxesBoardHeight = val.toInt();
+              });
+            },
+            label: '$boxesBoardHeight',
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20),
