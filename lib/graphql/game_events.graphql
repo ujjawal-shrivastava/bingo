@@ -1,14 +1,18 @@
 query bingoStartGame($playerId: String!, $roomId: String!, $boardSize: Int!) {
   gameEvent(playerId: $playerId, roomId: $roomId) {
-    bingoInputs{
+    bingoInputs {
       startGame(boardSize: $boardSize)
     }
   }
 }
 
-query bingoReadyBoard($playerId: String!, $roomId: String!, $board: [[Int!]!]!) {
+query bingoReadyBoard(
+  $playerId: String!
+  $roomId: String!
+  $board: [[Int!]!]!
+) {
   gameEvent(playerId: $playerId, roomId: $roomId) {
-    bingoInputs{
+    bingoInputs {
       readyBoard(board: $board)
     }
   }
@@ -16,8 +20,29 @@ query bingoReadyBoard($playerId: String!, $roomId: String!, $board: [[Int!]!]!) 
 
 query bingoPlayerMov($playerId: String!, $roomId: String!, $number: Int!) {
   gameEvent(playerId: $playerId, roomId: $roomId) {
-    bingoInputs{
+    bingoInputs {
       playerMove(number: $number)
+    }
+  }
+}
+
+query boxesStartGame(
+  $playerId: String!
+  $roomId: String!
+  $boardWidth: Int!
+  $boardHeight: Int!
+) {
+  gameEvent(playerId: $playerId, roomId: $roomId) {
+    boxesInputs {
+      startGame(boardWidth: $boardWidth, boardHeight: $boardHeight)
+    }
+  }
+}
+
+query boxesPlayerMov($playerId: String!, $roomId: String!, $edgeId: Int!) {
+  gameEvent(playerId: $playerId, roomId: $roomId) {
+    boxesInputs {
+      playerMove(edgeId: $edgeId)
     }
   }
 }

@@ -2,6 +2,15 @@ fragment playerFields on Player {
   id
   name
 }
+
+fragment occupied on Occupied {
+  id
+  occupiedBy
+  movNo
+}
+fragment unoccupied on Unoccupied {
+  id
+}
 fragment roomFields on Room {
   id
   players {
@@ -15,6 +24,10 @@ fragment roomFields on Room {
             numbers
             score(roomId: $roomId)
           }
+        }
+        ... on BoxesPlayerData {
+          color
+          score(roomId: $roomId)
         }
       }
       player {
@@ -64,6 +77,9 @@ fragment roomFields on Room {
               numbers
             }
           }
+          ... on BoxesPlayerData {
+            color
+          }
         }
       }
       game {
@@ -82,6 +98,32 @@ fragment roomFields on Room {
                 cellValue
               }
             }
+          }
+        }
+        ... on Boxes {
+          turn
+          width
+          height
+          horizontalEdges {
+            __typename
+            ... on Occupied {
+              ...occupied
+            }
+            ... on Unoccupied {
+              ...unoccupied
+            }
+          }
+          verticalEdges {
+            __typename
+            ... on Occupied {
+              ...occupied
+            }
+            ... on Unoccupied {
+              ...unoccupied
+            }
+          }
+          cells{
+            occupiedBy
           }
         }
       }
@@ -131,7 +173,7 @@ subscription gameMessages($roomId: String!, $playerId: String!) {
       event {
         __typename
         ... on GameStarted {
-          game{
+          game {
             __typename
           }
         }

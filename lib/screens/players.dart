@@ -4,6 +4,21 @@ import 'package:multiavatar/multiavatar.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 import 'package:bingo/api/api.dart';
 
+typedef BingoPlayerData
+    = RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData;
+typedef BoxesPlayerData
+    = RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BoxesPlayerData;
+
+extension HexColor on Color {
+  static Color getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF" + hexColor;
+    }
+    return Color(int.parse(hexColor, radix: 16));
+  }
+}
+
 class Players extends StatelessWidget {
   final List<RoomFieldsMixin$CommonPlayer> players;
   final List<RoomFieldsMixin$RoomState$GameData$Rank>? ranks;
@@ -111,10 +126,8 @@ Color getStatusColor(RoomFieldsMixin$CommonPlayer player) {
   if (player is RoomFieldsMixin$CommonPlayer$GamePlayer) {
     if (!player.isConnected) {
       return Colors.grey;
-    } else if ((player.data
-                as RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData)
-            .board ==
-        null) {
+    } else if (player.data is BingoPlayerData &&
+        (player.data as BingoPlayerData).board == null) {
       return Colors.orange;
     } else {
       return Colors.green;
@@ -134,6 +147,44 @@ class CommonPlayerWidget extends StatelessWidget {
     required this.onKickPlayer,
     this.rank,
   });
+
+  int? get score {
+    if (player is RoomFieldsMixin$CommonPlayer$GamePlayer) {
+      var data = (player as RoomFieldsMixin$CommonPlayer$GamePlayer).data;
+      if (data is BingoPlayerData) {
+        return data.board?.score;
+      } else if (data is BoxesPlayerData) {
+        return data.score;
+      }
+    }
+  }
+
+  int? get maxScore {
+    if (player is RoomFieldsMixin$CommonPlayer$GamePlayer) {
+      var data = (player as RoomFieldsMixin$CommonPlayer$GamePlayer).data;
+      if (data is BingoPlayerData) {
+        return data.board?.numbers.length;
+      } else if (data is BoxesPlayerData) {
+        return null;
+      }
+    }
+  }
+
+  Color get playerColor {
+    if (player is RoomFieldsMixin$CommonPlayer$GamePlayer) {
+      var data = (player as RoomFieldsMixin$CommonPlayer$GamePlayer).data;
+      if (data is BingoPlayerData) {
+        return Colors.white;
+      } else if (data is BoxesPlayerData) {
+        return HexColor.getColorFromHex(data.color);
+      } else {
+        return Colors.white;
+      }
+    } else {
+      return Colors.white;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -170,18 +221,16 @@ class CommonPlayerWidget extends StatelessWidget {
               Container(
                 child: Text(
                   playerFieldsOfCommonPlayer(player).name,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      ?.copyWith(color: playerColor),
                 ),
               ),
-              if ((player is RoomFieldsMixin$CommonPlayer$GamePlayer) &&
-                  (((player as RoomFieldsMixin$CommonPlayer$GamePlayer).data
-                              as RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData)
-                          .board
-                          ?.score !=
-                      null))
+              if (score != null)
                 Container(
                   child: Text(
-                    "${((player as RoomFieldsMixin$CommonPlayer$GamePlayer).data as RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData).board?.score}/${((player as RoomFieldsMixin$CommonPlayer$GamePlayer).data as RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData).board?.numbers.length}",
+                    "$score${maxScore != null ? '/$maxScore' : ''}",
                     style: Theme.of(context).textTheme.headline6,
                   ),
                 ),

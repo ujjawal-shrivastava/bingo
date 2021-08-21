@@ -1,6 +1,7 @@
 import 'package:bingo/api/api.dart';
 import 'package:bingo/networking/clientProvider.dart';
 import 'package:bingo/screens/board_builder.dart';
+import 'package:bingo/screens/boxes.dart/boxes_board.dart';
 import 'package:bingo/screens/game_board.dart';
 import 'package:bingo/screens/players.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,29 @@ class Game extends StatelessWidget {
     );
   }
 
-  buildBoard(BuildContext context, GameClient gameClient,
+  Widget buildBoard(BuildContext context, GameClient gameClient,
+      RoomFieldsMixin$RoomState$GameData roomState) {
+    if (roomState.game is RoomFieldsMixin$RoomState$GameData$Game$Bingo) {
+      return buildBingoBoard(context, gameClient, roomState);
+    } else if (roomState.game
+        is RoomFieldsMixin$RoomState$GameData$Game$Boxes) {
+      var data =
+          (roomState.game as RoomFieldsMixin$RoomState$GameData$Game$Boxes);
+      var turnPlayer = room.players.firstWhere((element) =>
+          (element as RoomFieldsMixin$CommonPlayer$GamePlayer).player.id ==
+          data.turn);
+      return BoxesBoard(
+        data: data,
+        roomId: room.id,
+        turnPlayer: turnPlayer as RoomFieldsMixin$CommonPlayer$GamePlayer,
+        gameData: roomState,
+      );
+    } else {
+      return Container();
+    }
+  }
+
+  buildBingoBoard(BuildContext context, GameClient gameClient,
       RoomFieldsMixin$RoomState$GameData roomState) {
     if ((roomState.game as RoomFieldsMixin$RoomState$GameData$Game$Bingo)
             .gameState

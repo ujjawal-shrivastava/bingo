@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
       channelGenerator: () => WebSocketChannel.connect(
         Uri.parse(
           const String.fromEnvironment('BACKEND_URL',
-              defaultValue: 'wss://bingostage.herokuapp.com/'),
+              defaultValue: 'wss://bingotingo.herokuapp.com/'),
           // 'ws://localhost:8000/',
         ),
         protocols: ['graphql-ws'],
@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
       try {
         await client.execute(PingQuery()).timeout(Duration(seconds: 5));
         var cping = DateTime.now().difference(tim);
-        print("Ping ${cping.inMilliseconds}ms");
+        // print("Ping ${cping.inMilliseconds}ms");
         ping.value = cping.inMilliseconds;
       } catch (e) {
         ping.value = null;

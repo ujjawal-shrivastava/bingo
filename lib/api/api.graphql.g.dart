@@ -19,6 +19,17 @@ Map<String, dynamic> _$CreateLobby$MutationRootToJson(
       'createLobby': instance.createLobby,
     };
 
+Disconnect$MutationRoot _$Disconnect$MutationRootFromJson(
+    Map<String, dynamic> json) {
+  return Disconnect$MutationRoot()..disconnect = json['disconnect'] as String;
+}
+
+Map<String, dynamic> _$Disconnect$MutationRootToJson(
+        Disconnect$MutationRoot instance) =>
+    <String, dynamic>{
+      'disconnect': instance.disconnect,
+    };
+
 BingoStartGame$QueryRoot$GameInputs$BingoInputs
     _$BingoStartGame$QueryRoot$GameInputs$BingoInputsFromJson(
         Map<String, dynamic> json) {
@@ -136,6 +147,84 @@ Map<String, dynamic> _$BingoPlayerMov$QueryRootToJson(
       'gameEvent': instance.gameEvent.toJson(),
     };
 
+BoxesStartGame$QueryRoot$GameInputs$BoxesInputs
+    _$BoxesStartGame$QueryRoot$GameInputs$BoxesInputsFromJson(
+        Map<String, dynamic> json) {
+  return BoxesStartGame$QueryRoot$GameInputs$BoxesInputs()
+    ..startGame = json['startGame'] as bool;
+}
+
+Map<String, dynamic> _$BoxesStartGame$QueryRoot$GameInputs$BoxesInputsToJson(
+        BoxesStartGame$QueryRoot$GameInputs$BoxesInputs instance) =>
+    <String, dynamic>{
+      'startGame': instance.startGame,
+    };
+
+BoxesStartGame$QueryRoot$GameInputs
+    _$BoxesStartGame$QueryRoot$GameInputsFromJson(Map<String, dynamic> json) {
+  return BoxesStartGame$QueryRoot$GameInputs()
+    ..boxesInputs = BoxesStartGame$QueryRoot$GameInputs$BoxesInputs.fromJson(
+        json['boxesInputs'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$BoxesStartGame$QueryRoot$GameInputsToJson(
+        BoxesStartGame$QueryRoot$GameInputs instance) =>
+    <String, dynamic>{
+      'boxesInputs': instance.boxesInputs.toJson(),
+    };
+
+BoxesStartGame$QueryRoot _$BoxesStartGame$QueryRootFromJson(
+    Map<String, dynamic> json) {
+  return BoxesStartGame$QueryRoot()
+    ..gameEvent = BoxesStartGame$QueryRoot$GameInputs.fromJson(
+        json['gameEvent'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$BoxesStartGame$QueryRootToJson(
+        BoxesStartGame$QueryRoot instance) =>
+    <String, dynamic>{
+      'gameEvent': instance.gameEvent.toJson(),
+    };
+
+BoxesPlayerMov$QueryRoot$GameInputs$BoxesInputs
+    _$BoxesPlayerMov$QueryRoot$GameInputs$BoxesInputsFromJson(
+        Map<String, dynamic> json) {
+  return BoxesPlayerMov$QueryRoot$GameInputs$BoxesInputs()
+    ..playerMove = json['playerMove'] as bool;
+}
+
+Map<String, dynamic> _$BoxesPlayerMov$QueryRoot$GameInputs$BoxesInputsToJson(
+        BoxesPlayerMov$QueryRoot$GameInputs$BoxesInputs instance) =>
+    <String, dynamic>{
+      'playerMove': instance.playerMove,
+    };
+
+BoxesPlayerMov$QueryRoot$GameInputs
+    _$BoxesPlayerMov$QueryRoot$GameInputsFromJson(Map<String, dynamic> json) {
+  return BoxesPlayerMov$QueryRoot$GameInputs()
+    ..boxesInputs = BoxesPlayerMov$QueryRoot$GameInputs$BoxesInputs.fromJson(
+        json['boxesInputs'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$BoxesPlayerMov$QueryRoot$GameInputsToJson(
+        BoxesPlayerMov$QueryRoot$GameInputs instance) =>
+    <String, dynamic>{
+      'boxesInputs': instance.boxesInputs.toJson(),
+    };
+
+BoxesPlayerMov$QueryRoot _$BoxesPlayerMov$QueryRootFromJson(
+    Map<String, dynamic> json) {
+  return BoxesPlayerMov$QueryRoot()
+    ..gameEvent = BoxesPlayerMov$QueryRoot$GameInputs.fromJson(
+        json['gameEvent'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$BoxesPlayerMov$QueryRootToJson(
+        BoxesPlayerMov$QueryRoot instance) =>
+    <String, dynamic>{
+      'gameEvent': instance.gameEvent.toJson(),
+    };
+
 JoinLobby$MutationRoot _$JoinLobby$MutationRootFromJson(
     Map<String, dynamic> json) {
   return JoinLobby$MutationRoot()..joinLobby = json['joinLobby'] as String;
@@ -154,17 +243,6 @@ Ping$QueryRoot _$Ping$QueryRootFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$Ping$QueryRootToJson(Ping$QueryRoot instance) =>
     <String, dynamic>{
       'ping': instance.ping,
-    };
-
-Disconnect$MutationRoot _$Disconnect$MutationRootFromJson(
-    Map<String, dynamic> json) {
-  return Disconnect$MutationRoot()..disconnect = json['disconnect'] as String;
-}
-
-Map<String, dynamic> _$Disconnect$MutationRootToJson(
-        Disconnect$MutationRoot instance) =>
-    <String, dynamic>{
-      'disconnect': instance.disconnect,
     };
 
 RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData$Board
@@ -204,6 +282,25 @@ Map<String, dynamic>
         <String, dynamic>{
           '__typename': instance.$$typename,
           'board': instance.board?.toJson(),
+        };
+
+RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BoxesPlayerData
+    _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BoxesPlayerDataFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BoxesPlayerData()
+    ..$$typename = json['__typename'] as String?
+    ..color = json['color'] as String
+    ..score = json['score'] as int;
+}
+
+Map<String, dynamic>
+    _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BoxesPlayerDataToJson(
+            RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BoxesPlayerData
+                instance) =>
+        <String, dynamic>{
+          '__typename': instance.$$typename,
+          'color': instance.color,
+          'score': instance.score,
         };
 
 RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData
@@ -505,6 +602,23 @@ Map<String, dynamic>
           'board': instance.board?.toJson(),
         };
 
+RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BoxesPlayerData
+    _$RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BoxesPlayerDataFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BoxesPlayerData()
+    ..$$typename = json['__typename'] as String?
+    ..color = json['color'] as String;
+}
+
+Map<String, dynamic>
+    _$RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BoxesPlayerDataToJson(
+            RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BoxesPlayerData
+                instance) =>
+        <String, dynamic>{
+          '__typename': instance.$$typename,
+          'color': instance.color,
+        };
+
 RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData
     _$RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameDataFromJson(
         Map<String, dynamic> json) {
@@ -627,6 +741,108 @@ Map<String, dynamic> _$RoomFieldsMixin$RoomState$GameData$Game$BingoToJson(
       '__typename': instance.$$typename,
       'boardSize': instance.boardSize,
       'gameState': instance.gameState.toJson(),
+    };
+
+RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied
+    _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$OccupiedFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied()
+    ..id = json['id'] as int
+    ..occupiedBy = json['occupiedBy'] as String
+    ..movNo = json['movNo'] as int
+    ..$$typename = json['__typename'] as String?;
+}
+
+Map<String, dynamic>
+    _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$OccupiedToJson(
+            RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied
+                instance) =>
+        <String, dynamic>{
+          'id': instance.id,
+          'occupiedBy': instance.occupiedBy,
+          'movNo': instance.movNo,
+          '__typename': instance.$$typename,
+        };
+
+RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Unoccupied
+    _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$UnoccupiedFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Unoccupied()
+    ..id = json['id'] as int
+    ..$$typename = json['__typename'] as String?;
+}
+
+Map<String, dynamic>
+    _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$UnoccupiedToJson(
+            RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Unoccupied
+                instance) =>
+        <String, dynamic>{
+          'id': instance.id,
+          '__typename': instance.$$typename,
+        };
+
+RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType
+    _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeTypeFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType()
+    ..$$typename = json['__typename'] as String?;
+}
+
+Map<String, dynamic>
+    _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeTypeToJson(
+            RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType instance) =>
+        <String, dynamic>{
+          '__typename': instance.$$typename,
+        };
+
+RoomFieldsMixin$RoomState$GameData$Game$Boxes$Cell
+    _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$CellFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$GameData$Game$Boxes$Cell()
+    ..occupiedBy = json['occupiedBy'] as String?;
+}
+
+Map<String, dynamic> _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$CellToJson(
+        RoomFieldsMixin$RoomState$GameData$Game$Boxes$Cell instance) =>
+    <String, dynamic>{
+      'occupiedBy': instance.occupiedBy,
+    };
+
+RoomFieldsMixin$RoomState$GameData$Game$Boxes
+    _$RoomFieldsMixin$RoomState$GameData$Game$BoxesFromJson(
+        Map<String, dynamic> json) {
+  return RoomFieldsMixin$RoomState$GameData$Game$Boxes()
+    ..$$typename = json['__typename'] as String?
+    ..turn = json['turn'] as String
+    ..width = json['width'] as int
+    ..height = json['height'] as int
+    ..horizontalEdges = (json['horizontalEdges'] as List<dynamic>)
+        .map((e) =>
+            RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType.fromJson(
+                e as Map<String, dynamic>))
+        .toList()
+    ..verticalEdges = (json['verticalEdges'] as List<dynamic>)
+        .map((e) =>
+            RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType.fromJson(
+                e as Map<String, dynamic>))
+        .toList()
+    ..cells = (json['cells'] as List<dynamic>)
+        .map((e) => RoomFieldsMixin$RoomState$GameData$Game$Boxes$Cell.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$RoomFieldsMixin$RoomState$GameData$Game$BoxesToJson(
+        RoomFieldsMixin$RoomState$GameData$Game$Boxes instance) =>
+    <String, dynamic>{
+      '__typename': instance.$$typename,
+      'turn': instance.turn,
+      'width': instance.width,
+      'height': instance.height,
+      'horizontalEdges':
+          instance.horizontalEdges.map((e) => e.toJson()).toList(),
+      'verticalEdges': instance.verticalEdges.map((e) => e.toJson()).toList(),
+      'cells': instance.cells.map((e) => e.toJson()).toList(),
     };
 
 RoomFieldsMixin$RoomState$GameData$Game
@@ -1095,6 +1311,20 @@ Map<String, dynamic> _$CreateLobbyArgumentsToJson(
       'playerName': instance.playerName,
     };
 
+DisconnectArguments _$DisconnectArgumentsFromJson(Map<String, dynamic> json) {
+  return DisconnectArguments(
+    playerId: json['playerId'] as String,
+    roomId: json['roomId'] as String,
+  );
+}
+
+Map<String, dynamic> _$DisconnectArgumentsToJson(
+        DisconnectArguments instance) =>
+    <String, dynamic>{
+      'playerId': instance.playerId,
+      'roomId': instance.roomId,
+    };
+
 BingoStartGameArguments _$BingoStartGameArgumentsFromJson(
     Map<String, dynamic> json) {
   return BingoStartGameArguments(
@@ -1148,6 +1378,42 @@ Map<String, dynamic> _$BingoPlayerMovArgumentsToJson(
       'number': instance.number,
     };
 
+BoxesStartGameArguments _$BoxesStartGameArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return BoxesStartGameArguments(
+    playerId: json['playerId'] as String,
+    roomId: json['roomId'] as String,
+    boardWidth: json['boardWidth'] as int,
+    boardHeight: json['boardHeight'] as int,
+  );
+}
+
+Map<String, dynamic> _$BoxesStartGameArgumentsToJson(
+        BoxesStartGameArguments instance) =>
+    <String, dynamic>{
+      'playerId': instance.playerId,
+      'roomId': instance.roomId,
+      'boardWidth': instance.boardWidth,
+      'boardHeight': instance.boardHeight,
+    };
+
+BoxesPlayerMovArguments _$BoxesPlayerMovArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return BoxesPlayerMovArguments(
+    playerId: json['playerId'] as String,
+    roomId: json['roomId'] as String,
+    edgeId: json['edgeId'] as int,
+  );
+}
+
+Map<String, dynamic> _$BoxesPlayerMovArgumentsToJson(
+        BoxesPlayerMovArguments instance) =>
+    <String, dynamic>{
+      'playerId': instance.playerId,
+      'roomId': instance.roomId,
+      'edgeId': instance.edgeId,
+    };
+
 JoinLobbyArguments _$JoinLobbyArgumentsFromJson(Map<String, dynamic> json) {
   return JoinLobbyArguments(
     playerId: json['playerId'] as String,
@@ -1160,20 +1426,6 @@ Map<String, dynamic> _$JoinLobbyArgumentsToJson(JoinLobbyArguments instance) =>
     <String, dynamic>{
       'playerId': instance.playerId,
       'playerName': instance.playerName,
-      'roomId': instance.roomId,
-    };
-
-DisconnectArguments _$DisconnectArgumentsFromJson(Map<String, dynamic> json) {
-  return DisconnectArguments(
-    playerId: json['playerId'] as String,
-    roomId: json['roomId'] as String,
-  );
-}
-
-Map<String, dynamic> _$DisconnectArgumentsToJson(
-        DisconnectArguments instance) =>
-    <String, dynamic>{
-      'playerId': instance.playerId,
       'roomId': instance.roomId,
     };
 

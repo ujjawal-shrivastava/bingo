@@ -11,6 +11,14 @@ mixin PlayerFieldsMixin {
   late String id;
   late String name;
 }
+mixin OccupiedMixin {
+  late int id;
+  late String occupiedBy;
+  late int movNo;
+}
+mixin UnoccupiedMixin {
+  late int id;
+}
 mixin RoomFieldsMixin {
   late String id;
   late List<RoomFieldsMixin$CommonPlayer> players;
@@ -30,6 +38,21 @@ class CreateLobby$MutationRoot extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [createLobby];
   @override
   Map<String, dynamic> toJson() => _$CreateLobby$MutationRootToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Disconnect$MutationRoot extends JsonSerializable with EquatableMixin {
+  Disconnect$MutationRoot();
+
+  factory Disconnect$MutationRoot.fromJson(Map<String, dynamic> json) =>
+      _$Disconnect$MutationRootFromJson(json);
+
+  late String disconnect;
+
+  @override
+  List<Object?> get props => [disconnect];
+  @override
+  Map<String, dynamic> toJson() => _$Disconnect$MutationRootToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -186,6 +209,108 @@ class BingoPlayerMov$QueryRoot extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class BoxesStartGame$QueryRoot$GameInputs$BoxesInputs extends JsonSerializable
+    with EquatableMixin {
+  BoxesStartGame$QueryRoot$GameInputs$BoxesInputs();
+
+  factory BoxesStartGame$QueryRoot$GameInputs$BoxesInputs.fromJson(
+          Map<String, dynamic> json) =>
+      _$BoxesStartGame$QueryRoot$GameInputs$BoxesInputsFromJson(json);
+
+  late bool startGame;
+
+  @override
+  List<Object?> get props => [startGame];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$BoxesStartGame$QueryRoot$GameInputs$BoxesInputsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class BoxesStartGame$QueryRoot$GameInputs extends JsonSerializable
+    with EquatableMixin {
+  BoxesStartGame$QueryRoot$GameInputs();
+
+  factory BoxesStartGame$QueryRoot$GameInputs.fromJson(
+          Map<String, dynamic> json) =>
+      _$BoxesStartGame$QueryRoot$GameInputsFromJson(json);
+
+  late BoxesStartGame$QueryRoot$GameInputs$BoxesInputs boxesInputs;
+
+  @override
+  List<Object?> get props => [boxesInputs];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$BoxesStartGame$QueryRoot$GameInputsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class BoxesStartGame$QueryRoot extends JsonSerializable with EquatableMixin {
+  BoxesStartGame$QueryRoot();
+
+  factory BoxesStartGame$QueryRoot.fromJson(Map<String, dynamic> json) =>
+      _$BoxesStartGame$QueryRootFromJson(json);
+
+  late BoxesStartGame$QueryRoot$GameInputs gameEvent;
+
+  @override
+  List<Object?> get props => [gameEvent];
+  @override
+  Map<String, dynamic> toJson() => _$BoxesStartGame$QueryRootToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class BoxesPlayerMov$QueryRoot$GameInputs$BoxesInputs extends JsonSerializable
+    with EquatableMixin {
+  BoxesPlayerMov$QueryRoot$GameInputs$BoxesInputs();
+
+  factory BoxesPlayerMov$QueryRoot$GameInputs$BoxesInputs.fromJson(
+          Map<String, dynamic> json) =>
+      _$BoxesPlayerMov$QueryRoot$GameInputs$BoxesInputsFromJson(json);
+
+  late bool playerMove;
+
+  @override
+  List<Object?> get props => [playerMove];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$BoxesPlayerMov$QueryRoot$GameInputs$BoxesInputsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class BoxesPlayerMov$QueryRoot$GameInputs extends JsonSerializable
+    with EquatableMixin {
+  BoxesPlayerMov$QueryRoot$GameInputs();
+
+  factory BoxesPlayerMov$QueryRoot$GameInputs.fromJson(
+          Map<String, dynamic> json) =>
+      _$BoxesPlayerMov$QueryRoot$GameInputsFromJson(json);
+
+  late BoxesPlayerMov$QueryRoot$GameInputs$BoxesInputs boxesInputs;
+
+  @override
+  List<Object?> get props => [boxesInputs];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$BoxesPlayerMov$QueryRoot$GameInputsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class BoxesPlayerMov$QueryRoot extends JsonSerializable with EquatableMixin {
+  BoxesPlayerMov$QueryRoot();
+
+  factory BoxesPlayerMov$QueryRoot.fromJson(Map<String, dynamic> json) =>
+      _$BoxesPlayerMov$QueryRootFromJson(json);
+
+  late BoxesPlayerMov$QueryRoot$GameInputs gameEvent;
+
+  @override
+  List<Object?> get props => [gameEvent];
+  @override
+  Map<String, dynamic> toJson() => _$BoxesPlayerMov$QueryRootToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class JoinLobby$MutationRoot extends JsonSerializable with EquatableMixin {
   JoinLobby$MutationRoot();
 
@@ -213,21 +338,6 @@ class Ping$QueryRoot extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [ping];
   @override
   Map<String, dynamic> toJson() => _$Ping$QueryRootToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Disconnect$MutationRoot extends JsonSerializable with EquatableMixin {
-  Disconnect$MutationRoot();
-
-  factory Disconnect$MutationRoot.fromJson(Map<String, dynamic> json) =>
-      _$Disconnect$MutationRootFromJson(json);
-
-  late String disconnect;
-
-  @override
-  List<Object?> get props => [disconnect];
-  @override
-  Map<String, dynamic> toJson() => _$Disconnect$MutationRootToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -275,6 +385,29 @@ class RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData
 }
 
 @JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BoxesPlayerData
+    extends RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData
+    with EquatableMixin {
+  RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BoxesPlayerData();
+
+  factory RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BoxesPlayerData.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BoxesPlayerDataFromJson(
+          json);
+
+  late String color;
+
+  late int score;
+
+  @override
+  List<Object?> get props => [color, score];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BoxesPlayerDataToJson(
+          this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData
     extends JsonSerializable with EquatableMixin {
   RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData();
@@ -284,6 +417,9 @@ class RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData
     switch (json['__typename'].toString()) {
       case r'BingoPlayerData':
         return RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData
+            .fromJson(json);
+      case r'BoxesPlayerData':
+        return RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BoxesPlayerData
             .fromJson(json);
       default:
     }
@@ -302,6 +438,10 @@ class RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData
       case r'BingoPlayerData':
         return (this
                 as RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BingoPlayerData)
+            .toJson();
+      case r'BoxesPlayerData':
+        return (this
+                as RoomFieldsMixin$CommonPlayer$GamePlayer$PlayerGameData$BoxesPlayerData)
             .toJson();
       default:
     }
@@ -640,6 +780,27 @@ class RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BingoPlayerDa
 }
 
 @JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BoxesPlayerData
+    extends RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData
+    with EquatableMixin {
+  RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BoxesPlayerData();
+
+  factory RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BoxesPlayerData.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BoxesPlayerDataFromJson(
+          json);
+
+  late String color;
+
+  @override
+  List<Object?> get props => [color];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BoxesPlayerDataToJson(
+          this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData
     extends JsonSerializable with EquatableMixin {
   RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData();
@@ -649,6 +810,9 @@ class RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData
     switch (json['__typename'].toString()) {
       case r'BingoPlayerData':
         return RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BingoPlayerData
+            .fromJson(json);
+      case r'BoxesPlayerData':
+        return RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BoxesPlayerData
             .fromJson(json);
       default:
     }
@@ -667,6 +831,10 @@ class RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData
       case r'BingoPlayerData':
         return (this
                 as RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BingoPlayerData)
+            .toJson();
+      case r'BoxesPlayerData':
+        return (this
+                as RoomFieldsMixin$RoomState$GameData$GamePlayer$PlayerGameData$BoxesPlayerData)
             .toJson();
       default:
     }
@@ -827,6 +995,135 @@ class RoomFieldsMixin$RoomState$GameData$Game$Bingo
 }
 
 @JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied
+    extends RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType
+    with EquatableMixin, OccupiedMixin {
+  RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied();
+
+  factory RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$OccupiedFromJson(
+          json);
+
+  @override
+  List<Object?> get props => [id, occupiedBy, movNo];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$OccupiedToJson(
+          this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Unoccupied
+    extends RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType
+    with EquatableMixin, UnoccupiedMixin {
+  RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Unoccupied();
+
+  factory RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Unoccupied.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$UnoccupiedFromJson(
+          json);
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$UnoccupiedToJson(
+          this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType
+    extends JsonSerializable with EquatableMixin {
+  RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType();
+
+  factory RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType.fromJson(
+      Map<String, dynamic> json) {
+    switch (json['__typename'].toString()) {
+      case r'Occupied':
+        return RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied
+            .fromJson(json);
+      case r'Unoccupied':
+        return RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Unoccupied
+            .fromJson(json);
+      default:
+    }
+    return _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeTypeFromJson(
+        json);
+  }
+
+  @JsonKey(name: '__typename')
+  String? $$typename;
+
+  @override
+  List<Object?> get props => [$$typename];
+  @override
+  Map<String, dynamic> toJson() {
+    switch ($$typename) {
+      case r'Occupied':
+        return (this
+                as RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied)
+            .toJson();
+      case r'Unoccupied':
+        return (this
+                as RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Unoccupied)
+            .toJson();
+      default:
+    }
+    return _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeTypeToJson(this);
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$RoomState$GameData$Game$Boxes$Cell
+    extends JsonSerializable with EquatableMixin {
+  RoomFieldsMixin$RoomState$GameData$Game$Boxes$Cell();
+
+  factory RoomFieldsMixin$RoomState$GameData$Game$Boxes$Cell.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$CellFromJson(json);
+
+  String? occupiedBy;
+
+  @override
+  List<Object?> get props => [occupiedBy];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$RoomState$GameData$Game$Boxes$CellToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RoomFieldsMixin$RoomState$GameData$Game$Boxes
+    extends RoomFieldsMixin$RoomState$GameData$Game with EquatableMixin {
+  RoomFieldsMixin$RoomState$GameData$Game$Boxes();
+
+  factory RoomFieldsMixin$RoomState$GameData$Game$Boxes.fromJson(
+          Map<String, dynamic> json) =>
+      _$RoomFieldsMixin$RoomState$GameData$Game$BoxesFromJson(json);
+
+  late String turn;
+
+  late int width;
+
+  late int height;
+
+  late List<RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType>
+      horizontalEdges;
+
+  late List<RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType>
+      verticalEdges;
+
+  late List<RoomFieldsMixin$RoomState$GameData$Game$Boxes$Cell> cells;
+
+  @override
+  List<Object?> get props =>
+      [turn, width, height, horizontalEdges, verticalEdges, cells];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RoomFieldsMixin$RoomState$GameData$Game$BoxesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class RoomFieldsMixin$RoomState$GameData$Game extends JsonSerializable
     with EquatableMixin {
   RoomFieldsMixin$RoomState$GameData$Game();
@@ -836,6 +1133,8 @@ class RoomFieldsMixin$RoomState$GameData$Game extends JsonSerializable
     switch (json['__typename'].toString()) {
       case r'Bingo':
         return RoomFieldsMixin$RoomState$GameData$Game$Bingo.fromJson(json);
+      case r'Boxes':
+        return RoomFieldsMixin$RoomState$GameData$Game$Boxes.fromJson(json);
       default:
     }
     return _$RoomFieldsMixin$RoomState$GameData$GameFromJson(json);
@@ -851,6 +1150,8 @@ class RoomFieldsMixin$RoomState$GameData$Game extends JsonSerializable
     switch ($$typename) {
       case r'Bingo':
         return (this as RoomFieldsMixin$RoomState$GameData$Game$Bingo).toJson();
+      case r'Boxes':
+        return (this as RoomFieldsMixin$RoomState$GameData$Game$Boxes).toJson();
       default:
     }
     return _$RoomFieldsMixin$RoomState$GameData$GameToJson(this);
@@ -1441,6 +1742,80 @@ class CreateLobbyMutation
 }
 
 @JsonSerializable(explicitToJson: true)
+class DisconnectArguments extends JsonSerializable with EquatableMixin {
+  DisconnectArguments({required this.playerId, required this.roomId});
+
+  @override
+  factory DisconnectArguments.fromJson(Map<String, dynamic> json) =>
+      _$DisconnectArgumentsFromJson(json);
+
+  late String playerId;
+
+  late String roomId;
+
+  @override
+  List<Object?> get props => [playerId, roomId];
+  @override
+  Map<String, dynamic> toJson() => _$DisconnectArgumentsToJson(this);
+}
+
+final DISCONNECT_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'disconnect'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'playerId')),
+            type:
+                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'roomId')),
+            type:
+                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'disconnect'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'playerId'),
+                  value: VariableNode(name: NameNode(value: 'playerId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'roomId'),
+                  value: VariableNode(name: NameNode(value: 'roomId')))
+            ],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class DisconnectMutation
+    extends GraphQLQuery<Disconnect$MutationRoot, DisconnectArguments> {
+  DisconnectMutation({required this.variables});
+
+  @override
+  final DocumentNode document = DISCONNECT_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'disconnect';
+
+  @override
+  final DisconnectArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  Disconnect$MutationRoot parse(Map<String, dynamic> json) =>
+      Disconnect$MutationRoot.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
 class BingoStartGameArguments extends JsonSerializable with EquatableMixin {
   BingoStartGameArguments(
       {required this.playerId, required this.roomId, required this.boardSize});
@@ -1749,6 +2124,222 @@ class BingoPlayerMovQuery
 }
 
 @JsonSerializable(explicitToJson: true)
+class BoxesStartGameArguments extends JsonSerializable with EquatableMixin {
+  BoxesStartGameArguments(
+      {required this.playerId,
+      required this.roomId,
+      required this.boardWidth,
+      required this.boardHeight});
+
+  @override
+  factory BoxesStartGameArguments.fromJson(Map<String, dynamic> json) =>
+      _$BoxesStartGameArgumentsFromJson(json);
+
+  late String playerId;
+
+  late String roomId;
+
+  late int boardWidth;
+
+  late int boardHeight;
+
+  @override
+  List<Object?> get props => [playerId, roomId, boardWidth, boardHeight];
+  @override
+  Map<String, dynamic> toJson() => _$BoxesStartGameArgumentsToJson(this);
+}
+
+final BOXES_START_GAME_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'boxesStartGame'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'playerId')),
+            type:
+                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'roomId')),
+            type:
+                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'boardWidth')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'boardHeight')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'gameEvent'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'playerId'),
+                  value: VariableNode(name: NameNode(value: 'playerId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'roomId'),
+                  value: VariableNode(name: NameNode(value: 'roomId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'boxesInputs'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'startGame'),
+                        alias: null,
+                        arguments: [
+                          ArgumentNode(
+                              name: NameNode(value: 'boardWidth'),
+                              value: VariableNode(
+                                  name: NameNode(value: 'boardWidth'))),
+                          ArgumentNode(
+                              name: NameNode(value: 'boardHeight'),
+                              value: VariableNode(
+                                  name: NameNode(value: 'boardHeight')))
+                        ],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class BoxesStartGameQuery
+    extends GraphQLQuery<BoxesStartGame$QueryRoot, BoxesStartGameArguments> {
+  BoxesStartGameQuery({required this.variables});
+
+  @override
+  final DocumentNode document = BOXES_START_GAME_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'boxesStartGame';
+
+  @override
+  final BoxesStartGameArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  BoxesStartGame$QueryRoot parse(Map<String, dynamic> json) =>
+      BoxesStartGame$QueryRoot.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class BoxesPlayerMovArguments extends JsonSerializable with EquatableMixin {
+  BoxesPlayerMovArguments(
+      {required this.playerId, required this.roomId, required this.edgeId});
+
+  @override
+  factory BoxesPlayerMovArguments.fromJson(Map<String, dynamic> json) =>
+      _$BoxesPlayerMovArgumentsFromJson(json);
+
+  late String playerId;
+
+  late String roomId;
+
+  late int edgeId;
+
+  @override
+  List<Object?> get props => [playerId, roomId, edgeId];
+  @override
+  Map<String, dynamic> toJson() => _$BoxesPlayerMovArgumentsToJson(this);
+}
+
+final BOXES_PLAYER_MOV_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'boxesPlayerMov'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'playerId')),
+            type:
+                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'roomId')),
+            type:
+                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'edgeId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'gameEvent'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'playerId'),
+                  value: VariableNode(name: NameNode(value: 'playerId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'roomId'),
+                  value: VariableNode(name: NameNode(value: 'roomId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'boxesInputs'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'playerMove'),
+                        alias: null,
+                        arguments: [
+                          ArgumentNode(
+                              name: NameNode(value: 'edgeId'),
+                              value:
+                                  VariableNode(name: NameNode(value: 'edgeId')))
+                        ],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class BoxesPlayerMovQuery
+    extends GraphQLQuery<BoxesPlayerMov$QueryRoot, BoxesPlayerMovArguments> {
+  BoxesPlayerMovQuery({required this.variables});
+
+  @override
+  final DocumentNode document = BOXES_PLAYER_MOV_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'boxesPlayerMov';
+
+  @override
+  final BoxesPlayerMovArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  BoxesPlayerMov$QueryRoot parse(Map<String, dynamic> json) =>
+      BoxesPlayerMov$QueryRoot.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
 class JoinLobbyArguments extends JsonSerializable with EquatableMixin {
   JoinLobbyArguments(
       {required this.playerId, required this.playerName, required this.roomId});
@@ -1867,80 +2458,6 @@ class PingQuery extends GraphQLQuery<Ping$QueryRoot, JsonSerializable> {
 }
 
 @JsonSerializable(explicitToJson: true)
-class DisconnectArguments extends JsonSerializable with EquatableMixin {
-  DisconnectArguments({required this.playerId, required this.roomId});
-
-  @override
-  factory DisconnectArguments.fromJson(Map<String, dynamic> json) =>
-      _$DisconnectArgumentsFromJson(json);
-
-  late String playerId;
-
-  late String roomId;
-
-  @override
-  List<Object?> get props => [playerId, roomId];
-  @override
-  Map<String, dynamic> toJson() => _$DisconnectArgumentsToJson(this);
-}
-
-final DISCONNECT_MUTATION_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.mutation,
-      name: NameNode(value: 'disconnect'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'playerId')),
-            type:
-                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
-            defaultValue: DefaultValueNode(value: null),
-            directives: []),
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'roomId')),
-            type:
-                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'disconnect'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'playerId'),
-                  value: VariableNode(name: NameNode(value: 'playerId'))),
-              ArgumentNode(
-                  name: NameNode(value: 'roomId'),
-                  value: VariableNode(name: NameNode(value: 'roomId')))
-            ],
-            directives: [],
-            selectionSet: null)
-      ]))
-]);
-
-class DisconnectMutation
-    extends GraphQLQuery<Disconnect$MutationRoot, DisconnectArguments> {
-  DisconnectMutation({required this.variables});
-
-  @override
-  final DocumentNode document = DISCONNECT_MUTATION_DOCUMENT;
-
-  @override
-  final String operationName = 'disconnect';
-
-  @override
-  final DisconnectArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  Disconnect$MutationRoot parse(Map<String, dynamic> json) =>
-      Disconnect$MutationRoot.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
 class GameMessagesArguments extends JsonSerializable with EquatableMixin {
   GameMessagesArguments({required this.roomId, required this.playerId});
 
@@ -1973,6 +2490,46 @@ final GAME_MESSAGES_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'occupied'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(
+              name: NameNode(value: 'Occupied'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'occupiedBy'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'movNo'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'unoccupied'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(
+              name: NameNode(value: 'Unoccupied'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2059,6 +2616,31 @@ final GAME_MESSAGES_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
                                           directives: [],
                                           selectionSet: null)
                                     ]))
+                              ])),
+                          InlineFragmentNode(
+                              typeCondition: TypeConditionNode(
+                                  on: NamedTypeNode(
+                                      name: NameNode(value: 'BoxesPlayerData'),
+                                      isNonNull: false)),
+                              directives: [],
+                              selectionSet: SelectionSetNode(selections: [
+                                FieldNode(
+                                    name: NameNode(value: 'color'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: null),
+                                FieldNode(
+                                    name: NameNode(value: 'score'),
+                                    alias: null,
+                                    arguments: [
+                                      ArgumentNode(
+                                          name: NameNode(value: 'roomId'),
+                                          value: VariableNode(
+                                              name: NameNode(value: 'roomId')))
+                                    ],
+                                    directives: [],
+                                    selectionSet: null)
                               ]))
                         ])),
                     FieldNode(
@@ -2247,6 +2829,21 @@ final GAME_MESSAGES_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
                                                 directives: [],
                                                 selectionSet: null)
                                           ]))
+                                    ])),
+                                InlineFragmentNode(
+                                    typeCondition: TypeConditionNode(
+                                        on: NamedTypeNode(
+                                            name: NameNode(
+                                                value: 'BoxesPlayerData'),
+                                            isNonNull: false)),
+                                    directives: [],
+                                    selectionSet: SelectionSetNode(selections: [
+                                      FieldNode(
+                                          name: NameNode(value: 'color'),
+                                          alias: null,
+                                          arguments: [],
+                                          directives: [],
+                                          selectionSet: null)
                                     ]))
                               ]))
                         ])),
@@ -2344,6 +2941,127 @@ final GAME_MESSAGES_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
                                                           selectionSet: null)
                                                     ]))
                                           ]))
+                                    ]))
+                              ])),
+                          InlineFragmentNode(
+                              typeCondition: TypeConditionNode(
+                                  on: NamedTypeNode(
+                                      name: NameNode(value: 'Boxes'),
+                                      isNonNull: false)),
+                              directives: [],
+                              selectionSet: SelectionSetNode(selections: [
+                                FieldNode(
+                                    name: NameNode(value: 'turn'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: null),
+                                FieldNode(
+                                    name: NameNode(value: 'width'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: null),
+                                FieldNode(
+                                    name: NameNode(value: 'height'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: null),
+                                FieldNode(
+                                    name: NameNode(value: 'horizontalEdges'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: SelectionSetNode(selections: [
+                                      FieldNode(
+                                          name: NameNode(value: '__typename'),
+                                          alias: null,
+                                          arguments: [],
+                                          directives: [],
+                                          selectionSet: null),
+                                      InlineFragmentNode(
+                                          typeCondition: TypeConditionNode(
+                                              on: NamedTypeNode(
+                                                  name: NameNode(
+                                                      value: 'Occupied'),
+                                                  isNonNull: false)),
+                                          directives: [],
+                                          selectionSet:
+                                              SelectionSetNode(selections: [
+                                            FragmentSpreadNode(
+                                                name:
+                                                    NameNode(value: 'occupied'),
+                                                directives: [])
+                                          ])),
+                                      InlineFragmentNode(
+                                          typeCondition: TypeConditionNode(
+                                              on: NamedTypeNode(
+                                                  name: NameNode(
+                                                      value: 'Unoccupied'),
+                                                  isNonNull: false)),
+                                          directives: [],
+                                          selectionSet: SelectionSetNode(
+                                              selections: [
+                                                FragmentSpreadNode(
+                                                    name: NameNode(
+                                                        value: 'unoccupied'),
+                                                    directives: [])
+                                              ]))
+                                    ])),
+                                FieldNode(
+                                    name: NameNode(value: 'verticalEdges'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: SelectionSetNode(selections: [
+                                      FieldNode(
+                                          name: NameNode(value: '__typename'),
+                                          alias: null,
+                                          arguments: [],
+                                          directives: [],
+                                          selectionSet: null),
+                                      InlineFragmentNode(
+                                          typeCondition: TypeConditionNode(
+                                              on: NamedTypeNode(
+                                                  name: NameNode(
+                                                      value: 'Occupied'),
+                                                  isNonNull: false)),
+                                          directives: [],
+                                          selectionSet:
+                                              SelectionSetNode(selections: [
+                                            FragmentSpreadNode(
+                                                name:
+                                                    NameNode(value: 'occupied'),
+                                                directives: [])
+                                          ])),
+                                      InlineFragmentNode(
+                                          typeCondition: TypeConditionNode(
+                                              on: NamedTypeNode(
+                                                  name: NameNode(
+                                                      value: 'Unoccupied'),
+                                                  isNonNull: false)),
+                                          directives: [],
+                                          selectionSet: SelectionSetNode(
+                                              selections: [
+                                                FragmentSpreadNode(
+                                                    name: NameNode(
+                                                        value: 'unoccupied'),
+                                                    directives: [])
+                                              ]))
+                                    ])),
+                                FieldNode(
+                                    name: NameNode(value: 'cells'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: SelectionSetNode(selections: [
+                                      FieldNode(
+                                          name: NameNode(value: 'occupiedBy'),
+                                          alias: null,
+                                          arguments: [],
+                                          directives: [],
+                                          selectionSet: null)
                                     ]))
                               ]))
                         ]))
