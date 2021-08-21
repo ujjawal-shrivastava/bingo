@@ -88,7 +88,7 @@ class _BoxesBoardState extends State<BoxesBoard> {
           Expanded(
             child: Center(
               child: AspectRatio(
-                aspectRatio: 1 / 1,
+                aspectRatio: widget.data.width / widget.data.height,
                 child: Container(
                   // width: 1000,
                   // height: 1000,
