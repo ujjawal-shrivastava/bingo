@@ -274,7 +274,8 @@ class _SettingsWidgetState extends State<SettingsWidget>
                       if (pageController.index == 0) {
                         widget.startBingoGame(bingoBoardSize);
                       } else {
-                        widget.startBoxesGame(boxesBoardWidth, boxesBoardWidth);
+                        widget.startBoxesGame(
+                            boxesBoardWidth, boxesBoardHeight);
                       }
                     },
                     child: Text("Start Game"),
