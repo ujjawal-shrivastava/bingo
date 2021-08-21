@@ -38,7 +38,7 @@ class _BoxesBoardState extends State<BoxesBoard> {
   Offset dragupoffset = Offset.zero;
 
   callMove(int edgeId) {
-    print('send edgeId $edgeId ');
+    // print('send edgeId $edgeId ');
     GameClient.of(context)!.artemisClient.execute(
           BoxesPlayerMovQuery(
             variables: BoxesPlayerMovArguments(
