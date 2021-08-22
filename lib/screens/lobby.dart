@@ -127,6 +127,7 @@ class _RoomState extends State<Room> {
                     verticalDirection: VerticalDirection.up,
                     children: [
                       Expanded(
+                        flex: isScreenWide ? 1 : 2,
                         child: SettingsWidget(
                             startBingoGame: (boardSize) {
                               GameClient.of(context)?.artemisClient.execute(
@@ -167,6 +168,7 @@ class _RoomState extends State<Room> {
                         height: isScreenWide ? double.infinity : 20,
                       ),
                       Expanded(
+                        flex: 1,
                         child: Players(
                           players: widget.room.players,
                           onKickPlayer: (playerId) async {
@@ -249,14 +251,17 @@ class _SettingsWidgetState extends State<SettingsWidget>
               textAlign: TextAlign.center,
             ),
           ),
-          TabBar(controller: pageController, tabs: [
-            Tab(
-              text: 'Bingo',
-            ),
-            Tab(
-              text: 'Boxes',
-            )
-          ]),
+          TabBar(
+              controller: pageController,
+              indicatorColor: Theme.of(context).buttonColor,
+              tabs: [
+                Tab(
+                  text: 'Bingo',
+                ),
+                Tab(
+                  text: 'Boxes',
+                )
+              ]),
           Expanded(
             child: TabBarView(
               controller: pageController,

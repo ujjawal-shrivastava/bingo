@@ -196,7 +196,10 @@ class CommonPlayerWidget extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  PlayerAvatar(player: playerFieldsOfCommonPlayer(player)),
+                  PlayerAvatar(
+                      player: playerFieldsOfCommonPlayer(player),
+                      playerColor:
+                          playerColor == Colors.white ? null : playerColor),
                   Positioned(
                     right: 2,
                     bottom: 2,
@@ -230,7 +233,6 @@ class CommonPlayerWidget extends StatelessWidget {
                       offset: const Offset(2, -8),
                       child: Text(
                         rank != null ? ordinal(rank!).toString() : ' ',
-                        //superscript is usually smaller in size
                         textScaleFactor: 0.8,
                         style: TextStyle(color: Colors.white),
                       ),
@@ -238,7 +240,7 @@ class CommonPlayerWidget extends StatelessWidget {
                   )
                 ])),
               ),
-              if (score != null)
+              if (score != null && player.isConnected)
                 Container(
                   child: Text(
                     "$score${maxScore != null ? '/$maxScore' : ''}",
@@ -299,12 +301,16 @@ class CommonPlayerWidget extends StatelessWidget {
                                                       .textTheme
                                                       .headline5),
                                               SizedBox(height: 10),
-                                              Text(
-                                                  "You are about to kick ${playerFieldsOfCommonPlayer(player).name} out of the room. Are you sure about that?",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyText1,
-                                                  textAlign: TextAlign.center),
+                                              Opacity(
+                                                opacity: 0.8,
+                                                child: Text(
+                                                    "You are about to kick ${playerFieldsOfCommonPlayer(player).name} out of the room. Are you sure about that?",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyText1,
+                                                    textAlign:
+                                                        TextAlign.center),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -406,18 +412,20 @@ class CommonPlayerWidget extends StatelessWidget {
 }
 
 class PlayerAvatar extends StatelessWidget {
-  const PlayerAvatar({
-    Key? key,
-    required this.player,
-  }) : super(key: key);
+  const PlayerAvatar({Key? key, required this.player, this.playerColor})
+      : super(key: key);
 
   final PlayerFieldsMixin player;
+  final Color? playerColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: playerColor?.withOpacity(0.5) ?? Colors.transparent),
       child: WebsafeSvg.string(
-        multiavatar(player.id),
+        multiavatar(player.id, trBackground: playerColor != null),
         height: 80,
         width: 80,
       ),
