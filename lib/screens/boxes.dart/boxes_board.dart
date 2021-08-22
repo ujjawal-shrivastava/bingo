@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bingo/networking/clientProvider.dart';
 import 'package:bingo/screens/players.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +39,7 @@ class _BoxesBoardState extends State<BoxesBoard> {
   int dragvertexradius = 40;
 
   Offset dragupoffset = Offset.zero;
+  Offset? snapoffset;
   int dragIndex = -1;
 
   callMove(int edgeId) {
@@ -70,6 +73,34 @@ class _BoxesBoardState extends State<BoxesBoard> {
             element.id == id);
   }
 
+  bool isLastEdge(int id) {
+    var maxedge = widget.data.horizontalEdges
+        .followedBy(widget.data.verticalEdges)
+        .reduce((value, element) {
+      if (element
+              is RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied &&
+          value
+              is RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied) {
+        if (element.movNo > value.movNo) {
+          return element;
+        } else {
+          return value;
+        }
+      } else if (element
+          is RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied) {
+        return element;
+      } else {
+        return value;
+      }
+    });
+    if (maxedge
+        is RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied) {
+      return maxedge.id == id;
+    } else {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -100,6 +131,7 @@ class _BoxesBoardState extends State<BoxesBoard> {
                         shrinkWrap: true,
                         crossAxisCount: widget.data.width,
                         childAspectRatio: 1,
+                        physics: NeverScrollableScrollPhysics(),
                         children: [
                           ...List.generate(
                               widget.data.cells.length, (index) => index).map(
@@ -118,7 +150,7 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                   ),
                                 ),
                                 decoration: BoxDecoration(
-                                  color: getCellColor(e),
+                                  color: getCellColor(e).withOpacity(0.5),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 // margin: EdgeInsets.all(10),
@@ -148,7 +180,9 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                     var width = 2.0;
                                     if (edge
                                         is RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied) {
-                                      color = Colors.grey;
+                                      color = isLastEdge(edge.id)
+                                          ? getPlayerColor(edge.occupiedBy)
+                                          : Colors.grey;
                                       width = 20;
                                     }
                                     late int edgeId;
@@ -194,10 +228,11 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                     var edge = widget.data.verticalEdges[index];
                                     Color color = Colors.grey;
                                     var width = 2.0;
-
                                     if (edge
                                         is RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied) {
-                                      color = Colors.grey;
+                                      color = isLastEdge(edge.id)
+                                          ? getPlayerColor(edge.occupiedBy)
+                                          : Colors.grey;
                                       width = 20;
                                     }
                                     late int edgeId;
@@ -275,12 +310,17 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                         ),
                                         child: CustomPaint(
                                           painter: DragLinePainter(
-                                            movedOffset: dragupoffset,
+                                            movedOffset:
+                                                snapoffset ?? dragupoffset,
                                             linecolor: getPlayerColor(
                                                     GameClient.of(context)!
                                                         .playerId)
                                                 .withOpacity(0.5),
                                             lineWidth: 30,
+                                            circleColor: snapoffset != null
+                                                ? Colors.transparent
+                                                : Colors.white,
+                                            circlradius: vertexradius ~/ 2,
                                           ),
                                           child: Container(
                                             width: vertexradius.toDouble(),
@@ -296,7 +336,7 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                         width: vertexradius.toDouble(),
                                         height: vertexradius.toDouble(),
                                         decoration: BoxDecoration(
-                                          color: Colors.white,
+                                          color: Colors.transparent,
                                           shape: BoxShape.circle,
                                         ),
                                       ),
@@ -351,29 +391,68 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                               ),
                                               if (canAccept)
                                                 Positioned.fill(
-                                                  left: -10,
-                                                  right: -10,
-                                                  top: -10,
-                                                  bottom: -10,
+                                                  left: -15,
+                                                  right: -15,
+                                                  top: -15,
+                                                  bottom: -15,
                                                   child: DragTarget<int>(
+                                                    onLeave: (_) {
+                                                      setState(() {
+                                                        snapoffset = null;
+                                                      });
+                                                    },
+                                                    onWillAccept: (_) {
+                                                      setState(() {
+                                                        snapoffset = Offset(
+                                                          dragupoffset.dx
+                                                                      .abs() >
+                                                                  dragupoffset
+                                                                      .dy
+                                                                      .abs()
+                                                              ? dragupoffset.dx
+                                                              : 0,
+                                                          dragupoffset.dy
+                                                                      .abs() >
+                                                                  dragupoffset
+                                                                      .dx
+                                                                      .abs()
+                                                              ? dragupoffset.dy
+                                                              : 0,
+                                                        );
+                                                      });
+                                                      return true;
+                                                    },
                                                     onAccept: (comingIndex) {
+                                                      setState(() {
+                                                        snapoffset = null;
+                                                      });
                                                       callMove(edgeId);
                                                     },
                                                     builder: (context, accept,
                                                             reject) =>
                                                         Container(
-                                                      decoration: BoxDecoration(
-                                                        color: accept.isNotEmpty
-                                                            ? Colors.yellow
-                                                            : Colors.white,
-                                                        border: Border.all(
-                                                          width: 2,
-                                                          color: getPlayerColor(
-                                                              GameClient.of(
-                                                                      context)!
-                                                                  .playerId),
+                                                      padding:
+                                                          EdgeInsets.all(5),
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: accept
+                                                                  .isNotEmpty
+                                                              ? getPlayerColor(
+                                                                  GameClient.of(
+                                                                          context)!
+                                                                      .playerId)
+                                                              : Colors.white,
+                                                          border: Border.all(
+                                                            width: 2,
+                                                            color: getPlayerColor(
+                                                                GameClient.of(
+                                                                        context)!
+                                                                    .playerId),
+                                                          ),
+                                                          shape:
+                                                              BoxShape.circle,
                                                         ),
-                                                        shape: BoxShape.circle,
                                                       ),
                                                     ),
                                                   ),
@@ -406,10 +485,15 @@ class DragLinePainter extends CustomPainter {
   final Offset movedOffset;
   final Color linecolor;
   final int lineWidth;
-  DragLinePainter(
-      {required this.movedOffset,
-      required this.lineWidth,
-      required this.linecolor});
+  final Color circleColor;
+  final int circlradius;
+  DragLinePainter({
+    required this.movedOffset,
+    required this.lineWidth,
+    required this.linecolor,
+    required this.circleColor,
+    required this.circlradius,
+  });
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
@@ -419,6 +503,11 @@ class DragLinePainter extends CustomPainter {
       Offset.zero.translate(size.width / 2, size.height / 2),
       movedOffset.translate(size.width / 2, size.height / 2),
       paint,
+    );
+    canvas.drawCircle(
+      Offset.zero.translate(size.width / 2, size.height / 2) + movedOffset,
+      circlradius.toDouble(),
+      paint..color = circleColor,
     );
   }
 
