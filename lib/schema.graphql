@@ -31,11 +31,36 @@ type BoardCreation {
   ready: [String!]!
 }
 
+type Boxes {
+  verticalEdges: [EdgeType!]!
+  horizontalEdges: [EdgeType!]!
+  cells: [Cell!]!
+  width: Int!
+  height: Int!
+  turn: String!
+}
+
+type BoxesInputs {
+  startGame(boardWidth: Int!, boardHeight: Int!): Boolean!
+  playerMove(edgeId: Int!): Boolean!
+}
+
+type BoxesPlayerData {
+  color: String!
+  score(roomId: String!): Int!
+}
+
+type Cell {
+  occupiedBy: String
+}
+
 interface CommonPlayer {
   isConnected: Boolean!
 }
 
-union Game = Bingo
+union EdgeType = Occupied | Unoccupied
+
+union Game = Bingo | Boxes
 
 type GameData {
   players: [GamePlayer!]!
@@ -47,6 +72,7 @@ union GameEvents = GameStarted | RoomUpdate
 
 type GameInputs {
   bingoInputs: BingoInputs!
+  boxesInputs: BoxesInputs!
 }
 
 type GameMessage {
@@ -92,6 +118,12 @@ type MutationRoot {
   disconnect(playerId: String!, roomId: String!): String!
 }
 
+type Occupied {
+  movNo: Int!
+  occupiedBy: String!
+  id: Int!
+}
+
 type Player {
   id: String!
   name: String!
@@ -102,7 +134,7 @@ type PlayerConnected {
   room: Room!
 }
 
-union PlayerGameData = BingoPlayerData
+union PlayerGameData = BingoPlayerData | BoxesPlayerData
 
 type PlayerJoined {
   player: Player!
@@ -156,4 +188,8 @@ union ServerResponse =
 
 type Subscription {
   serverMessages(roomId: String!, playerId: String!): ServerResponse!
+}
+
+type Unoccupied {
+  id: Int!
 }

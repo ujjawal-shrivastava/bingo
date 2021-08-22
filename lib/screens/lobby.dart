@@ -128,7 +128,7 @@ class _RoomState extends State<Room> {
                     children: [
                       Expanded(
                         child: SettingsWidget(
-                            startGame: (boardSize) {
+                            startBingoGame: (boardSize) {
                               GameClient.of(context)?.artemisClient.execute(
                                     BingoStartGameQuery(
                                       variables: BingoStartGameArguments(
@@ -136,6 +136,19 @@ class _RoomState extends State<Room> {
                                             GameClient.of(context)!.playerId,
                                         roomId: widget.room.id,
                                         boardSize: boardSize,
+                                      ),
+                                    ),
+                                  );
+                            },
+                            startBoxesGame: (width, height) {
+                              GameClient.of(context)?.artemisClient.execute(
+                                    BoxesStartGameQuery(
+                                      variables: BoxesStartGameArguments(
+                                        playerId:
+                                            GameClient.of(context)!.playerId,
+                                        roomId: widget.room.id,
+                                        boardWidth: width,
+                                        boardHeight: height,
                                       ),
                                     ),
                                   );
@@ -180,26 +193,43 @@ class _RoomState extends State<Room> {
 }
 
 class SettingsWidget extends StatefulWidget {
-  final void Function(int) startGame;
+  final void Function(int) startBingoGame;
+  final void Function(int, int) startBoxesGame;
   final Function leaveRoom;
   final bool canStart;
 
-  const SettingsWidget(
-      {Key? key,
-      required this.startGame,
-      required this.canStart,
-      required this.leaveRoom})
-      : super(key: key);
+  const SettingsWidget({
+    Key? key,
+    required this.startBingoGame,
+    required this.canStart,
+    required this.leaveRoom,
+    required this.startBoxesGame,
+  }) : super(key: key);
 
   @override
   _SettingsWidgetState createState() => _SettingsWidgetState();
 }
 
-class _SettingsWidgetState extends State<SettingsWidget> {
-  int boardSize = 5;
-  int get minBoard => 3;
-  int get maxBoard => 11;
-  int get divisions => (maxBoard - minBoard) ~/ 2;
+class _SettingsWidgetState extends State<SettingsWidget>
+    with SingleTickerProviderStateMixin {
+  int bingoBoardSize = 5;
+  int get minBingoBoard => 3;
+  int get maxBingoBoard => 11;
+  int get bingoBoardDivisions => (maxBingoBoard - minBingoBoard) ~/ 2;
+
+  int boxesBoardWidth = 5;
+  int boxesBoardHeight = 5;
+  int get minBoxesBoardWidth => 5;
+  int get maxBoxesBoardWidth => 10;
+  int get boxesBoardDivisions => (maxBoxesBoardWidth - minBoxesBoardWidth) ~/ 1;
+
+  late TabController pageController;
+
+  @override
+  void initState() {
+    pageController = TabController(length: 2, vsync: this);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -219,48 +249,34 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               textAlign: TextAlign.center,
             ),
           ),
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+          TabBar(controller: pageController, tabs: [
+            Tab(
+              text: 'Bingo',
+            ),
+            Tab(
+              text: 'Boxes',
+            )
+          ]),
+          Expanded(
+            child: TabBarView(
+              controller: pageController,
               children: [
-                Container(
-                  margin: EdgeInsets.only(
-                    left: 20,
-                  ),
-                  child: Text("Board Size"),
-                ),
-                Slider(
-                  min: minBoard.toDouble(),
-                  max: maxBoard.toDouble(),
-                  value: boardSize.toDouble(),
-                  divisions: divisions,
-                  onChanged: (val) {
-                    setState(() {
-                      boardSize = val.toInt();
-                    });
-                  },
-                  label: '$boardSize',
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: List.generate(
-                            divisions + 1, (index) => index * 2 + minBoard)
-                        .map((e) => Text(e.toString()))
-                        .toList(),
-                  ),
-                ),
+                SingleChildScrollView(child: buildBingoSetting()),
+                SingleChildScrollView(child: buildBoxesSetting()),
               ],
             ),
           ),
-          Expanded(child: Container()),
           Container(
             margin: EdgeInsets.symmetric(vertical: 5),
             child: widget.canStart
                 ? ElevatedButton(
                     onPressed: () {
-                      widget.startGame(boardSize);
+                      if (pageController.index == 0) {
+                        widget.startBingoGame(bingoBoardSize);
+                      } else {
+                        widget.startBoxesGame(
+                            boxesBoardWidth, boxesBoardHeight);
+                      }
                     },
                     child: Text("Start Game"),
                   )
@@ -279,6 +295,115 @@ class _SettingsWidgetState extends State<SettingsWidget> {
             child: Text("Leave Room"),
             style: ElevatedButton.styleFrom(primary: Colors.red),
           )
+        ],
+      ),
+    );
+  }
+
+  Container buildBingoSetting() {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            margin: EdgeInsets.only(
+              left: 20,
+              top: 20,
+            ),
+            child: Text("Board Size"),
+          ),
+          Slider(
+            min: minBingoBoard.toDouble(),
+            max: maxBingoBoard.toDouble(),
+            value: bingoBoardSize.toDouble(),
+            divisions: bingoBoardDivisions,
+            onChanged: (val) {
+              setState(() {
+                bingoBoardSize = val.toInt();
+              });
+            },
+            label: '$bingoBoardSize',
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(bingoBoardDivisions + 1,
+                      (index) => index * 2 + minBingoBoard)
+                  .map((e) => Text(e.toString()))
+                  .toList(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container buildBoxesSetting() {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            margin: EdgeInsets.only(
+              left: 20,
+              top: 20,
+            ),
+            child: Text("Board Width"),
+          ),
+          Slider(
+            min: minBoxesBoardWidth.toDouble(),
+            max: maxBoxesBoardWidth.toDouble(),
+            value: boxesBoardWidth.toDouble(),
+            divisions: boxesBoardDivisions,
+            onChanged: (val) {
+              setState(() {
+                boxesBoardWidth = val.toInt();
+              });
+            },
+            label: '$boxesBoardWidth',
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(boxesBoardDivisions + 1,
+                      (index) => index * 1 + minBoxesBoardWidth)
+                  .map((e) => Text(e.toString()))
+                  .toList(),
+            ),
+          ),
+
+          //Height Slider
+          Container(
+            margin: EdgeInsets.only(
+              left: 20,
+              top: 20,
+            ),
+            child: Text("Board Height"),
+          ),
+          Slider(
+            min: minBoxesBoardWidth.toDouble(),
+            max: maxBoxesBoardWidth.toDouble(),
+            value: boxesBoardHeight.toDouble(),
+            divisions: boxesBoardDivisions,
+            onChanged: (val) {
+              setState(() {
+                boxesBoardHeight = val.toInt();
+              });
+            },
+            label: '$boxesBoardHeight',
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(boxesBoardDivisions + 1,
+                      (index) => index * 1 + minBoxesBoardWidth)
+                  .map((e) => Text(e.toString()))
+                  .toList(),
+            ),
+          ),
         ],
       ),
     );
