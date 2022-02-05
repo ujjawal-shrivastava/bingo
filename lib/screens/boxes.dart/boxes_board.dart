@@ -232,7 +232,7 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                         is RoomFieldsMixin$RoomState$GameData$Game$Boxes$EdgeType$Occupied) {
                                       color = isLastEdge(edge.id)
                                           ? getPlayerColor(edge.occupiedBy)
-                                          : Colors.grey;
+                                          : Colors.black;
                                       width = 20;
                                     }
                                     late int edgeId;
