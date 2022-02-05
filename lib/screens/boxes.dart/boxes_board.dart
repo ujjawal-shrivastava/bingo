@@ -183,7 +183,7 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                       color = isLastEdge(edge.id)
                                           ? getPlayerColor(edge.occupiedBy)
                                           : Colors.black;
-                                      width = 20;
+                                      width = 8;
                                     }
                                     late int edgeId;
                                     if (edge
@@ -233,7 +233,7 @@ class _BoxesBoardState extends State<BoxesBoard> {
                                       color = isLastEdge(edge.id)
                                           ? getPlayerColor(edge.occupiedBy)
                                           : Colors.black;
-                                      width = 20;
+                                      width = 8;
                                     }
                                     late int edgeId;
                                     if (edge
